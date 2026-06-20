@@ -246,5 +246,81 @@
     "quoteSent": "Quote sent! You'll be notified when the client responds.",
     "countersigned": "Contract countersigned — waiting for the client's deposit.",
     "error": "Something went wrong. Please try again."
+  },
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Your business at a glance",
+    "kpis": {
+      "newLeads": "New leads",
+      "activeBookings": "Active bookings",
+      "revenue": "Revenue ({{month}})",
+      "avgRating": "Avg. rating",
+      "reviewsCount": "{{count, number}} reviews"
+    },
+    "revenueCard": {
+      "title": "Revenue",
+      "subtitle": "Last 6 months"
+    },
+    "activity": {
+      "title": "Recent activity",
+      "paymentReceived": "Payment received from {{client}}",
+      "bookingConfirmed": "New booking confirmed",
+      "empty": "No recent activity yet"
+    },
+    "newRequests": {
+      "title": "New open requests",
+      "viewAll": "View all →",
+      "empty": "No open requests right now"
+    },
+    "upcoming": {
+      "title": "Upcoming events",
+      "viewAll": "View all →",
+      "empty": "No upcoming events"
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "Your bookings and event dates",
+    "thisMonth": "This month",
+    "addEvent": "Add event / block date",
+    "empty": "No events this month",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
+  },
+  "earnings": {
+    "title": "Earnings",
+    "subtitle": "Payouts, balance and transaction history",
+    "availableBalance": "Available balance",
+    "withdraw": "Withdraw",
+    "thisMonth": "This month",
+    "vsLastMonth": "{{sign}}{{pct, number}}% vs last month",
+    "pendingPayouts": "Pending payouts",
+    "awaiting": "{{count, number}} awaiting",
+    "transactions": "Transactions",
+    "client": "Client",
+    "date": "Date",
+    "type": "Type",
+    "amount": "Amount",
+    "paymentType": {
+      "deposit": "Deposit",
+      "balance": "Final"
+    },
+    "status": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "refunded": "Refunded",
+      "failed": "Failed"
+    },
+    "emptyTitle": "No transactions yet",
+    "emptySub": "Payments will show up here once a client pays a deposit or balance."
+  },
+  "messages": {
+    "title": "Messages",
+    "writeReply": "Write a reply…",
+    "createBooking": "Create booking",
+    "online": "Online",
+    "emptyTitle": "No conversations yet",
+    "emptySub": "Conversations start automatically once you send an offer on a client's request.",
+    "emptyThread": "Select a conversation to start chatting"
   }
 }
