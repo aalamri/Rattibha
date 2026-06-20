@@ -4,6 +4,7 @@ import { Animated, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Text } from './Text';
+import { useIsRTL } from '@/i18n/useIsRTL';
 import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
 import { radii, shadows } from '@/theme/tokens';
@@ -29,6 +30,7 @@ export function useToast() {
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const theme = useTheme();
+  const isRTL = useIsRTL();
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const counter = useRef(0);
   const insets = useSafeAreaInsets();
@@ -75,7 +77,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   borderWidth: 1,
                   borderColor: cfg.border,
                   borderRadius: radii.md,
-                  flexDirection: 'row',
+                  flexDirection: isRTL ? 'row-reverse' : 'row',
                   alignItems: 'center',
                   gap: 10,
                   paddingVertical: 12,
@@ -85,7 +87,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 },
               ]}>
               <IconComp size={20} color={cfg.iconColor} weight="fill" />
-              <Text style={{ flex: 1, fontFamily: fonts.sans.semibold, fontSize: 13.5, color: '#1a1a1a', lineHeight: 18 }}>
+              <Text style={{ flex: 1, fontFamily: isRTL ? fonts.arSans.semibold : fonts.sans.semibold, fontSize: 13.5, color: '#1a1a1a', lineHeight: 18 }}>
                 {t.message}
               </Text>
               <Pressable onPress={() => dismiss(t.id, t.anim)} hitSlop={8}>
