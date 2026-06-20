@@ -25,6 +25,7 @@ import { bidiIsolate } from '@/i18n/bidi';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
 import { type DBRequestRow } from '@/lib/db';
+import { formatDate } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { categoryColors, colors } from '@/theme/colors';
 import { useTheme } from '@/theme/ThemeContext';
@@ -176,7 +177,7 @@ export default function RequestsScreen() {
             const CategoryIcon = CATEGORY_ICONS[request.category as CategoryKey] ?? CATEGORY_ICONS.weddings;
             const tint = categoryColors[request.category as CategoryKey] ?? categoryColors.weddings;
             const cityLabel = t(`cities.${request.city}`);
-            const dateLabel = new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(request.event_date));
+            const dateLabel = formatDate(new Date(request.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
             const offerList = request.offers as unknown as { id: string; status: string }[];
             const offerCount = offerList?.length ?? 0;
             const newOffers = offerList?.filter((o) => o.status === 'pending').length ?? 0;

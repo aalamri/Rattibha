@@ -12,7 +12,7 @@ import { Text } from '@/components/ui/Text';
 import { useToast } from '@/components/ui/Toast';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { type DBOfferRow, PLANNER_SELECT } from '@/lib/db';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
@@ -79,9 +79,7 @@ export default function CheckoutScreen() {
   const balance = customerTotal - deposit;
   const reqWithDate = offer as unknown as { requests: { event_date: string } | null } | null;
   const eventDate = reqWithDate?.requests?.event_date;
-  const dateLabel = eventDate
-    ? new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(eventDate))
-    : '';
+  const dateLabel = eventDate ? formatDate(new Date(eventDate), isRTL, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
 
   const METHODS: { key: MethodKey; label: string; icon: typeof CreditCard }[] = [
     { key: 'card', label: t('checkout.methods.card'), icon: CreditCard },

@@ -13,6 +13,7 @@ import { bidiIsolate } from '@/i18n/bidi';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
 import { type DBBookingRow } from '@/lib/db';
+import { formatDate } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
 import { radii, shadows } from '@/theme/tokens';
@@ -88,7 +89,7 @@ export default function BookingsScreen() {
           const seed = plannerData?.profiles?.avatar_seed ?? 0;
           const pkgName = offer?.package ?? '—';
           const confirmed = booking.stage === 'deposit_paid' || booking.stage === 'completed';
-          const dateLabel = new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(booking.event_date));
+          const dateLabel = formatDate(new Date(booking.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
 
           return (
             <Pressable key={booking.id} onPress={() => router.push({ pathname: '/booking/[id]', params: { id: booking.id } })}>

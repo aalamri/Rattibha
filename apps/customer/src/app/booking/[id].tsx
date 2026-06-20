@@ -23,7 +23,7 @@ import { Text } from '@/components/ui/Text';
 import { bidiIsolate } from '@/i18n/bidi';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { type DBBookingRow } from '@/lib/db';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
@@ -79,7 +79,7 @@ export default function BookingDetailScreen() {
   const price = offer?.price ?? 0;
   const confirmed = booking.stage === 'deposit_paid' || booking.stage === 'completed';
   const cityLabel = plannerCity ? t(`cities.${plannerCity}`) : '';
-  const dateLabel = new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(booking.event_date));
+  const dateLabel = formatDate(new Date(booking.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
   const deposit = Math.round(price * 0.2);
   const balance = price - deposit;
 

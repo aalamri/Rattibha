@@ -22,7 +22,7 @@ import { InfoRow } from '@/components/ui/InfoRow';
 import { Section } from '@/components/ui/Section';
 import { CATEGORY_ICONS, type CategoryKey, type CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { BudgetRange, PackageTier } from '@/lib/database.types';
 
@@ -106,7 +106,7 @@ export default function SubmitQuotePage() {
   const earnings = price - fee;
   const CategoryIcon = CATEGORY_ICONS[request.category];
 
-  const eventDateLabel = request.eventDate.toLocaleDateString(i18n.language === 'ar' ? 'ar-SA' : 'en-GB', {
+  const eventDateLabel = formatDate(request.eventDate, i18n.language, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',

@@ -26,6 +26,7 @@ import { useToast } from '@/components/ui/Toast';
 import { CATEGORY_KEYS, CITY_KEYS, type CategoryKey, type CityKey } from '@/data/planners';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
+import { formatDate } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { categoryColors } from '@/theme/colors';
 import { useTheme } from '@/theme/ThemeContext';
@@ -59,14 +60,10 @@ export default function PostRequestScreen() {
   const [city, setCity] = useState<CityKey>('riyadh');
   const [cityOpen, setCityOpen] = useState(false);
   const [vision, setVision] = useState('');
-  const [eventDate, setEventDate] = useState(() => {
-    const date = new Date();
-    date.setDate(date.getDate() + 30);
-    return date;
-  });
+  const [eventDate, setEventDate] = useState(() => new Date());
   const [dateOpen, setDateOpen] = useState(false);
 
-  const dateLabel = new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(eventDate);
+  const dateLabel = formatDate(eventDate, isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
 
   async function handlePost() {
     if (!session) return;

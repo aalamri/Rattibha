@@ -13,7 +13,7 @@ import { bidiIsolate } from '@/i18n/bidi';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
 import { type DBOfferRow, PLANNER_SELECT } from '@/lib/db';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
@@ -52,9 +52,7 @@ export default function ContractScreen() {
   // Safely extract nested request fields
   const req = offer ? (offer as unknown as { requests: { category: string; city: string; event_date: string; guests: number; budget: string } | null }).requests : null;
   const cityLabel = req ? t(`cities.${req.city}`) : '';
-  const dateLabel = req
-    ? new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(req.event_date))
-    : '';
+  const dateLabel = req ? formatDate(new Date(req.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
   const eventValue = req
     ? `${t(`categories.${req.category}`)} · ${bidiIsolate(dateLabel, isRTL)} · ${bidiIsolate(t('myRequests.guests', { count: req.guests }), isRTL)}`
     : '';

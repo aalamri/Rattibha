@@ -3,3 +3,10 @@
 export function formatNumber(value: number, isRTL: boolean) {
   return value.toLocaleString(isRTL ? 'ar-SA' : 'en-US');
 }
+
+/** Date formatting locale — `ar-SA` defaults to the Hijri calendar on iOS/ICU, but this app
+ * (per CLAUDE.md, Saudi market) always shows Gregorian dates regardless of language, just with
+ * Arabic month names/numerals in RTL. The `-u-ca-gregory` extension forces that explicitly. */
+export function formatDate(date: Date, isRTL: boolean, options: Intl.DateTimeFormatOptions) {
+  return new Intl.DateTimeFormat(isRTL ? 'ar-SA-u-ca-gregory' : 'en-GB', options).format(date);
+}

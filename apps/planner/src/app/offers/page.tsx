@@ -26,7 +26,7 @@ import { Card } from '@/components/ui/Card';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import type { CategoryKey, CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { OfferStatus } from '@/lib/database.types';
 
@@ -185,7 +185,7 @@ export default function MyOffersPage() {
         <div className="grid grid-cols-2 gap-4">
           {shown.map((offer) => {
             const StatusIcon = STATUS_ICON[offer.status];
-            const eventDate = offer.eventDate.toLocaleDateString(i18n.language === 'ar' ? 'ar-SA' : 'en-GB', {
+            const eventDate = formatDate(offer.eventDate, i18n.language, {
               day: 'numeric',
               month: 'short',
               year: 'numeric',

@@ -13,7 +13,7 @@ import { Skeleton, SkeletonCard } from '@/components/ui/Skeleton';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { CATEGORY_COLORS, CATEGORY_ICONS, CATEGORY_KEYS, type CategoryKey, type CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { BudgetRange } from '@/lib/database.types';
 
@@ -56,7 +56,7 @@ function RequestCard({ request, locale }: { request: BoardRequest; locale: strin
   const CategoryIcon = CATEGORY_ICONS[request.category];
   const colors = CATEGORY_COLORS[request.category];
   const posted = postedAgoKey(request.postedHoursAgo);
-  const eventDate = request.eventDate.toLocaleDateString(locale === 'ar' ? 'ar-SA' : 'en-GB', {
+  const eventDate = formatDate(request.eventDate, locale, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
