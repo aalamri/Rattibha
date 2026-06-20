@@ -30,7 +30,8 @@ export function DateSheet({ visible, value, onSelect, onClose }: DateSheetProps)
   const isRTL = useIsRTL();
   const theme = useTheme();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
-  const locale = isRTL ? 'ar-SA' : 'en-GB';
+  // ar-SA defaults to the Hijri calendar on iOS/ICU; this app always shows Gregorian dates.
+  const locale = isRTL ? 'ar-SA-u-ca-gregory' : 'en-GB';
 
   const today = startOfDay(new Date());
   const [viewDate, setViewDate] = useState(() => new Date(value.getFullYear(), value.getMonth(), 1));

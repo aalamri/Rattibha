@@ -29,7 +29,7 @@ import { type CategoryKey } from '@/data/planners';
 import { bidiIsolate } from '@/i18n/bidi';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { type DBOfferRow, type DBRequestRow, PLANNER_SELECT } from '@/lib/db';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { categoryColors } from '@/theme/colors';
 import { useTheme } from '@/theme/ThemeContext';
@@ -90,9 +90,7 @@ export default function ProposalsScreen() {
   const cityLabel = request ? t(`cities.${request.city}`) : '';
   const CategoryIcon = request ? (CATEGORY_ICONS[request.category as CategoryKey] ?? CATEGORY_ICONS.weddings) : CATEGORY_ICONS.weddings;
   const categoryTint = request ? (categoryColors[request.category as CategoryKey] ?? categoryColors.weddings) : categoryColors.weddings;
-  const dateLabel = request
-    ? new Intl.DateTimeFormat(isRTL ? 'ar-SA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(request.event_date))
-    : '';
+  const dateLabel = request ? formatDate(new Date(request.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
 
   const SORTS: { key: SortKey; label: string }[] = [
     { key: 'best', label: t('proposals.sortBest') },

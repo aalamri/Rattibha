@@ -35,7 +35,7 @@ import { InfoRow } from '@/components/ui/InfoRow';
 import { Section } from '@/components/ui/Section';
 import type { CategoryKey, CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { DealStatus, PackageTier } from '@/lib/database.types';
 
@@ -137,7 +137,7 @@ export default function DealPage() {
     return <DashboardShell title={t('deal.breadcrumb')}><div className="p-7" /></DashboardShell>;
   }
 
-  const eventDate = deal.eventDate.toLocaleDateString(i18n.language === 'ar' ? 'ar-SA' : 'en-GB', {
+  const eventDate = formatDate(deal.eventDate, i18n.language, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',

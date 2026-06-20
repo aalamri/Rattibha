@@ -13,7 +13,7 @@ import { Card } from '@/components/ui/Card';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import type { CategoryKey, CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
-import { formatNumber } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { BookingStage, PaymentStatus, PaymentType } from '@/lib/database.types';
 
@@ -145,7 +145,7 @@ export default function PlannerBookingsPage() {
       ) : (
       <div className="grid grid-cols-2 gap-4.5">
         {shown.map((booking) => {
-          const eventDate = booking.eventDate.toLocaleDateString(i18n.language === 'ar' ? 'ar-SA' : 'en-GB', {
+          const eventDate = formatDate(booking.eventDate, i18n.language, {
             day: 'numeric',
             month: 'short',
             year: 'numeric',
