@@ -246,5 +246,81 @@
     "quoteSent": "تم إرسال العرض! ستُخطَر عندما يرد العميل.",
     "countersigned": "تم توقيع العقد — في انتظار وديعة العميل.",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "overview": {
+    "title": "نظرة عامة",
+    "subtitle": "نشاطك التجاري في نظرة واحدة",
+    "kpis": {
+      "newLeads": "طلبات جديدة",
+      "activeBookings": "حجوزات نشطة",
+      "revenue": "الأرباح ({{month}})",
+      "avgRating": "متوسط التقييم",
+      "reviewsCount": "{{count, number}} تقييم"
+    },
+    "revenueCard": {
+      "title": "الأرباح",
+      "subtitle": "آخر ٦ أشهر"
+    },
+    "activity": {
+      "title": "النشاط الأخير",
+      "paymentReceived": "تم استلام دفعة من {{client}}",
+      "bookingConfirmed": "تم تأكيد حجز جديد",
+      "empty": "لا يوجد نشاط حتى الآن"
+    },
+    "newRequests": {
+      "title": "طلبات مفتوحة جديدة",
+      "viewAll": "عرض الكل ←",
+      "empty": "لا توجد طلبات مفتوحة حاليًا"
+    },
+    "upcoming": {
+      "title": "المناسبات القادمة",
+      "viewAll": "عرض الكل ←",
+      "empty": "لا توجد مناسبات قادمة"
+    }
+  },
+  "calendar": {
+    "title": "التقويم",
+    "subtitle": "حجوزاتك ومواعيد مناسباتك",
+    "thisMonth": "هذا الشهر",
+    "addEvent": "إضافة مناسبة / حجب تاريخ",
+    "empty": "لا توجد مناسبات هذا الشهر",
+    "prevMonth": "الشهر السابق",
+    "nextMonth": "الشهر التالي"
+  },
+  "earnings": {
+    "title": "الأرباح",
+    "subtitle": "المدفوعات والرصيد وسجل المعاملات",
+    "availableBalance": "الرصيد المتاح",
+    "withdraw": "سحب",
+    "thisMonth": "هذا الشهر",
+    "vsLastMonth": "{{sign}}{{pct, number}}٪ عن الشهر الماضي",
+    "pendingPayouts": "مدفوعات قيد الانتظار",
+    "awaiting": "{{count, number}} قيد الانتظار",
+    "transactions": "المعاملات",
+    "client": "العميل",
+    "date": "التاريخ",
+    "type": "النوع",
+    "amount": "المبلغ",
+    "paymentType": {
+      "deposit": "العربون",
+      "balance": "الدفعة النهائية"
+    },
+    "status": {
+      "paid": "مدفوع",
+      "pending": "قيد الانتظار",
+      "refunded": "مُسترد",
+      "failed": "فاشل"
+    },
+    "emptyTitle": "لا توجد معاملات بعد",
+    "emptySub": "ستظهر المدفوعات هنا بعد أن يدفع العميل العربون أو المتبقي."
+  },
+  "messages": {
+    "title": "الرسائل",
+    "writeReply": "اكتب ردًا…",
+    "createBooking": "إنشاء حجز",
+    "online": "متصل",
+    "emptyTitle": "لا توجد محادثات بعد",
+    "emptySub": "تبدأ المحادثات تلقائيًا بعد إرسال عرض على طلب أحد العملاء.",
+    "emptyThread": "اختر محادثة لبدء الدردشة"
   }
 }
