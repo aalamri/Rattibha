@@ -97,7 +97,7 @@ export function DateSheet({ visible, value, onSelect, onClose }: DateSheetProps)
             </Pressable>
           </View>
 
-          <View style={{ flexDirection: 'row', paddingHorizontal: 22 }}>
+          <View style={[row, { paddingHorizontal: 22 }]}>
             {weekdayLabels.map((label, i) => (
               <View key={i} style={{ flex: 1, alignItems: 'center', paddingBottom: 8 }}>
                 <Text style={{ fontFamily: isRTL ? fonts.arSans.medium : fonts.sans.medium, fontSize: 11.5, color: theme.fg3 }}>{label}</Text>
@@ -106,7 +106,7 @@ export function DateSheet({ visible, value, onSelect, onClose }: DateSheetProps)
           </View>
 
           <ScrollView contentContainerStyle={{ paddingHorizontal: 22 }}>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <View style={[row, { flexWrap: 'wrap' }]}>
               {cells.map((date, i) => {
                 if (!date) return <View key={i} style={{ width: '14.2857%', aspectRatio: 1 }} />;
                 const disabled = date < today;

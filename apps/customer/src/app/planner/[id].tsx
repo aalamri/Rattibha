@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, ChatCircle, Crown, Heart, HeartStraight, MapPin, PaperPlaneTilt, SealCheck, Storefront } from 'phosphor-react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,6 +31,8 @@ export default function PlannerScreen() {
   const [loading, setLoading] = useState(true);
   const [fav, setFav] = useState(false);
   const [pkg, setPkg] = useState(0);
+  const galleryScrollRef = useRef<ScrollView>(null);
+  const servicesScrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -45,6 +47,15 @@ export default function PlannerScreen() {
       });
 
   }, [id]);
+
+  // Horizontal ScrollViews always anchor scroll position 0 at their physical
+  // left edge — row-reverse only mirrors item order, so in RTL the first
+  // item (rightmost) starts off-screen unless we explicitly scroll there.
+  useEffect(() => {
+    if (!isRTL || !planner) return;
+    galleryScrollRef.current?.scrollToEnd({ animated: false });
+    servicesScrollRef.current?.scrollToEnd({ animated: false });
+  }, [isRTL, planner]);
 
   if (loading) return null;
   if (!planner) return <PlaceholderScreen icon={Storefront} title={t('placeholders.planner')} />;
@@ -69,7 +80,7 @@ export default function PlannerScreen() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <ArrowLeft size={19} color={theme.fg1} />
+              <ArrowLeft size={19} color={theme.brand} style={isRTL ? { transform: [{ scaleX: -1 }] } : undefined} />
             </Pressable>
             <Pressable
               onPress={() => setFav((f) => !f)}
@@ -124,11 +135,11 @@ export default function PlannerScreen() {
 
           {/* gallery */}
           <ScrollView
+            ref={galleryScrollRef}
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={[row, { gap: 9, paddingTop: 14 }]}
-            style={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
-            {[1, 2, 3, 4].map((i) => (
+            contentContainerStyle={{ flexDirection: 'row', gap: 9, paddingTop: 14 }}>
+            {(isRTL ? [4, 3, 2, 1] : [1, 2, 3, 4]).map((i) => (
               <Photo key={i} seed={planner.seed + i} style={{ width: 108, height: 78, borderRadius: radii.sm }} />
             ))}
           </ScrollView>
@@ -140,11 +151,11 @@ export default function PlannerScreen() {
                 {t('planner.services')}
               </Text>
               <ScrollView
+                ref={servicesScrollRef}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={[row, { gap: 11, paddingTop: 11, paddingBottom: 2 }]}
-                style={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
-                {planner.services.map((service, i) => (
+                contentContainerStyle={{ flexDirection: 'row', gap: 11, paddingTop: 11, paddingBottom: 2 }}>
+                {(isRTL ? [...planner.services].reverse() : planner.services).map((service, i) => (
                   <ServiceCard key={i} service={service} />
                 ))}
               </ScrollView>

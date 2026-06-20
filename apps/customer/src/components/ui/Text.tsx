@@ -1,4 +1,4 @@
-import { Text as RNText, type TextProps } from 'react-native';
+import { StyleSheet, Text as RNText, type TextProps, type TextStyle } from 'react-native';
 
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useTheme } from '@/theme/ThemeContext';
@@ -10,10 +10,26 @@ export interface AppTextProps extends TextProps {
   color?: string;
 }
 
+/**
+ * Many screens pass a one-off `lineHeight` tuned by eye for the English copy
+ * (e.g. `style={{ lineHeight: 28 }}`). Those values are routinely too tight
+ * for Arabic — see the comment in typography.ts — so in RTL we drop any
+ * caller-provided `lineHeight` and keep the font-appropriate one from
+ * `getTextStyle`. Everything else in the override (color, textAlign, etc.)
+ * still applies normally.
+ */
+function dropLineHeightOverride(style: TextProps['style'], isRTL: boolean) {
+  if (!isRTL || !style) return style;
+  const flat = StyleSheet.flatten(style) as TextStyle;
+  if (flat.lineHeight === undefined) return style;
+  const { lineHeight: _omit, ...rest } = flat;
+  return rest;
+}
+
 export function Text({ variant = 'body', color, style, ...rest }: AppTextProps) {
   const isRTL = useIsRTL();
   const base = getTextStyle(variant, isRTL);
-  return <RNText {...rest} style={[base, color ? { color } : null, style]} />;
+  return <RNText {...rest} style={[base, color ? { color } : null, dropLineHeightOverride(style, isRTL)]} />;
 }
 
 /**
@@ -27,7 +43,11 @@ export function AccentText({ variant = 'display', style, ...rest }: AppTextProps
   return (
     <RNText
       {...rest}
-      style={[base, { fontFamily: getDisplayItalicFont('semibold', isRTL), color: theme.brand }, style]}
+      style={[
+        base,
+        { fontFamily: getDisplayItalicFont('semibold', isRTL), color: theme.brand },
+        dropLineHeightOverride(style, isRTL),
+      ]}
     />
   );
 }

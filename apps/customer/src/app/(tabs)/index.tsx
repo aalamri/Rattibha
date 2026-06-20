@@ -14,7 +14,7 @@ import {
   SlidersHorizontal,
   type Icon,
 } from 'phosphor-react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -58,6 +58,19 @@ export default function DiscoverScreen() {
   const isRTL = useIsRTL();
   const router = useRouter();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
+  const categoriesScrollRef = useRef<ScrollView>(null);
+  const featuredScrollRef = useRef<ScrollView>(null);
+  // flexDirection: 'row-reverse' directly on a horizontal ScrollView's content
+  // can lay children out at negative x-offsets that scrollTo/scrollToEnd can
+  // never reach — the row visually "disappears" with no valid scroll position
+  // that reveals it. Keeping the ScrollView itself LTR and reversing the
+  // array for RTL avoids that entirely while still showing the first item
+  // (weddings) at the right edge once scrolled to the end.
+  const orderedCategoryKeys = isRTL ? [...CATEGORY_KEYS].reverse() : CATEGORY_KEYS;
+
+  useEffect(() => {
+    if (isRTL) categoriesScrollRef.current?.scrollToEnd({ animated: false });
+  }, [isRTL]);
 
   const PAGE_SIZE = 20;
   const [city, setCity] = useState<CityKey | undefined>(undefined);
@@ -98,8 +111,13 @@ export default function DiscoverScreen() {
   const inCategory = (p: Planner) => !category || p.tags.some((tag) => CATEGORY_LABELS[category].includes(tag));
   const visible = (p: Planner) => inCity(p) && inCategory(p);
 
-  const featured = planners.filter((p) => p.premium && visible(p));
+  const featuredLtr = planners.filter((p) => p.premium && visible(p));
+  const featured = isRTL ? [...featuredLtr].reverse() : featuredLtr;
   const nearby = planners.filter(visible);
+
+  useEffect(() => {
+    if (isRTL && featured.length > 0) featuredScrollRef.current?.scrollToEnd({ animated: false });
+  }, [isRTL, featured.length]);
 
   const openPlanner = (planner: Planner) => router.push(`/planner/${planner.id}`);
   const cityLabel = city ? t(`cities.${city}`) : t('cities.all');
@@ -241,11 +259,11 @@ export default function DiscoverScreen() {
 
       {/* categories */}
       <ScrollView
+        ref={categoriesScrollRef}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={[row, { gap: 9, paddingHorizontal: 18, paddingTop: 12, paddingBottom: 6 }]}
-        style={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
-        {CATEGORY_KEYS.map((key) => {
+        contentContainerStyle={{ flexDirection: 'row', gap: 9, paddingHorizontal: 18, paddingTop: 12, paddingBottom: 6 }}>
+        {orderedCategoryKeys.map((key) => {
           const on = category === key;
           const c = categoryColors[key];
           const IconComp = CATEGORY_ICONS[key];
@@ -292,10 +310,10 @@ export default function DiscoverScreen() {
         </ScrollView>
       ) : (
         <ScrollView
+          ref={featuredScrollRef}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={[row, { gap: 13, paddingHorizontal: 18, paddingVertical: 4 }]}
-          style={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
+          contentContainerStyle={{ flexDirection: 'row', gap: 13, paddingHorizontal: 18, paddingVertical: 4 }}>
           {featured.map((p) => (
             <FeaturedCard key={p.id} planner={p} onPress={openPlanner} />
           ))}

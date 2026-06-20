@@ -138,7 +138,7 @@ export default function PostRequestScreen() {
             {/* category grid */}
             <View>
               <Text style={labelFont}>{t('postRequest.whatPlanning')}</Text>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 9 }}>
+              <View style={[row, { flexWrap: 'wrap', gap: 9 }]}>
                 {CATEGORY_KEYS.map((key) => {
                   const on = category === key;
                   const c = categoryColors[key];

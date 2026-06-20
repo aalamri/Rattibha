@@ -77,12 +77,23 @@ export function getTextStyle(variant: TypographyVariant, isArabic: boolean): Tex
   // the display group only exposes semibold/bold (matches .display/.h1-.h3 usage).
   const weight = spec.family === 'display' && !isArabic && spec.weight !== 'bold' ? 'semibold' : spec.weight;
 
+  // El Messiri/Tajawal's diacritics (dots, tanween marks) sit further from the
+  // baseline than Latin metrics assume — line-heights tuned for the English
+  // type scale clip them, which can make adjacent letters visually merge
+  // (e.g. a clipped ن + ش can read as a single س). Arabic gets extra headroom,
+  // most needed for the larger 'display' family used by every page title.
+  const arabicLineHeightBoost = isArabic ? (spec.family === 'display' ? 1.35 : 1.08) : 1;
+
   return {
     fontFamily: (group as Record<Weight, string>)[weight],
     fontSize,
-    lineHeight: Math.round(fontSize * spec.lineHeight),
+    lineHeight: Math.round(fontSize * spec.lineHeight * arabicLineHeightBoost),
     letterSpacing: Math.round(letterSpacingEm * fontSize * 100) / 100,
     color: theme[spec.color] as string,
+    // Don't rely on inherited CSS `direction` for alignment — react-native-web
+    // doesn't reliably propagate document.dir down through arbitrary Views, so
+    // every Text needs its own explicit start-edge alignment for Arabic.
+    textAlign: isArabic ? 'right' : 'left',
     ...(spec.uppercase ? { textTransform: 'uppercase' as const } : {}),
   };
 }
