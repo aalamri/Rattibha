@@ -1,0 +1,242 @@
+<!doctype html>
+<!-- @dsCard group="UI Kit — App" name="Customer app · Offers inbox" subtitle="Compare competing planner quotes" viewport="460x880" -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rattibha · Customer App</title>
+<link rel="icon" type="image/png" href="../../assets/app-icon.png">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: #2a1426; display: grid; place-items: center; overflow: hidden;
+    font-family: 'Poppins', sans-serif; }
+  #stage { transform-origin: center center; }
+  i[class^="ph"], i[class*=" ph"] { line-height: 1; display: inline-block; }
+</style>
+</head>
+<body style="background-color: rgb(0, 0, 0)">
+<div id="stage"><div id="root"></div></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="lang.jsx"></script>
+<script type="text/babel" src="screens.jsx"></script>
+<script type="text/babel" src="screens2.jsx"></script>
+<script type="text/babel" src="screens3.jsx"></script>
+<script type="text/babel" src="screens4.jsx"></script>
+<script type="text/babel" src="screens5.jsx"></script>
+<script type="text/babel" src="screens6.jsx"></script>
+
+<script type="text/babel">
+const { useState } = React;
+
+function ScreenShell({ children, footer, topInset = true }) {
+  return (
+    <div style={{ height: '100%', position: 'relative', overflow: 'hidden', background: C.cream }}>
+      <div style={{ position: 'absolute', inset: 0, overflowY: 'auto', paddingTop: topInset ? 50 : 0 }}>{children}</div>
+      {footer && <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 30 }}>{footer}</div>}
+    </div>
+  );
+}
+
+function BookingsScreen({ go }) {
+  const items = [
+    { p: PLANNERS[0], pkg: 'Signature Wedding', date: '14 Mar 2026', price: 18000, status: 'Confirmed', color: C.emerald, bg: C.emerald100 },
+    { p: PLANNERS[2], pkg: 'Annual Celebration', date: '02 May 2026', price: 25000, status: 'Pending', color: '#8a5d14', bg: '#F7E8C9' },
+  ];
+  return (
+    <div style={{ paddingBottom: 100 }}>
+      <Header title="My bookings" />
+      <div style={{ padding: '0 18px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {items.map((b, i) => (
+          <button key={i} onClick={() => go('bookingDetail', { p: b.p, pkg: b.pkg, date: b.date, price: b.price, status: b.status })} style={{ all: 'unset', cursor: 'pointer' }}>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 18, padding: 12,
+              display: 'flex', gap: 12, boxShadow: '0 6px 18px -12px rgba(43,34,51,0.18)' }}>
+              <Photo seed={b.p.seed} style={{ width: 70, height: 70, borderRadius: 13, flexShrink: 0 }} />
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <span style={{ fontFamily: DISPLAY, fontSize: 18, fontWeight: 600, color: C.ink }}>{trPlanner(b.p, 'name')}</span>
+                  <Badge bg={b.bg} fg={b.color}>{tr(b.status)}</Badge>
+                </div>
+                <div style={{ fontFamily: SANS, fontSize: 12.5, color: C.fg2, marginTop: 3 }}>{b.pkg}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: SANS, fontSize: 12.5,
+                  color: C.fg3, marginTop: 6 }}>
+                  <i className="ph ph-calendar-blank" style={{ fontSize: 14 }} />{b.date}
+                </div>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProfileScreen({ go }) {
+  const rows = [
+    { icon: 'ph-heart', label: 'Saved planners', note: '8', go: 'saved' },
+    { icon: 'ph-credit-card', label: 'Payment methods' },
+    { icon: 'ph-bell', label: 'Notifications', go: 'notifications' },
+    { icon: 'ph-gear', label: 'Settings' },
+    { icon: 'ph-question', label: 'Help & support' },
+  ];
+  return (
+    <div style={{ paddingBottom: 100 }}>
+      <Header title="Profile" />
+      <div style={{ padding: '0 18px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, background: C.surface,
+          border: `1px solid ${C.border}`, borderRadius: 20, padding: 16,
+          boxShadow: '0 8px 22px -14px rgba(43,34,51,0.2)' }}>
+          <Avatar seed={3} size={58} initials="N" />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: DISPLAY, fontSize: 22, fontWeight: 600, color: C.ink }}>Nada Al-Rashid</div>
+            <div style={{ fontFamily: SANS, fontSize: 13, color: C.fg2 }}>nada@email.com</div>
+          </div>
+          <i className="ph ph-pencil-simple" style={{ fontSize: 19, color: C.brand }} />
+        </div>
+
+        <div style={{ display: 'flex', gap: 12, marginTop: 14 }}>
+          <Stat n="3" label={tr('Events planned')} />
+          <Stat n="8" label={tr('Saved')} />
+          <Stat n="4.9" label={tr('Avg rating')} />
+        </div>
+
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 18, marginTop: 14,
+          overflow: 'hidden' }}>
+          {rows.map((r, i) => (
+            <div key={i} onClick={() => r.go && go(r.go)} style={{ display: 'flex', alignItems: 'center', gap: 13, padding: '15px 16px',
+              cursor: r.go ? 'pointer' : 'default',
+              borderBottom: i < rows.length - 1 ? `1px solid ${C.border}` : 'none' }}>
+              <i className={`ph ${r.icon}`} style={{ fontSize: 20, color: C.plum700, width: 22 }} />
+              <span style={{ flex: 1, fontFamily: SANS, fontSize: 14.5, color: C.ink }}>{tr(r.label)}</span>
+              {r.note && <span style={{ fontFamily: SANS, fontSize: 13, color: C.fg3 }}>{r.note}</span>}
+              <i className="ph ph-caret-right" style={{ fontSize: 15, color: C.fg3 }} />
+            </div>
+          ))}
+        </div>
+
+        <div onClick={() => go('login')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: 8, marginTop: 16, padding: '14px', cursor: 'pointer', color: C.brand, fontFamily: SANS,
+          fontSize: 14, fontWeight: 700 }}>
+          <i className="ph ph-sign-out" style={{ fontSize: 18 }} />{tr('Sign out')}
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stat({ n, label }) {
+  return (
+    <div style={{ flex: 1, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 16,
+      padding: '13px 10px', textAlign: 'center' }}>
+      <div style={{ fontFamily: DISPLAY, fontSize: 24, fontWeight: 700, color: C.brand }}>{n}</div>
+      <div style={{ fontFamily: SANS, fontSize: 11.5, color: C.fg2, marginTop: 1 }}>{label}</div>
+    </div>
+  );
+}
+
+const TABS = ['discover', 'requests', 'bookings', 'messages', 'profile'];
+
+function App() {
+  const initial = 'proposals';
+  const [stack, setStack] = useState([{ s: initial, d: null }]);
+  const [cat, setCat] = useState(null);
+  const [city, setCity] = useState('All Saudi Arabia');
+  const [lang, setLangState] = useState(() => { try { return localStorage.getItem('rtb_lang') || 'en'; } catch(e){ return 'en'; } });
+  window.__lang = lang;
+  const setLang = (l) => { window.__lang = l; try { localStorage.setItem('rtb_lang', l); } catch(e){} setLangState(l); };
+  const [favs, setFavs] = useState({});
+  const [pkg, setPkg] = useState(0);
+  const top = stack[stack.length - 1];
+
+  const go = (s, d = null) => {
+    if (TABS.includes(s)) { setStack([{ s, d }]); }
+    else { if (s === 'planner') setPkg(0); setStack(st => [...st, { s, d }]); }
+  };
+  const back = () => setStack(st => st.length > 1 ? st.slice(0, -1) : st);
+
+  let content, footer = null;
+  const tab = TABS.includes(top.s) ? top.s : null;
+
+  switch (top.s) {
+    case 'discover': content = <DiscoverScreen go={go} cat={cat} setCat={setCat} city={city} setCity={setCity} lang={lang} setLang={setLang} />; break;
+    case 'requests': content = <RequestsScreen go={go} />; break;
+    case 'bookings': content = <BookingsScreen go={go} />; break;
+    case 'messages': content = <MessagesScreen go={go} />; break;
+    case 'profile': content = <ProfileScreen go={go} />; break;
+    case 'onboarding': content = <OnboardingScreen go={go} />; break;
+    case 'login': content = <LoginScreen go={go} />; break;
+    case 'register': content = <RegisterScreen go={go} back={back} />; break;
+    case 'forgot': content = <ForgotPasswordScreen go={go} back={back} />; break;
+    case 'otp': content = <OTPVerificationScreen go={go} back={back} />; break;
+    case 'search': content = <SearchScreen go={go} back={back} />; break;
+    case 'notifications': content = <NotificationsScreen go={go} back={back} />; break;
+    case 'saved': content = <SavedScreen go={go} back={back} />; break;
+    case 'bookingDetail': content = <BookingDetailScreen data={top.d} go={go} back={back} />; break;
+    case 'planner':
+      content = <PlannerScreen p={top.d} go={go} back={back} pkg={pkg} setPkg={setPkg}
+        fav={!!favs[top.d.id]} toggleFav={() => setFavs(f => ({ ...f, [top.d.id]: !f[top.d.id] }))} />;
+      footer = <PlannerFooter p={top.d} pkg={pkg} go={go} />; break;
+    case 'booking':
+      content = <BookingScreen data={top.d} go={go} back={back} />;
+      footer = <BookingFooter data={top.d} go={go} />; break;
+    case 'request':
+      content = <RequestScreen data={top.d} go={go} back={back} />;
+      footer = <RequestFooter data={top.d} go={go} />; break;
+    case 'postRequest':
+      content = <PostRequestScreen data={top.d} go={go} back={back} />;
+      footer = <PostRequestFooter go={go} />; break;
+    case 'proposals': content = <ProposalsScreen data={top.d} go={go} back={back} />; break;
+    case 'requestSent': content = <RequestSentScreen data={top.d} go={go} />; break;
+    case 'offer':
+      content = <OfferScreen data={top.d} go={go} back={back} />;
+      footer = <OfferFooter data={top.d} go={go} />; break;
+    case 'contract':
+      content = <ContractScreen data={top.d} go={go} back={back} />;
+      footer = <ContractFooter data={top.d} go={go} />; break;
+    case 'checkout':
+      content = <CheckoutScreen data={top.d} go={go} back={back} />;
+      footer = <CheckoutFooter data={top.d} go={go} />; break;
+    case 'review':
+      content = <ReviewScreen data={top.d} go={go} back={back} />;
+      footer = <ReviewFooter go={go} />; break;
+    case 'confirm': content = <ConfirmScreen data={top.d} go={go} />; break;
+    case 'chat': content = <ChatScreen p={top.d} back={back} />; break;
+    default: content = <DiscoverScreen go={go} cat={cat} setCat={setCat} city={city} setCity={setCity} lang={lang} setLang={setLang} />;
+  }
+
+  // Tab screens & detail screens share the bottom nav except chat/booking/confirm/planner flows
+  const showNav = tab !== null;
+  const fullBleed = top.s === 'chat' || top.s === 'onboarding' || top.s === 'login' || top.s === 'register' || top.s === 'forgot' || top.s === 'otp' || top.s === 'search' || top.s === 'requestSent'; // manage own layout
+
+  return (
+    <IOSDevice>
+      <div dir={lang === 'ar' ? 'rtl' : 'ltr'} style={{ height: '100%', fontFamily: lang === 'ar' ? "'Tajawal','Poppins',sans-serif" : undefined }}>
+      {fullBleed ? content : (
+        <ScreenShell topInset={top.s !== 'planner'} footer={footer || (showNav ? <BottomNav tab={tab} go={go} /> : null)}>
+          {content}
+        </ScreenShell>
+      )}
+      </div>
+    </IOSDevice>
+  );
+}
+
+function fit() {
+  const stage = document.getElementById('stage');
+  const s = Math.min(window.innerWidth / 402, window.innerHeight / 874, 1) * 0.96;
+  stage.style.transform = `scale(${s})`;
+}
+window.addEventListener('resize', fit);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+setTimeout(fit, 50);
+</script>
+</body>
+</html>

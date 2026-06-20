@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/**
+ * Rattibha design tokens — ported from /colors_and_type.css and the customer
+ * app's theme/colors.ts. Keep in sync.
+ */
+@theme {
+  /* Royal Purple — primary brand */
+  --color-purple-50: #F2EAF7;
+  --color-purple-100: #E4D4EF;
+  --color-purple-200: #C9A9DE;
+  --color-purple-300: #A875C9;
+  --color-purple-400: #7E3FAE;
+  --color-purple-500: #4B0082;
+  --color-purple-600: #3D0069;
+  --color-purple-700: #2E014F;
+  --color-purple-800: #21013A;
+
+  /* Soft Gold — accent */
+  --color-gold-200: #F2E2A6;
+  --color-gold-300: #EBD083;
+  --color-gold-400: #E3BE55;
+  --color-gold-500: #DAA520;
+  --color-gold-600: #B5881A;
+
+  /* Lavender — secondary */
+  --color-lavender-50: #F4EFF9;
+  --color-lavender-100: #EAE2F4;
+  --color-lavender-200: #D8C9E8;
+  --color-lavender-300: #B6A1D4;
+  --color-lavender-400: #9C82C2;
+
+  /* Plum / ink */
+  --color-plum-900: #2B2233;
+  --color-plum-800: #352A41;
+  --color-plum-700: #41324F;
+  --color-plum-600: #574667;
+  --color-plum-500: #6E5C80;
+
+  /* Emerald — success */
+  --color-emerald-100: #DCEFE4;
+  --color-emerald-500: #2E9E68;
+  --color-emerald-600: #1F7B4F;
+
+  /* Celebration accents — category tags */
+  --color-coral-100: #F7E0D8;
+  --color-coral-500: #C9663F;
+  --color-coral-600: #A84E2C;
+  --color-marigold-100: #F6E7C4;
+  --color-marigold-500: #D4992F;
+  --color-marigold-600: #B27C1E;
+  --color-grape-100: #EADFF7;
+  --color-grape-500: #7B4FB0;
+  --color-grape-600: #623C90;
+  --color-sky-100: #D9E8F5;
+  --color-sky-500: #3E7EB0;
+  --color-sky-600: #2C6390;
+
+  /* Neutrals */
+  --color-cream: #FAF7F2;
+  --color-ivory: #FFFFFF;
+  --color-warm-50: #F4F0EA;
+  --color-warm-100: #ECE6DE;
+  --color-warm-200: #E0D8CE;
+  --color-warm-300: #C9BFB3;
+  --color-warm-400: #A99E92;
+  --color-warm-500: #847A70;
+  --color-warm-600: #635A52;
+  --color-warm-700: #423B35;
+
+  /* Semantic roles */
+  --color-bg-app: #F7F4FA;
+  --color-bg-canvas: var(--color-cream);
+  --color-bg-surface: var(--color-ivory);
+  --color-bg-sunken: var(--color-warm-50);
+  --color-bg-blush: var(--color-purple-50);
+
+  --color-fg1: var(--color-plum-900);
+  --color-fg2: #5C5266;
+  --color-fg3: #877E92;
+  --color-fg-on-brand: #FBF7FF;
+
+  --color-brand: var(--color-purple-500);
+  --color-brand-hover: var(--color-purple-600);
+  --color-brand-press: var(--color-purple-700);
+
+  --color-border: #ECE4F1;
+  --color-border-strong: #DCD0E4;
+
+  --color-success: var(--color-emerald-500);
+  --color-success-bg: var(--color-emerald-100);
+  --color-warning: #C9871F;
+  --color-warning-bg: #F6E8C9;
+  --color-danger: #C24436;
+  --color-danger-bg: #F6DED9;
+
+  /* Radii — cards 20, buttons/inputs 14 */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+
+  /* Purple-tinted shadows */
+  --shadow-card: 0 6px 20px -16px rgba(43, 34, 51, 0.3);
+  --shadow-sm: 0 2px 6px -2px rgba(43, 34, 51, 0.07);
+  --shadow-brand: 0 8px 18px -10px rgba(91, 44, 131, 0.5);
+  --shadow-gold: 0 6px 16px -6px rgba(218, 165, 32, 0.5);
+
+  /* Fonts */
+  --font-display: var(--font-playfair), var(--font-el-messiri), serif;
+  --font-sans: var(--font-poppins), var(--font-tajawal), system-ui, sans-serif;
+  --font-display-ar: var(--font-el-messiri), serif;
+  --font-sans-ar: var(--font-tajawal), system-ui, sans-serif;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-sans-ar);
+}
+
+body {
+  background: var(--color-bg-app);
+  color: var(--color-fg1);
+  font-family: var(--font-sans);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/*
+ * Dark mode — overrides the semantic surface/text/border/status variables
+ * only (raw palette tokens like --color-purple-500 stay the same; brand
+ * hues are lifted a step lighter here so they keep contrast on dark bg).
+ * Toggled by adding/removing `.dark` on <html> — see ThemeProvider.
+ */
+.dark {
+  --color-bg-app: #15121B;
+  --color-bg-canvas: #18141D;
+  --color-bg-surface: #221C2B;
+  --color-bg-sunken: #2B2435;
+  --color-bg-blush: #2E2238;
+
+  --color-fg1: #F3EEF7;
+  --color-fg2: #C7BDD1;
+  --color-fg3: #8E8398;
+  --color-fg-on-brand: #FBF7FF;
+
+  --color-brand: var(--color-purple-300);
+  --color-brand-hover: var(--color-purple-200);
+  --color-brand-press: var(--color-lavender-300);
+
+  --color-border: #372E42;
+  --color-border-strong: #4A3F56;
+
+  --color-success: #4FBE85;
+  --color-success-bg: #1C3A2A;
+  --color-warning: #E0AE4C;
+  --color-warning-bg: #3D3217;
+  --color-danger: #E3766A;
+  --color-danger-bg: #3D2220;
+}

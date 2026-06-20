@@ -1,0 +1,250 @@
+{
+  "common": {
+    "appName": "رتّبها",
+    "sar": "ر.س",
+    "pro": "احترافي",
+    "searchPlaceholder": "بحث…",
+    "guests": "ضيف",
+    "offers": "عروض",
+    "toggleLanguage": "تغيير اللغة",
+    "toggleAppearance": "تغيير المظهر",
+    "appearance": {
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "النظام"
+    },
+    "notifications": "الإشعارات",
+    "budgets": {
+      "under10": "< ١٠ آلاف",
+      "10to20": "١٠–٢٠ ألف",
+      "20to35": "٢٠–٣٥ ألف",
+      "over35": "+٣٥ ألف"
+    },
+    "hoursAgo": "منذ {{count, number}} س",
+    "daysAgo": "منذ {{count, number}} يوم"
+  },
+  "auth": {
+    "title": "مرحبًا بعودتك",
+    "subtitle": "سجّل الدخول إلى لوحة تحكم منظّم رتّبها",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جارٍ تسجيل الدخول…",
+    "signOut": "تسجيل الخروج",
+    "error": "بريد إلكتروني أو كلمة مرور غير صحيحة. جرّب حساب التجربة: planner@lumiere-events.sa / password123"
+  },
+  "nav": {
+    "overview": "نظرة عامة",
+    "openRequests": "الطلبات المفتوحة",
+    "myOffers": "عروضي",
+    "bookings": "الحجوزات",
+    "calendar": "التقويم",
+    "messages": "الرسائل",
+    "earnings": "الأرباح",
+    "profile": "الملف التعريفي"
+  },
+  "cities": {
+    "all": "كل السعودية",
+    "riyadh": "الرياض",
+    "jeddah": "جدة",
+    "makkah": "مكة المكرمة",
+    "madinah": "المدينة المنورة",
+    "dammam": "الدمام",
+    "khobar": "الخبر",
+    "dhahran": "الظهران",
+    "taif": "الطائف",
+    "tabuk": "تبوك",
+    "abha": "أبها",
+    "al_ahsa": "الأحساء",
+    "buraidah": "بريدة",
+    "yanbu": "ينبع"
+  },
+  "categories": {
+    "weddings": "عرس",
+    "birthdays": "عيد ميلاد",
+    "engagements": "خطوبة",
+    "corporate": "شركات",
+    "galas": "حفل كبير"
+  },
+  "openRequests": {
+    "title": "الطلبات المفتوحة",
+    "subtitle": "طلبات جديدة من العملاء يمكنك تقديم عرض عليها",
+    "scopeBanner": "عرض الطلبات في <bold>{{scope}}</bold>",
+    "scopeNote": "تستقبل عروضًا من عملاء في مدينتك",
+    "scopeCity": "{{city}}",
+    "scopeAll": "كل السعودية",
+    "open": "مفتوح",
+    "allCategories": "الكل",
+    "sendQuote": "إرسال عرض",
+    "postedAgo": "{{time}}",
+    "emptyTitle": "لا توجد طلبات مفتوحة هنا حتى الآن",
+    "emptyBodyCity": "لا توجد طلبات جديدة في مدينتك الآن. بدّل إلى كل السعودية لرؤية المزيد، أو تحقق لاحقًا.",
+    "emptyBodyAll": "لا توجد طلبات مفتوحة تطابق هذا التصفية الآن. تحقق لاحقًا.",
+    "refresh": "تحديث"
+  },
+  "sidebar": {
+    "navLabel": "التنقل الرئيسي",
+    "boostTitle": "وسّع نطاق وصولك",
+    "boostBody": "أبرز استوديوهك لـ ٣ أضعاف عدد العملاء.",
+    "upgrade": "ترقية"
+  },
+  "quote": {
+    "breadcrumb": "الطلبات المفتوحة / إرسال عرض",
+    "askQuestion": "اطرح سؤالًا",
+    "clientRequest": "طلب العميل",
+    "posted": "نُشر",
+    "offersSoFar": "عروض حتى الآن",
+    "eventType": "نوع المناسبة",
+    "date": "التاريخ",
+    "guests": "الضيوف",
+    "city": "المدينة",
+    "clientBudget": "ميزانية العميل",
+    "yourProposal": "عرضك",
+    "package": "الباقة",
+    "packages": {
+      "essentials": "أساسي",
+      "signature": "سيقناتشر",
+      "luxury": "فاخر"
+    },
+    "yourQuote": "سعرك",
+    "messageToClient": "رسالة إلى العميل",
+    "messagePreview": "مرحبًا {{name}}! يسعدنا تحقيق {{category}} الخاص بك. تشمل باقة {{package}} التخطيط الكامل والتنسيق والتصميم — مصممة خصيصًا لرؤيتك.",
+    "platformFee": "رسوم المنصة (٥٪)",
+    "youEarn": "صافي ربحك",
+    "sendProposal": "إرسال العرض"
+  },
+  "myOffers": {
+    "title": "عروضي",
+    "subtitle": "العروض التي أرسلتها — تابع حالتها هنا",
+    "intro": "العروض التي أرسلتها للعملاء · تابع حالتها هنا. الطلبات الجديدة للتقديم عليها تجدها في <bold>الطلبات المفتوحة</bold>.",
+    "tabs": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "viewed": "تمت المشاهدة",
+      "accepted": "مقبول",
+      "declined": "مرفوض"
+    },
+    "status": {
+      "pending": "قيد الانتظار",
+      "viewed": "العميل شاهده",
+      "accepted": "مقبول",
+      "declined": "مرفوض"
+    },
+    "sent": "أُرسل {{time}}",
+    "yourQuote": "سعرك",
+    "trackDeal": "تتبّع الصفقة",
+    "reQuote": "إعادة التسعير",
+    "message": "رسالة",
+    "emptyTitle": "لم ترسل أي عروض بعد",
+    "emptySub": "تصفّح الطلبات المفتوحة وأرسل أول عرض سعر لتتابع الصفقات هنا.",
+    "loadMore": "عرض المزيد"
+  },
+  "deal": {
+    "breadcrumb": "عروضي / الصفقة",
+    "messageClient": "راسل العميل",
+    "countersign": "وقّع الاتفاقية",
+    "awaitingSignature": "في انتظار توقيعك",
+    "acceptedInfo": "قبل {{name}} عرضك. <bold>وقّع الاتفاقية</bold> لتأكيد الحجز — يُحوّل العربون إليك عند التوقيع.",
+    "timeline": "مسار الصفقة",
+    "steps": {
+      "requestReceived": "استلام الطلب",
+      "offerSent": "إرسال العرض",
+      "clientAccepted": "قبول العميل",
+      "countersign": "توقيع الاتفاقية",
+      "depositReceived": "استلام العربون",
+      "eventDay": "يوم المناسبة"
+    },
+    "stepDetails": {
+      "offerSent": "باقة سيقناتشر · ١٨٬٠٠٠ ر.س",
+      "clientAccepted": "قبل عرضك",
+      "countersign": "وقّع اتفاقية الخدمة"
+    },
+    "who": {
+      "client": "العميل",
+      "you": "أنت"
+    },
+    "now": "الآن",
+    "serviceAgreement": "اتفاقية الخدمة",
+    "actionNeeded": "إجراء مطلوب",
+    "agreementName": "اتفاقية خدمات المناسبة",
+    "agreementRef": "رقم RTB-2026-0314 · وقّعه العميل ✓",
+    "view": "عرض",
+    "countersignRequired": "توقيعك المقابل مطلوب",
+    "signNow": "وقّع الآن",
+    "dealSummary": "ملخص الصفقة",
+    "package": "الباقة",
+    "event": "المناسبة",
+    "payment": "الدفع",
+    "totalFee": "الإجمالي",
+    "depositOnSigning": "العربون (عند التوقيع)",
+    "earningsAfterFee": "صافي ربحك (بعد الرسوم)",
+    "oneStepAway": "خطوة واحدة تفصلك",
+    "countersignCta": "وقّع لتأكيد الحجز",
+    "countersignNote": "يُحوّل العربون إلى رصيدك بمجرد التوقيع.",
+    "countersignNow": "وقّع الآن"
+  },
+  "plannerBookings": {
+    "title": "الحجوزات",
+    "subtitle": "المناسبات المؤكدة والقادمة التي تخطط لها",
+    "status": {
+      "confirmed": "مؤكد",
+      "pending": "قيد الانتظار"
+    },
+    "stages": {
+      "planning": "التخطيط",
+      "design": "التصميم",
+      "awaitingDeposit": "في انتظار العربون",
+      "finalWalkthrough": "المراجعة النهائية"
+    },
+    "value": "القيمة",
+    "paid": "المدفوع",
+    "viewDetails": "عرض التفاصيل",
+    "emptyTitle": "لا توجد حجوزات بعد",
+    "emptySub": "ستظهر الصفقات المؤكدة هنا بعد أن يوقّع العميل ويدفع العربون.",
+    "loadMore": "عرض المزيد"
+  },
+  "profile": {
+    "title": "الملف التعريفي",
+    "subtitle": "إدارة واجهة متجرك",
+    "edit": "تعديل المتجر",
+    "view": "عرض المتجر",
+    "reviews": "{{count, number}} تقييم",
+    "categories": "الفئات",
+    "city": "المدينة",
+    "about": "نبذة",
+    "bio": "استوديو فاخر حائز على جوائز لتنسيق الأعراس والحفلات الكبرى في أنحاء المملكة.",
+    "specialty": "أعراس وحفلات",
+    "portfolio": "معرض الأعمال",
+    "services": "الخدمات والباقات",
+    "from": "تبدأ من",
+    "serviceNames": {
+      "fullWeddingPlanning": "تنسيق أعراس كامل",
+      "luxuryGalaProduction": "إنتاج حفلات فاخرة",
+      "engagementAndMilkah": "خطوبة وملكة"
+    },
+    "serviceDescriptions": {
+      "fullWeddingPlanningDesc": "تخطيط شامل، تنسيق وتصميم من البداية للنهاية.",
+      "luxuryGalaProductionDesc": "منصة، إضاءة، أنظمة صوتية وإنتاج العرض.",
+      "engagementAndMilkahDesc": "تنسيق حميمي، زهور وضيافة."
+    },
+    "editTitle": "تعديل المتجر",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء",
+    "saved": "تم الحفظ",
+    "fields": {
+      "businessName": "اسم النشاط التجاري",
+      "bio": "نبذة",
+      "bioPlaceholder": "صف استوديوك وأسلوبك وتخصصك…",
+      "instagram": "حساب إنستقرام",
+      "instagramPlaceholder": "@استوديوك",
+      "website": "رابط الموقع",
+      "websitePlaceholder": "https://",
+      "city": "المدينة"
+    }
+  },
+  "toast": {
+    "quoteSent": "تم إرسال العرض! ستُخطَر عندما يرد العميل.",
+    "countersigned": "تم توقيع العقد — في انتظار وديعة العميل.",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  }
+}

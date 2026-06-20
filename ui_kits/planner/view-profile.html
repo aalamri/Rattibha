@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- @dsCard group="UI Kit — Planner" name="Planner dashboard · Storefront" subtitle="Public profile — services, portfolio, ratings" viewport="1320x880" -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rattibha · Planner Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/app-icon.png">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { background: #ECE7F2; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  i[class^="ph"], i[class*=" ph"] { line-height: 1; display: inline-block; }
+  #app { width: 1320px; height: 860px; background: #F7F4FA; display: flex; overflow: hidden;
+    border-radius: 16px; box-shadow: 0 30px 80px -30px rgba(43,34,51,0.5); }
+  #stageWrap { width: 100%; height: 100%; display: grid; place-items: center; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #DCD0E4; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div id="stageWrap"><div id="stage"><div id="app"><div id="root"></div></div></div></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="dash.jsx"></script>
+<script type="text/babel" src="lang.jsx"></script>
+<script type="text/babel" src="shell.jsx"></script>
+<script type="text/babel" src="leads.jsx"></script>
+<script type="text/babel" src="views.jsx"></script>
+<script type="text/babel" src="views2.jsx"></script>
+<script type="text/babel" src="detail.jsx"></script>
+<script type="text/babel" src="deal.jsx"></script>
+<script type="text/babel" src="browse.jsx"></script>
+<script type="text/babel" src="profile-edit.jsx"></script>
+<script type="text/babel" src="states.jsx"></script>
+
+<script type="text/babel">
+const { useState } = React;
+
+const TITLES = {
+  overview: ['Welcome back, Lumière', 'Here’s what’s happening with your studio today'],
+  leads: ['My Offers', 'Quotes you’ve sent — track their status'],
+  bookings: ['Bookings', 'Manage your confirmed and pending events'],
+  calendar: ['Calendar', 'Your events and blocked dates'],
+  messages: ['Messages', null],
+  earnings: ['Earnings', 'Track revenue, balance and payouts'],
+  profile: ['My storefront', 'How clients see you on Rattibha'],
+  leadDetail: ['Lead details', 'Review the request and respond'],
+  bookingDetail: ['Booking details', 'Manage this event end-to-end'],
+  deal: ['Deal', 'Agreement progress with your client'],
+  browse: ['Open requests', 'Browse posted briefs and send quotes'],
+  submitProposal: ['Submit a quote', 'Send your proposal to the client'],
+  profileEdit: ['Edit storefront', 'Update your profile, images & services'],
+};
+
+function App() {
+  const initial = 'profile';
+  const [view, setView] = useState(initial);
+  const [data, setData] = useState(null);
+  const [lang, setLangState] = useState(() => { try { return localStorage.getItem('rtb_lang') || 'en'; } catch(e){ return 'en'; } });
+  window.__lang = lang;
+  const setLang = (l) => { window.__lang = l; try { localStorage.setItem('rtb_lang', l); } catch(e){} setLangState(l); };
+  const go = (v, d = null) => { setData(d); setView(v); };
+  const [title0, sub0] = TITLES[view] || TITLES.overview;
+  const title = tr(title0), sub = sub0 ? tr(sub0) : sub0;
+
+  let content;
+  switch (view) {
+    case 'overview': content = <OverviewView go={go} />; break;
+    case 'leads': content = <LeadsView go={go} />; break;
+    case 'bookings': content = <BookingsView go={go} />; break;
+    case 'calendar': content = <CalendarView />; break;
+    case 'messages': content = <MessagesView />; break;
+    case 'earnings': content = <EarningsView />; break;
+    case 'profile': content = <ProfileView go={go} />; break;
+    case 'leadDetail': content = <LeadDetailView lead={data} go={go} />; break;
+    case 'bookingDetail': content = <BookingDetailView booking={data} go={go} />; break;
+    case 'deal': content = <DealView lead={data} go={go} />; break;
+    case 'browse': content = <BrowseRequestsView go={go} />; break;
+    case 'submitProposal': content = <SubmitProposalView req={data} go={go} />; break;
+    case 'profileEdit': content = <ProfileEditView go={go} />; break;
+    default: content = <OverviewView go={go} />;
+  }
+
+  // detail views map to their parent nav item for sidebar highlight
+  const navActive = view === 'leadDetail' ? 'leads' : view === 'bookingDetail' ? 'bookings' : view === 'deal' ? 'leads' : view === 'submitProposal' ? 'browse' : view === 'profileEdit' ? 'profile' : view;
+
+  const scroll = view !== 'messages';
+  return (
+    <div dir={lang === 'ar' ? 'rtl' : 'ltr'} style={{ display: 'flex', width: '100%', height: '100%' }}>
+      <Sidebar active={navActive} go={go} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <Topbar title={title} sub={sub} lang={lang} setLang={setLang} />
+        <div style={{ flex: 1, overflowY: scroll ? 'auto' : 'hidden', minHeight: 0 }}>{content}</div>
+      </div>
+      <PToastHost />
+    </div>
+  );
+}
+
+function fit() {
+  const s = Math.min(window.innerWidth / 1320, window.innerHeight / 860, 1);
+  const stage = document.getElementById('stage');
+  stage.style.transform = `scale(${s})`;
+  stage.style.transformOrigin = 'center center';
+}
+window.addEventListener('resize', fit);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+setTimeout(fit, 40);
+</script>
+</body>
+</html>

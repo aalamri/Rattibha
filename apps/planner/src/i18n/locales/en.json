@@ -1,0 +1,250 @@
+{
+  "common": {
+    "appName": "Rattibha",
+    "sar": "SAR",
+    "pro": "Pro",
+    "searchPlaceholder": "Search…",
+    "guests": "guests",
+    "offers": "offers",
+    "toggleLanguage": "Switch language",
+    "toggleAppearance": "Switch appearance",
+    "appearance": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "notifications": "Notifications",
+    "budgets": {
+      "under10": "< 10k",
+      "10to20": "10–20k",
+      "20to35": "20–35k",
+      "over35": "35k+"
+    },
+    "hoursAgo": "{{count, number}}h ago",
+    "daysAgo": "{{count, number}}d ago"
+  },
+  "auth": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to your Rattibha planner dashboard",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "signOut": "Sign out",
+    "error": "Invalid email or password. Try the seed account: planner@lumiere-events.sa / password123"
+  },
+  "nav": {
+    "overview": "Overview",
+    "openRequests": "Open requests",
+    "myOffers": "My Offers",
+    "bookings": "Bookings",
+    "calendar": "Calendar",
+    "messages": "Messages",
+    "earnings": "Earnings",
+    "profile": "Profile"
+  },
+  "cities": {
+    "all": "All Saudi Arabia",
+    "riyadh": "Riyadh",
+    "jeddah": "Jeddah",
+    "makkah": "Makkah",
+    "madinah": "Madinah",
+    "dammam": "Dammam",
+    "khobar": "Khobar",
+    "dhahran": "Dhahran",
+    "taif": "Taif",
+    "tabuk": "Tabuk",
+    "abha": "Abha",
+    "al_ahsa": "Al-Ahsa",
+    "buraidah": "Buraidah",
+    "yanbu": "Yanbu"
+  },
+  "categories": {
+    "weddings": "Wedding",
+    "birthdays": "Birthday",
+    "engagements": "Engagement",
+    "corporate": "Corporate",
+    "galas": "Gala"
+  },
+  "openRequests": {
+    "title": "Open requests",
+    "subtitle": "New customer briefs you can quote on",
+    "scopeBanner": "Showing requests in <bold>{{scope}}</bold>",
+    "scopeNote": "you receive leads from clients in your city",
+    "scopeCity": "{{city}}",
+    "scopeAll": "All KSA",
+    "open": "open",
+    "allCategories": "All",
+    "sendQuote": "Send quote",
+    "postedAgo": "{{time}}",
+    "emptyTitle": "No open requests here yet",
+    "emptyBodyCity": "No new briefs in your city right now. Toggle to All KSA to see more, or check back soon.",
+    "emptyBodyAll": "No open requests match this filter right now. Check back soon.",
+    "refresh": "Refresh"
+  },
+  "sidebar": {
+    "navLabel": "Main navigation",
+    "boostTitle": "Boost your reach",
+    "boostBody": "Feature your studio to 3× more clients.",
+    "upgrade": "Upgrade"
+  },
+  "quote": {
+    "breadcrumb": "Open requests / Submit quote",
+    "askQuestion": "Ask a question",
+    "clientRequest": "Client request",
+    "posted": "Posted",
+    "offersSoFar": "offers so far",
+    "eventType": "Event type",
+    "date": "Date",
+    "guests": "Guests",
+    "city": "City",
+    "clientBudget": "Client budget",
+    "yourProposal": "Your proposal",
+    "package": "Package",
+    "packages": {
+      "essentials": "Essentials",
+      "signature": "Signature",
+      "luxury": "Luxury"
+    },
+    "yourQuote": "Your quote",
+    "messageToClient": "Message to client",
+    "messagePreview": "Hi {{name}}! We'd love to bring your {{category}} to life. Our {{package}} package covers full planning, styling and coordination — tailored to your vision.",
+    "platformFee": "Platform fee (5%)",
+    "youEarn": "You earn",
+    "sendProposal": "Send proposal"
+  },
+  "myOffers": {
+    "title": "My Offers",
+    "subtitle": "Quotes you've sent — track their status here",
+    "intro": "Quotes you've sent to clients · track their status here. New briefs to bid on live under <bold>Open requests</bold>.",
+    "tabs": {
+      "all": "All",
+      "pending": "Pending",
+      "viewed": "Viewed",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    },
+    "status": {
+      "pending": "Pending",
+      "viewed": "Client viewed",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    },
+    "sent": "Sent {{time}}",
+    "yourQuote": "Your quote",
+    "trackDeal": "Track deal",
+    "reQuote": "Re-quote",
+    "message": "Message",
+    "emptyTitle": "No offers sent yet",
+    "emptySub": "Browse Open requests and send your first quote to start tracking deals here.",
+    "loadMore": "Load more offers"
+  },
+  "deal": {
+    "breadcrumb": "My Offers / Deal",
+    "messageClient": "Message client",
+    "countersign": "Countersign",
+    "awaitingSignature": "Awaiting your signature",
+    "acceptedInfo": "{{name}} accepted your offer. <bold>Countersign the agreement</bold> to lock the booking — the deposit is released to you on signing.",
+    "timeline": "Deal timeline",
+    "steps": {
+      "requestReceived": "Request received",
+      "offerSent": "Offer sent",
+      "clientAccepted": "Client accepted",
+      "countersign": "Countersign contract",
+      "depositReceived": "Deposit received",
+      "eventDay": "Event day"
+    },
+    "stepDetails": {
+      "offerSent": "Signature package · SAR {{price}}",
+      "clientAccepted": "Accepted your offer",
+      "countersign": "Sign the service agreement"
+    },
+    "who": {
+      "client": "Client",
+      "you": "You"
+    },
+    "now": "Now",
+    "serviceAgreement": "Service agreement",
+    "actionNeeded": "Action needed",
+    "agreementName": "Event Services Agreement",
+    "agreementRef": "Ref RTB-2026-0314 · signed by client ✓",
+    "view": "View",
+    "countersignRequired": "Your countersignature required",
+    "signNow": "Sign now",
+    "dealSummary": "Deal summary",
+    "package": "Package",
+    "event": "Event",
+    "payment": "Payment",
+    "totalFee": "Total fee",
+    "depositOnSigning": "Deposit (on signing)",
+    "earningsAfterFee": "Your earnings (after fee)",
+    "oneStepAway": "One step away",
+    "countersignCta": "Countersign to confirm the booking",
+    "countersignNote": "The deposit releases to your balance the moment you sign.",
+    "countersignNow": "Countersign now"
+  },
+  "plannerBookings": {
+    "title": "Bookings",
+    "subtitle": "Confirmed and upcoming events you're planning",
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending"
+    },
+    "stages": {
+      "planning": "Planning",
+      "design": "Design",
+      "awaitingDeposit": "Awaiting deposit",
+      "finalWalkthrough": "Final walkthrough"
+    },
+    "value": "Value",
+    "paid": "Paid",
+    "viewDetails": "View details",
+    "emptyTitle": "No bookings yet",
+    "emptySub": "Confirmed deals will show up here once a client countersigns and pays the deposit.",
+    "loadMore": "Load more bookings"
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your public storefront",
+    "edit": "Edit storefront",
+    "view": "View storefront",
+    "reviews": "{{count, number}} reviews",
+    "categories": "Categories",
+    "city": "City",
+    "about": "About",
+    "bio": "Award-winning luxury wedding & gala studio crafting unforgettable celebrations across the Kingdom.",
+    "specialty": "Weddings & Galas",
+    "portfolio": "Portfolio",
+    "services": "Services & packages",
+    "from": "From",
+    "serviceNames": {
+      "fullWeddingPlanning": "Full Wedding Planning",
+      "luxuryGalaProduction": "Luxury Gala Production",
+      "engagementAndMilkah": "Engagement & Milkah"
+    },
+    "serviceDescriptions": {
+      "fullWeddingPlanningDesc": "End-to-end planning, styling & coordination.",
+      "luxuryGalaProductionDesc": "Stage, lighting, AV & show production.",
+      "engagementAndMilkahDesc": "Intimate styling, florals & catering."
+    },
+    "editTitle": "Edit storefront",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "saved": "Changes saved",
+    "fields": {
+      "businessName": "Business name",
+      "bio": "Bio",
+      "bioPlaceholder": "Describe your studio, style and specialty…",
+      "instagram": "Instagram handle",
+      "instagramPlaceholder": "@yourstudio",
+      "website": "Website URL",
+      "websitePlaceholder": "https://",
+      "city": "City"
+    }
+  },
+  "toast": {
+    "quoteSent": "Quote sent! You'll be notified when the client responds.",
+    "countersigned": "Contract countersigned — waiting for the client's deposit.",
+    "error": "Something went wrong. Please try again."
+  }
+}

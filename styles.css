@@ -1,0 +1,12 @@
+/* ============================================================
+   رتّبها · Rattibha — Design System entry stylesheet
+   Single root stylesheet for consumers. Link THIS file
+   (or @import it) to pull in the full token system.
+   ------------------------------------------------------------
+   This re-exports the design tokens defined in
+   colors_and_type.css (color palette + semantic roles,
+   the bilingual font families, the type scale & semantic
+   classes, spacing, radii, shadows, motion).
+   ============================================================ */
+
+@import url('./colors_and_type.css');

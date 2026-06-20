@@ -1,0 +1,448 @@
+{
+  "common": {
+    "appName": "Rattibha",
+    "tagline": "Plan beautifully. Celebrate effortlessly.",
+    "language": "Language",
+    "sar": "SAR",
+    "from": "from",
+    "back": "Go back",
+    "notifications": "Notifications",
+    "toggleLanguage": "Switch language",
+    "comingSoon": "Coming soon",
+    "hoursAgo": "{{count, number}}h ago",
+    "daysAgo": "{{count, number}}d ago",
+    "anonymous": "Anonymous"
+  },
+  "nav": {
+    "discover": "Discover",
+    "requests": "Requests",
+    "bookings": "Bookings",
+    "messages": "Messages",
+    "profile": "Profile"
+  },
+  "cities": {
+    "all": "All Saudi Arabia",
+    "riyadh": "Riyadh",
+    "jeddah": "Jeddah",
+    "makkah": "Makkah",
+    "madinah": "Madinah",
+    "dammam": "Dammam",
+    "khobar": "Khobar",
+    "dhahran": "Dhahran",
+    "taif": "Taif",
+    "tabuk": "Tabuk",
+    "abha": "Abha",
+    "al_ahsa": "Al-Ahsa",
+    "buraidah": "Buraidah",
+    "yanbu": "Yanbu"
+  },
+  "categories": {
+    "weddings": "Weddings",
+    "birthdays": "Birthdays",
+    "engagements": "Engagements",
+    "corporate": "Corporate",
+    "galas": "Galas"
+  },
+  "foundation": {
+    "title": "Plan your <italic>perfect</italic> celebration",
+    "subtitle": "Post one request — planners come to you",
+    "cta": "Post a request",
+    "search": "Search planners, venues…",
+    "buttons": "Buttons",
+    "badges": "Badges",
+    "inputs": "Inputs",
+    "cards": "Cards",
+    "avatars": "Avatars",
+    "typography": "Typography",
+    "filters": "Filters",
+    "premium": "Premium",
+    "verified": "Verified",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Nada Al-Rashid",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "sampleCardTitle": "Lumière Events",
+    "sampleCardBody": "Award-winning luxury wedding & gala studio crafting unforgettable celebrations across the Kingdom."
+  },
+  "auth": {
+    "errors": {
+      "invalidCredentials": "Incorrect email or password.",
+      "emailInUse": "An account with this email already exists.",
+      "weakPassword": "Password must be at least 6 characters.",
+      "invalidCode": "That code didn't work. Please try again.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "onboarding": {
+      "skip": "Skip",
+      "next": "Next",
+      "getStarted": "Get started",
+      "slide1": {
+        "title": "Discover trusted planners",
+        "description": "Browse 500+ verified event planners across the Kingdom — by category, city and budget."
+      },
+      "slide2": {
+        "title": "Compare & message directly",
+        "description": "Read real reviews, explore packages, and chat with planners before you commit."
+      },
+      "slide3": {
+        "title": "Book with confidence",
+        "description": "Secure your date with a protected deposit and let the experts handle the rest."
+      }
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to plan your next celebration",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign in",
+      "orContinueWith": "or continue with",
+      "apple": "Apple",
+      "google": "Google",
+      "newHere": "New here? ",
+      "createAccount": "Create account"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join Rattibha and start planning in minutes",
+      "agreeToTerms": "I agree to the <terms>Terms</terms> & <privacy>Privacy Policy</privacy>",
+      "orSignUpWith": "or sign up with",
+      "alreadyHaveAccount": "Already have an account? ",
+      "signIn": "Sign in",
+      "createAccount": "Create account"
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "subtitle": "Enter the email linked to your account and we'll send a verification code.",
+      "sendCode": "Send code",
+      "rememberedIt": "Remembered it? ",
+      "backToSignIn": "Back to sign in"
+    },
+    "otp": {
+      "title": "Verify your email",
+      "subtitleWithEmail": "We sent a 6-digit code to <email>{{email}}</email>",
+      "resendIn": "Resend code in <time>0:{{seconds}}</time>",
+      "resendCode": "Resend code",
+      "verifyAndContinue": "Verify & continue"
+    }
+  },
+  "placeholders": {
+    "notifications": "Notifications",
+    "search": "Search",
+    "postRequest": "Post a request",
+    "planner": "Planner profile",
+    "offer": "Offer details",
+    "contract": "Sign contract",
+    "checkout": "Checkout",
+    "confirm": "Booking confirmed"
+  },
+  "discover": {
+    "greeting": "Good evening 👋",
+    "heroTitle": "Plan your perfect celebration",
+    "heroSubtitle": "Post one request — planners come to you",
+    "postRequest": "Post a request",
+    "searchPlaceholder": "Search planners, venues…",
+    "featuredPlanners": "Featured planners",
+    "seeAll": "See all",
+    "topRatedNear": "Top rated near you",
+    "topRatedIn": "Top rated in {{city}}",
+    "filters": "Filters",
+    "chooseCity": "Choose your city",
+    "searchCities": "Search cities in Saudi Arabia…",
+    "emptyCity": "No planners in {{city}} yet — <link>post a request</link> and they’ll come to you.",
+    "loadMore": "Load more planners",
+    "loadingMore": "Loading…"
+  },
+  "planner": {
+    "eventsCount": "{{count, number}} events",
+    "services": "Services",
+    "packages": "Packages",
+    "reviews": "Reviews",
+    "allReviews": "All {{count, number}}",
+    "requestToBook": "Request to book"
+  },
+  "postRequest": {
+    "title": "Post a request",
+    "subtitle": "Planners send you quotes",
+    "intro": "Describe your event once — verified planners compete with tailored quotes. Free, no commitment.",
+    "whatPlanning": "What are you planning?",
+    "eventDate": "Event date",
+    "city": "City",
+    "guestsLabel": "Guests · {{count, number}}",
+    "budgetRange": "Budget range",
+    "selectDate": "Select date",
+    "describeVision": "Describe your vision",
+    "visionPlaceholder": "Tell planners about your style, must-haves and vibe…",
+    "postToPlanners": "Post to planners",
+    "budgets": {
+      "under10": "< 10k",
+      "10to20": "10–20k",
+      "20to35": "20–35k",
+      "over35": "35k+"
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "empty": "No conversations yet",
+    "emptySub": "Chat with a planner to get started",
+    "online": "Online",
+    "placeholder": "Message…",
+    "you": "You: "
+  },
+  "proposals": {
+    "title": "Offers for your event",
+    "respondedCount": "{{count, number}} planners in {{city}} responded",
+    "noneYet": "No planners in {{city}} yet",
+    "edit": "Edit",
+    "sortBest": "Best match",
+    "sortPrice": "Lowest price",
+    "sortRating": "Top rated",
+    "bestMatch": "BEST MATCH FOR YOU",
+    "repliedAgo": "replied {{time}}",
+    "theirQuote": "Their quote",
+    "chat": "Chat",
+    "viewOffer": "View offer",
+    "morePlanners": "More planners may still respond",
+    "emptyTitle": "No offers yet",
+    "emptySub": "Verified planners are reviewing your request — quotes usually arrive within a few hours."
+  },
+  "offer": {
+    "title": "Offer from planner",
+    "message": "Hi! We'd be delighted to plan your event 💜 Here's a tailored offer for {{count, number}} guests.",
+    "justNow": "just now",
+    "customOffer": "Custom offer",
+    "validDays": "Valid 7 days",
+    "items": {
+      "planning": "Full planning & coordination",
+      "styling": "Venue styling & decor",
+      "catering": "Catering for {{count, number}} guests",
+      "florals": "Live florals & photography"
+    },
+    "totalPrice": "Total price",
+    "depositLabel": "Deposit to confirm (20%)",
+    "balanceLabel": "Balance before event",
+    "note": "Accepting moves you to a signed agreement — you only pay after signing.",
+    "noMessage": "The planner hasn't included a message with this offer.",
+    "negotiate": "Negotiate",
+    "acceptOffer": "Accept offer"
+  },
+  "contract": {
+    "title": "Service agreement",
+    "docTitle": "Event Services Agreement",
+    "docRef": "Ref RTB-2026-0314 · {{city}}, KSA",
+    "rows": {
+      "client": "Client",
+      "planner": "Planner",
+      "event": "Event",
+      "package": "Package",
+      "totalFee": "Total fee",
+      "depositOnSigning": "Deposit on signing",
+      "cancellation": "Cancellation"
+    },
+    "cancellationValue": "Free up to 30 days before",
+    "terms": {
+      "scope": "I agree to the scope and pricing above",
+      "policy": "I accept the cancellation & refund policy",
+      "deposit": "Deposit is held securely until the event"
+    },
+    "yourSignature": "Your signature",
+    "tapToSign": "Tap to sign",
+    "signAndPay": "Sign & pay deposit"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "packageTotal": "Package total",
+    "serviceFee": "Service fee (5%)",
+    "customerTotal": "Your total",
+    "depositDueToday": "Deposit (20%) due today",
+    "balanceBeforeEvent": "Balance before event",
+    "paymentMethod": "Payment method",
+    "methods": {
+      "card": "Card",
+      "applePay": "Apple Pay",
+      "tabby": "Tabby · 4 splits"
+    },
+    "methodNames": {
+      "applePay": "Apple Pay",
+      "tabby": "Tabby"
+    },
+    "cardNumber": "Card number",
+    "expiry": "Expiry",
+    "cvv": "CVV",
+    "nameOnCard": "Name on card",
+    "altMethodNote": "You'll confirm payment with {{method}} on the next step.",
+    "secureNote": "Secured with 256-bit encryption · protected deposit",
+    "payNow": "Pay {{sar}} {{amount}} now",
+    "awaitingCountersign": "Waiting for planner signature",
+    "awaitingCountersignNote": "The planner needs to countersign your agreement. You'll be able to pay as soon as they do — this page will update automatically.",
+    "awaitingCountersignSub": "Usually takes a few minutes"
+  },
+  "confirm": {
+    "title": "You're booked!",
+    "subtitle": "Your deposit is paid and <bold>{{planner}}</bold> has been notified. They'll confirm details within 24 hours.",
+    "subtitleGeneric": "Your deposit is paid and the planner has been notified. They'll confirm details within 24 hours.",
+    "rows": {
+      "planner": "Planner",
+      "package": "Package",
+      "date": "Date",
+      "status": "Status"
+    },
+    "statusConfirmed": "Confirmed",
+    "message": "Message",
+    "done": "Done"
+  },
+  "review": {
+    "title": "Leave a review",
+    "packageAndDate": "{{package}} · {{date}}",
+    "ratingLabels": [
+      "",
+      "Poor",
+      "Fair",
+      "Good",
+      "Great",
+      "Excellent"
+    ],
+    "whatStoodOut": "What stood out?",
+    "tags": {
+      "professional": "Professional",
+      "onTime": "On time",
+      "greatValue": "Great value",
+      "creative": "Creative",
+      "responsive": "Responsive",
+      "flawlessSetup": "Flawless setup"
+    },
+    "commentLabel": "Tell others about your experience",
+    "commentPlaceholder": "Absolutely magical — every detail of our wedding was perfect. The team was professional, calm and brought our rose & gold vision to life beautifully. Highly recommend! 💜",
+    "addPhotos": "Add photos (optional)",
+    "submitReview": "Submit review"
+  },
+  "myBookings": {
+    "title": "My bookings",
+    "empty": "No bookings yet",
+    "emptySub": "Accept an offer and sign a contract to confirm your booking",
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending"
+    }
+  },
+  "bookingDetail": {
+    "title": "Booking details",
+    "timelineTitle": "Event timeline",
+    "timeline": {
+      "confirmed": {
+        "title": "Booking confirmed",
+        "desc": "Deposit received"
+      },
+      "planning": {
+        "title": "Planning & design",
+        "desc": "Moodboard + venue selection"
+      },
+      "walkthrough": {
+        "title": "Final walkthrough",
+        "desc": "Due 1 week before"
+      },
+      "eventDay": {
+        "title": "Event day"
+      }
+    },
+    "payment": "Payment",
+    "deposit": "Deposit (20%)",
+    "balance": "Balance",
+    "total": "Total",
+    "paid": "Paid",
+    "depositDue": "Deposit due",
+    "dueBeforeEvent": "Due before event",
+    "review": "Review",
+    "payBalance": "Pay balance"
+  },
+  "myRequests": {
+    "title": "My requests",
+    "filters": {
+      "all": "All",
+      "open": "Open",
+      "booked": "Booked"
+    },
+    "offers": "offers",
+    "offersReceived": "offers received",
+    "new": "{{count, number}} new",
+    "compare": "Compare",
+    "viewBooking": "View booking",
+    "postNew": "Post a new request",
+    "guests": "{{count, number}} guests",
+    "emptyTitle": "No requests yet",
+    "emptySub": "Post your event and start receiving tailored quotes from verified planners.",
+    "emptyCta": "Post a request"
+  },
+  "requestSent": {
+    "title": "Request posted!",
+    "subtitle": "Verified planners are reviewing your event now. You'll start receiving <bold>tailored quotes</bold> within a few hours — compare and choose the one you love.",
+    "steps": {
+      "posted": "Request posted",
+      "quoting": "Planners quoting",
+      "compare": "Compare offers",
+      "sign": "Pick & sign"
+    },
+    "viewOffers": "View offers",
+    "backToDiscover": "Back to browsing"
+  },
+  "fields": {
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Nada Al-Rashid",
+    "mobile": "Mobile number",
+    "mobilePlaceholder": "+966 50 123 4567"
+  },
+  "profile": {
+    "title": "Profile",
+    "edit": "Edit",
+    "eventsPlanned": "Events planned",
+    "saved": "Saved",
+    "avgRating": "Avg rating",
+    "rows": {
+      "savedPlanners": "Saved planners",
+      "paymentMethods": "Payment methods",
+      "notifications": "Notifications",
+      "settings": "Settings",
+      "helpSupport": "Help & support",
+      "language": "Language",
+      "appearance": "Appearance"
+    },
+    "appearance": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "signOut": "Sign out",
+    "language": "Language"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications yet",
+    "emptyNote": "New offers and booking updates will appear here.",
+    "markRead": "Mark all read"
+  },
+  "toast": {
+    "requestPosted": "Request posted! Planners will be in touch soon.",
+    "contractSigned": "Agreement signed — proceed to checkout.",
+    "bookingConfirmed": "Booking confirmed! Your deposit is secured.",
+    "reviewSubmitted": "Review submitted. Thank you!",
+    "error": "Something went wrong. Please try again."
+  },
+  "search": {
+    "recent": "Recent",
+    "allPlanners": "All planners",
+    "resultsFor": "Results for \"{{q}}\"",
+    "found": "{{count, number}} found",
+    "noResults": "No planners match your search.",
+    "eventType": "Event type",
+    "allTypes": "All types",
+    "budgetUpTo": "Budget · up to {{amount}}",
+    "sortBy": "Sort by",
+    "sortRating": "Top rated",
+    "sortPriceAsc": "Price: low",
+    "sortPriceDesc": "Price: high",
+    "showResults": "Show results",
+    "reset": "Reset"
+  }
+}

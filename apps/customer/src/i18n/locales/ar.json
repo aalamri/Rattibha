@@ -1,0 +1,448 @@
+{
+  "common": {
+    "appName": "رتّبها",
+    "tagline": "نظّم بجمال. احتفل بسهولة.",
+    "language": "اللغة",
+    "sar": "ر.س",
+    "from": "من",
+    "back": "رجوع",
+    "notifications": "الإشعارات",
+    "toggleLanguage": "تغيير اللغة",
+    "comingSoon": "قريبًا",
+    "hoursAgo": "منذ {{count, number}} س",
+    "daysAgo": "منذ {{count, number}} يوم",
+    "anonymous": "مجهول"
+  },
+  "nav": {
+    "discover": "استكشف",
+    "requests": "طلباتي",
+    "bookings": "حجوزاتي",
+    "messages": "الرسائل",
+    "profile": "حسابي"
+  },
+  "cities": {
+    "all": "كل السعودية",
+    "riyadh": "الرياض",
+    "jeddah": "جدة",
+    "makkah": "مكة المكرمة",
+    "madinah": "المدينة المنورة",
+    "dammam": "الدمام",
+    "khobar": "الخبر",
+    "dhahran": "الظهران",
+    "taif": "الطائف",
+    "tabuk": "تبوك",
+    "abha": "أبها",
+    "al_ahsa": "الأحساء",
+    "buraidah": "بريدة",
+    "yanbu": "ينبع"
+  },
+  "categories": {
+    "weddings": "أعراس",
+    "birthdays": "أعياد ميلاد",
+    "engagements": "خطوبة",
+    "corporate": "شركات",
+    "galas": "حفلات كبرى"
+  },
+  "foundation": {
+    "title": "نظّم احتفالك <italic>المثالي</italic>",
+    "subtitle": "اطلب مرة واحدة — المنظّمون يصلونك",
+    "cta": "انشر طلبك",
+    "search": "ابحث عن منظّمين، قاعات…",
+    "buttons": "الأزرار",
+    "badges": "الشعارات",
+    "inputs": "الحقول",
+    "cards": "البطاقات",
+    "avatars": "الصور الرمزية",
+    "typography": "الطباعة",
+    "filters": "تصفية",
+    "premium": "مميّز",
+    "verified": "موثّق",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "ندى الراشد",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "you@email.com",
+    "sampleCardTitle": "لوميير للمناسبات",
+    "sampleCardBody": "استوديو أعراس وحفلات كبرى حائز على جوائز، يصمم احتفالات لا تُنسى في ربوع المملكة."
+  },
+  "auth": {
+    "errors": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "emailInUse": "يوجد حساب مسجّل بهذا البريد الإلكتروني مسبقاً.",
+      "weakPassword": "يجب أن تتكون كلمة المرور من ٦ أحرف على الأقل.",
+      "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
+      "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+    },
+    "onboarding": {
+      "skip": "تخطّي",
+      "next": "التالي",
+      "getStarted": "ابدأ الآن",
+      "slide1": {
+        "title": "اكتشف منظّمين موثوقين",
+        "description": "تصفّح أكثر من ٥٠٠ منظّم موثّق في المملكة — حسب الفئة والمدينة والميزانية."
+      },
+      "slide2": {
+        "title": "قارن وتواصل مباشرة",
+        "description": "اقرأ التقييمات، استعرض الباقات، وتحدّث مع المنظّمين قبل أن تلتزم."
+      },
+      "slide3": {
+        "title": "احجز بثقة",
+        "description": "أمّن موعدك بعربون محمي، ودع الخبراء يتولّون الباقي."
+      }
+    },
+    "login": {
+      "title": "أهلاً بعودتك",
+      "subtitle": "سجّل دخولك لتخطّط احتفالك القادم",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "signIn": "تسجيل الدخول",
+      "orContinueWith": "أو الاستمرار باستخدام",
+      "apple": "Apple",
+      "google": "Google",
+      "newHere": "جديد هنا؟ ",
+      "createAccount": "أنشئ حساباً"
+    },
+    "register": {
+      "title": "أنشئ حسابك",
+      "subtitle": "انضم إلى رتّبها وابدأ التخطيط في دقائق",
+      "agreeToTerms": "أوافق على <terms>الشروط</terms> و<privacy>سياسة الخصوصية</privacy>",
+      "orSignUpWith": "أو التسجيل باستخدام",
+      "alreadyHaveAccount": "لديك حساب بالفعل؟ ",
+      "signIn": "تسجيل الدخول",
+      "createAccount": "إنشاء حساب"
+    },
+    "forgotPassword": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل لك رمز التحقق.",
+      "sendCode": "إرسال الرمز",
+      "rememberedIt": "تذكرت كلمة المرور؟ ",
+      "backToSignIn": "العودة لتسجيل الدخول"
+    },
+    "otp": {
+      "title": "تحقّق من بريدك الإلكتروني",
+      "subtitleWithEmail": "أرسلنا رمزاً مكوّناً من ٦ أرقام إلى <email>{{email}}</email>",
+      "resendIn": "إعادة إرسال الرمز خلال <time>0:{{seconds}}</time>",
+      "resendCode": "إعادة إرسال الرمز",
+      "verifyAndContinue": "تحقّق واستمر"
+    }
+  },
+  "placeholders": {
+    "notifications": "الإشعارات",
+    "search": "البحث",
+    "postRequest": "انشر طلباً",
+    "planner": "الملف الشخصي للمنظّم",
+    "offer": "تفاصيل العرض",
+    "contract": "توقيع الاتفاقية",
+    "checkout": "الدفع",
+    "confirm": "تم تأكيد الحجز"
+  },
+  "discover": {
+    "greeting": "مساء الخير 👋",
+    "heroTitle": "نظّم احتفالك المثالي",
+    "heroSubtitle": "اطلب مرة واحدة — المنظّمون يصلونك",
+    "postRequest": "انشر طلباً",
+    "searchPlaceholder": "ابحث عن منظّمين، قاعات…",
+    "featuredPlanners": "منظّمون مميّزون",
+    "seeAll": "عرض الكل",
+    "topRatedNear": "الأعلى تقييماً قريباً منك",
+    "topRatedIn": "الأعلى تقييماً في {{city}}",
+    "filters": "تصفية",
+    "chooseCity": "اختر مدينتك",
+    "searchCities": "ابحث عن مدينة في السعودية…",
+    "emptyCity": "لا يوجد منظّمون في {{city}} بعد — <link>انشر طلباً</link> وسيصلونك.",
+    "loadMore": "عرض منظّمين آخرين",
+    "loadingMore": "جارٍ التحميل…"
+  },
+  "planner": {
+    "eventsCount": "{{count, number}} مناسبة",
+    "services": "الخدمات",
+    "packages": "الباقات",
+    "reviews": "التقييمات",
+    "allReviews": "الكل {{count, number}}",
+    "requestToBook": "طلب حجز"
+  },
+  "postRequest": {
+    "title": "انشر طلباً",
+    "subtitle": "المنظّمون يرسلون لك عروض أسعار",
+    "intro": "صِف مناسبتك مرة واحدة — المنظّمون الموثّقون يتنافسون بعروض مخصّصة. مجانًا دون التزام.",
+    "whatPlanning": "ما الذي تخطط له؟",
+    "eventDate": "تاريخ المناسبة",
+    "city": "المدينة",
+    "guestsLabel": "الضيوف · {{count, number}}",
+    "budgetRange": "نطاق الميزانية",
+    "selectDate": "اختر التاريخ",
+    "describeVision": "صف رؤيتك",
+    "visionPlaceholder": "أخبر المنظّمين عن أسلوبك وأهم متطلباتك والجو العام الذي تريده…",
+    "postToPlanners": "نشر للمنظّمين",
+    "budgets": {
+      "under10": "أقل من ١٠ ألف",
+      "10to20": "⁦١٠–٢٠⁩ ألف",
+      "20to35": "⁦٢٠–٣٥⁩ ألف",
+      "over35": "٣٥ ألف+"
+    }
+  },
+  "messages": {
+    "title": "الرسائل",
+    "empty": "لا محادثات بعد",
+    "emptySub": "تواصل مع منظّم لبدء المحادثة",
+    "online": "متصل",
+    "placeholder": "رسالة…",
+    "you": "أنت: "
+  },
+  "proposals": {
+    "title": "العروض المقدّمة لمناسبتك",
+    "respondedCount": "{{count, number}} منظّم في {{city}} ردّوا",
+    "noneYet": "لا يوجد منظّمون في {{city}} بعد",
+    "edit": "تعديل",
+    "sortBest": "الأنسب",
+    "sortPrice": "الأقل سعراً",
+    "sortRating": "الأعلى تقييماً",
+    "bestMatch": "الأنسب لك",
+    "repliedAgo": "ردّ {{time}}",
+    "theirQuote": "عرض السعر",
+    "chat": "محادثة",
+    "viewOffer": "عرض التفاصيل",
+    "morePlanners": "قد يردّ منظّمون آخرون لاحقاً",
+    "emptyTitle": "لا توجد عروض بعد",
+    "emptySub": "يراجع المنظّمون الموثّقون طلبك الآن — تصلك عروض الأسعار خلال ساعات قليلة."
+  },
+  "offer": {
+    "title": "عرض من المنظّم",
+    "message": "أهلاً! يسعدنا تنظيم مناسبتك 💜 إليك عرضاً مخصّصاً لـ {{count, number}} ضيف.",
+    "justNow": "الآن",
+    "customOffer": "عرض مخصّص",
+    "validDays": "ساري لمدة ٧ أيام",
+    "items": {
+      "planning": "التخطيط والتنسيق الكامل",
+      "styling": "تنسيق وتزيين القاعة",
+      "catering": "ضيافة لـ {{count, number}} ضيف",
+      "florals": "تنسيق زهور وتصوير مباشر"
+    },
+    "totalPrice": "السعر الإجمالي",
+    "depositLabel": "العربون للتأكيد (٢٠٪)",
+    "balanceLabel": "المتبقّي قبل المناسبة",
+    "note": "القبول ينقلك إلى اتفاقية موقّعة — لا تدفع إلا بعد التوقيع.",
+    "noMessage": "لم يُرفق المخطط رسالة مع هذا العرض.",
+    "negotiate": "تفاوض",
+    "acceptOffer": "قبول العرض"
+  },
+  "contract": {
+    "title": "اتفاقية الخدمة",
+    "docTitle": "اتفاقية خدمات المناسبات",
+    "docRef": "رقم RTB-2026-0314 · {{city}}، السعودية",
+    "rows": {
+      "client": "العميل",
+      "planner": "المنظّم",
+      "event": "المناسبة",
+      "package": "الباقة",
+      "totalFee": "الرسوم الإجمالية",
+      "depositOnSigning": "العربون عند التوقيع",
+      "cancellation": "الإلغاء"
+    },
+    "cancellationValue": "مجانًا حتى ٣٠ يومًا قبل",
+    "terms": {
+      "scope": "أوافق على النطاق والتسعير أعلاه",
+      "policy": "أقبل سياسة الإلغاء والاسترداد",
+      "deposit": "يُحفظ العربون بأمان حتى المناسبة"
+    },
+    "yourSignature": "توقيعك",
+    "tapToSign": "انقر للتوقيع",
+    "signAndPay": "توقيع ودفع العربون"
+  },
+  "checkout": {
+    "title": "الدفع",
+    "packageTotal": "إجمالي الباقة",
+    "serviceFee": "رسوم الخدمة (٥٪)",
+    "customerTotal": "إجمالي ما تدفع",
+    "depositDueToday": "العربون (٢٠٪) مستحق اليوم",
+    "balanceBeforeEvent": "المتبقّي قبل المناسبة",
+    "paymentMethod": "طريقة الدفع",
+    "methods": {
+      "card": "بطاقة",
+      "applePay": "Apple Pay",
+      "tabby": "تابي · ٤ دفعات"
+    },
+    "methodNames": {
+      "applePay": "Apple Pay",
+      "tabby": "تابي"
+    },
+    "cardNumber": "رقم البطاقة",
+    "expiry": "الانتهاء",
+    "cvv": "رمز التحقّق",
+    "nameOnCard": "الاسم على البطاقة",
+    "altMethodNote": "ستؤكّد الدفع عبر {{method}} في الخطوة التالية.",
+    "secureNote": "محمي بتشفير 256-bit · عربون مضمون",
+    "payNow": "ادفع ⁦{{sar}} {{amount}}⁩ الآن",
+    "awaitingCountersign": "في انتظار توقيع المنظّم",
+    "awaitingCountersignNote": "يحتاج المنظّم إلى التوقيع على الاتفاقية. ستتمكن من الدفع فور توقيعه — ستتحدث هذه الصفحة تلقائياً.",
+    "awaitingCountersignSub": "عادةً يستغرق بضع دقائق"
+  },
+  "confirm": {
+    "title": "تم الحجز!",
+    "subtitle": "تم دفع العربون وتم إشعار <bold>{{planner}}</bold>. سيؤكّدون التفاصيل خلال ٢٤ ساعة.",
+    "subtitleGeneric": "تم دفع العربون وتم إشعار المنظّم. سيؤكّدون التفاصيل خلال ٢٤ ساعة.",
+    "rows": {
+      "planner": "المنظّم",
+      "package": "الباقة",
+      "date": "التاريخ",
+      "status": "الحالة"
+    },
+    "statusConfirmed": "مؤكّد",
+    "message": "محادثة",
+    "done": "تم"
+  },
+  "review": {
+    "title": "أضف تقييماً",
+    "packageAndDate": "⁦{{package}} · {{date}}⁩",
+    "ratingLabels": [
+      "",
+      "ضعيف",
+      "مقبول",
+      "جيد",
+      "رائع",
+      "ممتاز"
+    ],
+    "whatStoodOut": "ما الذي أعجبك؟",
+    "tags": {
+      "professional": "احترافي",
+      "onTime": "في الوقت",
+      "greatValue": "سعر ممتاز",
+      "creative": "إبداعي",
+      "responsive": "سريع الاستجابة",
+      "flawlessSetup": "تجهيز متقن"
+    },
+    "commentLabel": "أخبر الآخرين عن تجربتك",
+    "commentPlaceholder": "سحري تمامًا — كل تفصيل في زفافنا كان مثاليًا. الفريق احترافي وهادئ وحوّل تصوّرنا الوردي والذهبي إلى واقع بديع. أنصح بهم بشدّة! 💜",
+    "addPhotos": "أضف صوراً (اختياري)",
+    "submitReview": "إرسال التقييم"
+  },
+  "myBookings": {
+    "title": "حجوزاتي",
+    "empty": "لا حجوزات بعد",
+    "emptySub": "اقبل عرضًا ووقّع العقد لتأكيد حجزك",
+    "status": {
+      "confirmed": "مؤكَّد",
+      "pending": "قيد الانتظار"
+    }
+  },
+  "bookingDetail": {
+    "title": "تفاصيل الحجز",
+    "timelineTitle": "الجدول الزمني للمناسبة",
+    "timeline": {
+      "confirmed": {
+        "title": "تأكيد الحجز",
+        "desc": "تم استلام العربون"
+      },
+      "planning": {
+        "title": "التخطيط والتصميم",
+        "desc": "لوحة الإلهام + اختيار القاعة"
+      },
+      "walkthrough": {
+        "title": "المعاينة النهائية",
+        "desc": "قبل أسبوع من الموعد"
+      },
+      "eventDay": {
+        "title": "يوم المناسبة"
+      }
+    },
+    "payment": "الدفع",
+    "deposit": "العربون (٢٠٪)",
+    "balance": "المتبقّي",
+    "total": "الإجمالي",
+    "paid": "مدفوع",
+    "depositDue": "العربون مستحق",
+    "dueBeforeEvent": "مستحق قبل المناسبة",
+    "review": "تقييم",
+    "payBalance": "دفع المتبقّي"
+  },
+  "myRequests": {
+    "title": "طلباتي",
+    "filters": {
+      "all": "الكل",
+      "open": "مفتوحة",
+      "booked": "محجوزة"
+    },
+    "offers": "عروض",
+    "offersReceived": "عروض مستلمة",
+    "new": "{{count, number}} جديد",
+    "compare": "قارن",
+    "viewBooking": "عرض الحجز",
+    "postNew": "انشر طلباً جديداً",
+    "guests": "{{count, number}} ضيف",
+    "emptyTitle": "لا توجد طلبات بعد",
+    "emptySub": "انشر مناسبتك وابدأ باستلام عروض أسعار مخصّصة من منظّمين موثّقين.",
+    "emptyCta": "نشر طلب"
+  },
+  "requestSent": {
+    "title": "تم نشر طلبك!",
+    "subtitle": "المنظّمون الموثّقون يراجعون مناسبتك الآن. ستبدأ بتلقي <bold>عروض مخصّصة</bold> خلال ساعات قليلة — قارن واختر ما يناسبك.",
+    "steps": {
+      "posted": "تم نشر الطلب",
+      "quoting": "المنظّمون يجهّزون العروض",
+      "compare": "قارن العروض",
+      "sign": "اختر ووقّع"
+    },
+    "viewOffers": "عرض العروض",
+    "backToDiscover": "العودة للتصفح"
+  },
+  "fields": {
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "you@email.com",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "ندى الراشد",
+    "mobile": "رقم الجوال",
+    "mobilePlaceholder": "+966 50 123 4567"
+  },
+  "profile": {
+    "title": "حسابي",
+    "edit": "تعديل",
+    "eventsPlanned": "مناسبات مخططة",
+    "saved": "المحفوظة",
+    "avgRating": "متوسط التقييم",
+    "rows": {
+      "savedPlanners": "المنظمون المحفوظون",
+      "paymentMethods": "طرق الدفع",
+      "notifications": "الإشعارات",
+      "settings": "الإعدادات",
+      "helpSupport": "المساعدة والدعم",
+      "language": "اللغة",
+      "appearance": "المظهر"
+    },
+    "appearance": {
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "النظام"
+    },
+    "signOut": "تسجيل الخروج",
+    "language": "اللغة"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "empty": "لا توجد إشعارات بعد",
+    "emptyNote": "ستظهر هنا العروض الجديدة وتحديثات الحجز.",
+    "markRead": "تعيين الكل كمقروء"
+  },
+  "toast": {
+    "requestPosted": "تم نشر الطلب! سيتواصل معك المنظّمون قريبًا.",
+    "contractSigned": "تم توقيع الاتفاقية — تابع إلى الدفع.",
+    "bookingConfirmed": "تم تأكيد الحجز! وديعتك محفوظة.",
+    "reviewSubmitted": "تم إرسال التقييم. شكرًا لك!",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+  },
+  "search": {
+    "recent": "البحث الأخير",
+    "allPlanners": "كل المنظّمين",
+    "resultsFor": "نتائج لـ \"{{q}}\"",
+    "found": "{{count, number}} نتيجة",
+    "noResults": "لا يوجد منظّمون يطابقون بحثك.",
+    "eventType": "نوع المناسبة",
+    "allTypes": "الكل",
+    "budgetUpTo": "الميزانية · حتى {{amount}}",
+    "sortBy": "ترتيب حسب",
+    "sortRating": "الأعلى تقييماً",
+    "sortPriceAsc": "السعر: تصاعدي",
+    "sortPriceDesc": "السعر: تنازلي",
+    "showResults": "عرض النتائج",
+    "reset": "إعادة تعيين"
+  }
+}

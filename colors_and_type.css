@@ -1,0 +1,225 @@
+/* ============================================================
+   رتّبها · Rattibha — Design Tokens
+   Color + Type foundations for a bilingual (RTL + LTR) event-
+   planning marketplace. Plan beautifully. Celebrate effortlessly.
+   Brand: Royal Purple + Soft Gold on Off-White.
+   ------------------------------------------------------------
+   NOTE: legacy token names (--rose-*, --plum-*, --cream …) are
+   kept and REMAPPED to the new palette so existing specimens
+   keep working. --rose-* === the purple brand scale.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=Poppins:wght@300;400;500;600;700&family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap');
+
+:root {
+  /* ---------------------------------------------------------
+     1. CORE PALETTE — Royal Purple + Soft Gold
+     --------------------------------------------------------- */
+
+  /* Royal Purple — the primary brand color (legacy: --rose-*) · official #4B0082 */
+  --rose-50:  #F2EAF7;
+  --rose-100: #E4D4EF;
+  --rose-200: #C9A9DE;
+  --rose-300: #A875C9;
+  --rose-400: #7E3FAE;
+  --rose-500: #4B0082;   /* PRIMARY · Royal Purple #4B0082 */
+  --rose-600: #3D0069;
+  --rose-700: #2E014F;
+  --rose-800: #21013A;
+
+  /* explicit purple aliases */
+  --purple-50:  #F2EAF7;
+  --purple-100: #E4D4EF;
+  --purple-200: #C9A9DE;
+  --purple-300: #A875C9;
+  --purple-400: #7E3FAE;
+  --purple-500: #4B0082;
+  --purple-600: #3D0069;
+  --purple-700: #2E014F;
+  --purple-800: #21013A;
+
+  /* Dark text / deep aubergine (legacy: --plum-*) */
+  --plum-900: #2B2233;   /* Dark Text #2B2233 */
+  --plum-800s:#352A41;
+  --plum-700: #41324F;
+  --plum-600: #574667;
+  --plum-500: #6E5C80;
+
+  /* Soft Gold — premium accent · official #DAA520 */
+  --gold-200: #F2E2A6;
+  --gold-300: #EBD083;
+  --gold-400: #E3BE55;
+  --gold-500: #DAA520;   /* ACCENT · Gold #DAA520 */
+  --gold-600: #B5881A;
+
+  /* Lavender — soft celebratory secondary (the logo ribbon) */
+  --lavender-50:  #F4EFF9;
+  --lavender-100: #EAE2F4;
+  --lavender-200: #D8C9E8;
+  --lavender-300: #B6A1D4;   /* SECONDARY · ribbon #B6A1D4 */
+  --lavender-400: #9C82C2;
+
+  /* Emerald — success only */
+  --emerald-100:#DCEFE4;
+  --emerald-500:#2E9E68;
+  --emerald-600:#1F7B4F;
+
+  /* ---------------------------------------------------------
+     CELEBRATION ACCENTS — used sparingly for category tags etc.
+     Kept muted/jewel so they sit under the purple+gold system.
+     --------------------------------------------------------- */
+  --coral-100:  #F7E0D8;  --coral-500:  #C9663F;  --coral-600: #A84E2C;
+  --marigold-100:#F6E7C4; --marigold-500:#D4992F; --marigold-600:#B27C1E;
+  --grape-100:  #EADFF7;  --grape-500:  #7B4FB0;  --grape-600: #623C90;
+  --sky-100:    #D9E8F5;  --sky-500:    #3E7EB0;  --sky-600:   #2C6390;
+
+  /* Neutrals (off-white → ink) — softly cool to match #FAF7F2 */
+  --cream:    #FAF7F2;   /* Off-White canvas #FAF7F2 */
+  --ivory:    #FFFFFF;   /* raised surface */
+  --warm-50:  #F4F0EA;
+  --warm-100: #ECE6DE;
+  --warm-200: #E0D8CE;
+  --warm-300: #C9BFB3;
+  --warm-400s:#A99E92;
+  --warm-500: #847A70;
+  --warm-600: #635A52;
+  --warm-700: #423B35;
+
+  /* ---------------------------------------------------------
+     2. SEMANTIC COLOR ROLES
+     --------------------------------------------------------- */
+  --bg-canvas:    var(--cream);
+  --bg-surface:   var(--ivory);
+  --bg-raised:    var(--ivory);
+  --bg-sunken:    var(--warm-50);
+  --bg-inverse:   var(--plum-900);
+  --bg-blush:     var(--purple-50);
+
+  --fg1: var(--plum-900);     /* primary text */
+  --fg2: #5C5266;             /* secondary text */
+  --fg3: #877E92;             /* tertiary / captions */
+  --fg-on-brand: #FBF7FF;     /* text on purple */
+  --fg-on-dark:  #EFE9F3;     /* text on dark */
+
+  --brand:        var(--purple-500);
+  --brand-hover:  var(--purple-600);
+  --brand-press:  var(--purple-700);
+  --brand-subtle: var(--purple-50);
+  --accent:       var(--gold-500);
+  --accent-soft:  var(--gold-200);
+
+  --border:       #E9E1EE;    /* hairline on off-white (faint purple-gray) */
+  --border-strong:#D8CDE0;
+  --border-brand: var(--purple-200);
+
+  --success: var(--emerald-500);
+  --success-bg: var(--emerald-100);
+  --warning: #C9871F;
+  --warning-bg: #F6E8C9;
+  --danger:  #C24436;
+  --danger-bg: #F6DED9;
+  --info:    var(--purple-500);
+  --info-bg: var(--purple-50);
+
+  --focus-ring: var(--purple-400);
+
+  /* ---------------------------------------------------------
+     3. TYPOGRAPHY — families
+     Latin display: Playfair Display (elegant high-contrast serif)
+     Latin UI/body: Poppins (clean geometric sans)
+     Arabic display: El Messiri · Arabic UI/body: Tajawal
+     --------------------------------------------------------- */
+  --font-display: 'Playfair Display', 'El Messiri', Georgia, serif;
+  --font-sans:    'Poppins', 'Tajawal', system-ui, sans-serif;
+  --font-ar-display: 'El Messiri', 'Playfair Display', serif;
+  --font-ar-sans:    'Tajawal', 'Poppins', system-ui, sans-serif;
+
+  /* Type scale (Latin reference; Arabic scales ~1.05×).
+     Line-heights (--lh-*) and letter-spacings (--ls-*) are typographic. */
+  --fs-display: 76px;
+  --lh-display: 1.0;     /* @kind font */
+  --ls-display: -0.01em; /* @kind font */
+  --fs-h1: 52px;
+  --lh-h1: 1.06;         /* @kind font */
+  --ls-h1: -0.01em;      /* @kind font */
+  --fs-h2: 38px;
+  --lh-h2: 1.1;          /* @kind font */
+  --ls-h2: -0.005em;     /* @kind font */
+  --fs-h3: 27px;
+  --lh-h3: 1.2;          /* @kind font */
+  --ls-h3: 0;            /* @kind font */
+  --fs-h4: 21px;
+  --lh-h4: 1.3;          /* @kind font */
+  --ls-h4: 0;            /* @kind font */
+  --fs-lead: 19px;
+  --lh-lead: 1.55;       /* @kind font */
+  --fs-body: 16px;
+  --lh-body: 1.65;       /* @kind font */
+  --fs-small: 14px;
+  --lh-small: 1.55;      /* @kind font */
+  --fs-caption: 12.5px;
+  --lh-caption: 1.45;    /* @kind font */
+  --fs-overline: 12px;
+  --lh-overline: 1.2;    /* @kind font */
+  --ls-overline: 0.18em; /* @kind font */
+
+  /* ---------------------------------------------------------
+     4. SPACING — 4px base
+     --------------------------------------------------------- */
+  --sp-1: 4px;   --sp-2: 8px;   --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 20px;  --sp-6: 24px;  --sp-8: 32px;  --sp-10: 40px;
+  --sp-12: 48px; --sp-16: 64px; --sp-20: 80px; --sp-24: 96px;
+
+  /* ---------------------------------------------------------
+     5. RADII
+     --------------------------------------------------------- */
+  --r-xs: 6px;  --r-sm: 10px; --r-md: 14px; --r-lg: 20px;
+  --r-xl: 28px; --r-2xl: 36px; --r-pill: 999px;
+
+  /* ---------------------------------------------------------
+     6. SHADOWS — soft, purple-tinted
+     --------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(43,34,51,0.06);
+  --shadow-sm: 0 2px 6px rgba(43,34,51,0.07);
+  --shadow-md: 0 8px 22px -8px rgba(43,34,51,0.16);
+  --shadow-lg: 0 18px 44px -16px rgba(43,34,51,0.22);
+  --shadow-brand: 0 12px 28px -10px rgba(75,0,130,0.45);
+  --shadow-gold:  0 10px 24px -10px rgba(218,165,32,0.5);
+
+  /* Motion (not a token kind the compiler tracks → marked other) */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);   /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur: 240ms;      /* @kind other */
+  --dur-slow: 420ms; /* @kind other */
+}
+
+/* ============================================================
+   SEMANTIC TYPE CLASSES
+   Use .ar on a container to switch to Arabic families + RTL.
+   ============================================================ */
+
+.display, .h1, .h2, .h3 { font-family: var(--font-display); font-weight: 600; color: var(--fg1); }
+.display { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: var(--ls-display); font-weight: 700; }
+.h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); font-weight: 700; }
+.h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); }
+.h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); font-weight: 600; }
+.h4 { font-family: var(--font-sans); font-size: var(--fs-h4); line-height: var(--lh-h4); font-weight: 600; color: var(--fg1); }
+
+.lead  { font-family: var(--font-sans); font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--fg2); font-weight: 400; }
+.body  { font-family: var(--font-sans); font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg1); font-weight: 400; }
+.small { font-family: var(--font-sans); font-size: var(--fs-small); line-height: var(--lh-small); color: var(--fg2); }
+.caption { font-family: var(--font-sans); font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--fg3); }
+.overline {
+  font-family: var(--font-sans); font-size: var(--fs-overline); line-height: var(--lh-overline);
+  letter-spacing: var(--ls-overline); text-transform: uppercase; font-weight: 600; color: var(--accent);
+}
+
+/* Arabic context */
+.ar { direction: rtl; text-align: right; }
+.ar.display, .ar .display,
+.ar.h1, .ar .h1, .ar.h2, .ar .h2, .ar.h3, .ar .h3 { font-family: var(--font-ar-display); font-weight: 600; }
+.ar.h4, .ar .h4, .ar.lead, .ar .lead, .ar.body, .ar .body,
+.ar.small, .ar .small, .ar.caption, .ar .caption { font-family: var(--font-ar-sans); }
+.ar.display, .ar .display { font-size: 80px; }
+.ar.overline, .ar .overline { letter-spacing: 0; font-family: var(--font-ar-sans); }

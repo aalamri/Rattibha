@@ -1,0 +1,47 @@
+<!doctype html>
+<!-- @dsCard group="UI Kit — App" name="Polish · States" subtitle="Skeletons, empty states, toasts" viewport="900x620" -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rattibha · States</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);font-family:var(--font-sans);padding:26px;color:var(--fg1)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:900px}
+  .panel{background:var(--bg-canvas);border:1px solid var(--border);border-radius:18px;padding:18px;overflow:hidden}
+  .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  i[class^="ph"],i[class*=" ph"]{line-height:1;display:inline-block}
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="panel"><div class="lbl">Skeleton · planner row</div><div id="s1"></div></div>
+  <div class="panel"><div class="lbl">Empty state</div><div id="s2"></div></div>
+  <div class="panel"><div class="lbl">Toasts</div><div id="s3" style="display:flex;flex-direction:column;gap:12px"></div></div>
+  <div class="panel"><div class="lbl">Spinner &amp; featured skeleton</div><div id="s4" style="display:flex;align-items:center;gap:22px"></div></div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="ui.jsx"></script>
+<script type="text/babel" src="states.jsx"></script>
+<script type="text/babel">
+ReactDOM.createRoot(document.getElementById('s1')).render(<React.Fragment><PlannerRowSkeleton/></React.Fragment>);
+ReactDOM.createRoot(document.getElementById('s2')).render(
+  <EmptyState compact icon="ph-heart" title="No saved planners yet"
+    body="Tap the heart on any planner to save them here for later." cta="Discover planners" />);
+ReactDOM.createRoot(document.getElementById('s3')).render(<React.Fragment>
+  <Toast tone="success" title="Review submitted" sub="Thank you for sharing your experience!" />
+  <Toast tone="info" title="Request posted" sub="Planners in Riyadh are quoting now." />
+  <Toast tone="warning" title="Deposit due soon" sub="Balance is due 7 days before your event." />
+</React.Fragment>);
+ReactDOM.createRoot(document.getElementById('s4')).render(<React.Fragment>
+  <Spinner size={34}/><div style={{flex:1}}><FeaturedCardSkeleton/></div>
+</React.Fragment>);
+</script>
+</body>
+</html>
