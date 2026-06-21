@@ -3,6 +3,7 @@ import { Image } from 'phosphor-react-native';
 import type { ReactNode } from 'react';
 import { View, type ViewStyle } from 'react-native';
 
+import { useIsRTL } from '@/i18n/useIsRTL';
 import { gradients } from '@/theme/colors';
 import { Badge } from './Badge';
 
@@ -15,6 +16,7 @@ export interface PhotoProps {
 
 /** Gradient placeholder for a planner/event photo — matches `Photo` in ui.jsx. */
 export function Photo({ seed = 0, style, label, children }: PhotoProps) {
+  const isRTL = useIsRTL();
   const [from, to] = gradients[seed % gradients.length];
   return (
     <LinearGradient
@@ -26,7 +28,7 @@ export function Photo({ seed = 0, style, label, children }: PhotoProps) {
         <Image size={30} color="rgba(255,255,255,0.28)" weight="regular" />
       </View>
       {label && (
-        <View style={{ position: 'absolute', top: 8, left: 8 }}>
+        <View style={{ position: 'absolute', top: 8, [isRTL ? 'right' : 'left']: 8 }}>
           <Badge bg="rgba(43,34,51,0.35)" fg="rgba(255,255,255,0.85)">
             {label}
           </Badge>
