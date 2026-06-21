@@ -100,7 +100,7 @@ export default function PlannerScreen() {
         <View style={{ backgroundColor: theme.bgCanvas, borderTopLeftRadius: 24, borderTopRightRadius: 24, marginTop: -22, paddingHorizontal: 18, paddingTop: 18 }}>
           <View style={[row, { justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 }]}>
             <View style={{ flex: 1 }}>
-              <Text variant="h2" style={{ lineHeight: 32 }}>
+              <Text variant="h2">
                 {planner.name}
               </Text>
               <View style={[row, { alignItems: 'center', gap: 4, marginTop: 4 }]}>

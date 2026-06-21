@@ -37,8 +37,8 @@ interface VariantSpec {
 const VARIANTS: Record<TypographyVariant, VariantSpec> = {
   display: { size: 76, arSize: 80, lineHeight: 1.0, letterSpacingEm: -0.01, family: 'display', weight: 'bold', color: 'fg1' },
   h1: { size: 52, lineHeight: 1.06, letterSpacingEm: -0.01, family: 'display', weight: 'bold', color: 'fg1' },
-  h2: { size: 38, lineHeight: 1.1, letterSpacingEm: -0.005, family: 'display', weight: 'semibold', color: 'fg1' },
-  h3: { size: 27, lineHeight: 1.2, letterSpacingEm: 0, family: 'display', weight: 'semibold', color: 'fg1' },
+  h2: { size: 24, lineHeight: 1.15, letterSpacingEm: -0.005, family: 'display', weight: 'semibold', color: 'fg1' },
+  h3: { size: 19, lineHeight: 1.25, letterSpacingEm: 0, family: 'display', weight: 'semibold', color: 'fg1' },
   h4: { size: 21, lineHeight: 1.3, letterSpacingEm: 0, family: 'sans', weight: 'semibold', color: 'fg1' },
   lead: { size: 19, lineHeight: 1.55, letterSpacingEm: 0, family: 'sans', weight: 'regular', color: 'fg2' },
   body: { size: 16, lineHeight: 1.65, letterSpacingEm: 0, family: 'sans', weight: 'regular', color: 'fg1' },

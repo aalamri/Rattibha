@@ -54,7 +54,7 @@ export default function ConfirmScreen() {
           </View>
         </View>
 
-        <Text variant="h2" style={{ textAlign: 'center', lineHeight: 42 }}>
+        <Text variant="h2" style={{ textAlign: 'center' }}>
           {t('confirm.title')}
         </Text>
 

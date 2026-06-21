@@ -114,7 +114,7 @@ export default function ContractScreen() {
               {isRTL ? <ArrowLeft size={18} color={theme.fg1} style={{ transform: [{ scaleX: -1 }] }} /> : <ArrowLeft size={18} color={theme.fg1} />}
             </Pressable>
             <View style={{ flex: 1, minWidth: 0 }}>
-              <Text variant="h3" style={{ lineHeight: 28 }}>
+              <Text variant="h3">
                 {t('contract.title')}
               </Text>
               <Text variant="small" color={theme.fg2} style={{ marginTop: 1 }}>

@@ -124,7 +124,7 @@ export default function ProfileScreen() {
       <SafeAreaView edges={['top']}>
         {/* header row */}
         <View style={[row, { justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18, paddingTop: 6, marginBottom: 14 }]}>
-          <Text variant="h2" style={{ lineHeight: 36 }}>
+          <Text variant="h2">
             {t('profile.title')}
           </Text>
         </View>
