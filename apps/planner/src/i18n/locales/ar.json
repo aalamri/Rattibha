@@ -31,7 +31,37 @@
     "signIn": "تسجيل الدخول",
     "signingIn": "جارٍ تسجيل الدخول…",
     "signOut": "تسجيل الخروج",
-    "error": "بريد إلكتروني أو كلمة مرور غير صحيحة. جرّب حساب التجربة: planner@lumiere-events.sa / password123"
+    "error": "بريد إلكتروني أو كلمة مرور غير صحيحة. جرّب حساب التجربة: planner@lumiere-events.sa / password123",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "errors": {
+      "weakPassword": "يجب أن تتكون كلمة المرور من ٦ أحرف على الأقل.",
+      "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
+      "passwordMismatch": "كلمتا المرور غير متطابقتين.",
+      "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+    },
+    "forgotPasswordPage": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل لك رمز تحقق.",
+      "emailLabel": "البريد الإلكتروني",
+      "sendCode": "إرسال الرمز",
+      "rememberedIt": "تذكّرتها؟ ",
+      "backToSignIn": "العودة لتسجيل الدخول"
+    },
+    "verifyOtpPage": {
+      "title": "تحقّق من بريدك الإلكتروني",
+      "subtitleWithEmail": "أرسلنا رمزاً مكوّناً من ٦ أرقام إلى {{email}}",
+      "codeLabel": "رمز التحقق",
+      "resendIn": "إعادة إرسال الرمز خلال 0:{{seconds}}",
+      "resendCode": "إعادة إرسال الرمز",
+      "verifyAndContinue": "تحقّق واستمر"
+    },
+    "resetPasswordPage": {
+      "title": "تعيين كلمة مرور جديدة",
+      "subtitle": "اختر كلمة مرور جديدة لحسابك.",
+      "newPasswordLabel": "كلمة المرور الجديدة",
+      "confirmPasswordLabel": "تأكيد كلمة المرور الجديدة",
+      "resetButton": "إعادة تعيين كلمة المرور"
+    }
   },
   "nav": {
     "overview": "نظرة عامة",

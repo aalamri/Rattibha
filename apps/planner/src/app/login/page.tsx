@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type FormEvent } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { EnvelopeSimple, Globe, Lock } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
@@ -87,6 +88,10 @@ export default function LoginPage() {
               />
             </div>
           </label>
+
+          <Link href="/forgot-password" className="self-end text-[12.5px] font-bold text-brand">
+            {t('auth.forgotPassword')}
+          </Link>
 
           {error && <p className="text-[12.5px] text-danger">{error}</p>}
 

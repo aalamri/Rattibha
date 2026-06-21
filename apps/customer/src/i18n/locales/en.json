@@ -70,6 +70,7 @@
       "emailInUse": "An account with this email already exists.",
       "weakPassword": "Password must be at least 6 characters.",
       "invalidCode": "That code didn't work. Please try again.",
+      "passwordMismatch": "Passwords don't match.",
       "generic": "Something went wrong. Please try again."
     },
     "onboarding": {
@@ -122,6 +123,11 @@
       "resendIn": "Resend code in <time>0:{{seconds}}</time>",
       "resendCode": "Resend code",
       "verifyAndContinue": "Verify & continue"
+    },
+    "resetPassword": {
+      "title": "Set a new password",
+      "subtitle": "Choose a new password for your account.",
+      "resetButton": "Reset password"
     }
   },
   "placeholders": {
@@ -388,6 +394,8 @@
     "emailPlaceholder": "you@email.com",
     "password": "Password",
     "passwordPlaceholder": "••••••••",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
     "fullName": "Full name",
     "fullNamePlaceholder": "Nada Al-Rashid",
     "mobile": "Mobile number",

@@ -70,6 +70,7 @@
       "emailInUse": "يوجد حساب مسجّل بهذا البريد الإلكتروني مسبقاً.",
       "weakPassword": "يجب أن تتكون كلمة المرور من ٦ أحرف على الأقل.",
       "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
+      "passwordMismatch": "كلمتا المرور غير متطابقتين.",
       "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
     },
     "onboarding": {
@@ -122,6 +123,11 @@
       "resendIn": "إعادة إرسال الرمز خلال <time>0:{{seconds}}</time>",
       "resendCode": "إعادة إرسال الرمز",
       "verifyAndContinue": "تحقّق واستمر"
+    },
+    "resetPassword": {
+      "title": "تعيين كلمة مرور جديدة",
+      "subtitle": "اختر كلمة مرور جديدة لحسابك.",
+      "resetButton": "إعادة تعيين كلمة المرور"
     }
   },
   "placeholders": {
@@ -388,6 +394,8 @@
     "emailPlaceholder": "you@email.com",
     "password": "كلمة المرور",
     "passwordPlaceholder": "••••••••",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
     "fullName": "الاسم الكامل",
     "fullNamePlaceholder": "ندى الراشد",
     "mobile": "رقم الجوال",
