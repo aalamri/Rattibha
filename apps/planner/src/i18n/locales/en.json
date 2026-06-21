@@ -285,7 +285,18 @@
     "addEvent": "Add event / block date",
     "empty": "No events this month",
     "prevMonth": "Previous month",
-    "nextMonth": "Next month"
+    "nextMonth": "Next month",
+    "blocked": "Blocked",
+    "removeBlocked": "Remove blocked date",
+    "blockDateModal": {
+      "title": "Block a date",
+      "subtitle": "Mark a date as unavailable — it won't be offered to clients.",
+      "date": "Date",
+      "label": "Label (optional)",
+      "labelPlaceholder": "e.g. Vacation, Site visit",
+      "cancel": "Cancel",
+      "save": "Block date"
+    }
   },
   "earnings": {
     "title": "Earnings",

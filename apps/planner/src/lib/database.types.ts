@@ -187,6 +187,18 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['notifications']['Row']>;
         Relationships: [];
       };
+      planner_blocked_dates: {
+        Row: {
+          id: string;
+          planner_id: string;
+          date: string;
+          label: string | null;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['planner_blocked_dates']['Row']> & { planner_id: string; date: string };
+        Update: Partial<Database['public']['Tables']['planner_blocked_dates']['Row']>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
