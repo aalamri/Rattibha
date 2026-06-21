@@ -63,7 +63,7 @@ export default function RequestSentScreen() {
           </View>
         </View>
 
-        <Text variant="h2" style={{ textAlign: 'center', lineHeight: 42 }}>
+        <Text variant="h2" style={{ textAlign: 'center' }}>
           {t('requestSent.title')}
         </Text>
 

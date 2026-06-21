@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -93,10 +94,11 @@ export default function RequestsScreen() {
   const shown = requests.filter((r) => filter === 'all' || uiStatus(r.status) === filter);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: theme.bgCanvas }} contentContainerStyle={{ paddingBottom: 110 }}>
+    <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: theme.bgCanvas }}>
+    <ScrollView contentContainerStyle={{ paddingBottom: 110 }}>
       {/* header */}
       <View style={[row, { justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 18, paddingTop: 6, marginBottom: 12 }]}>
-        <Text variant="h2" style={{ lineHeight: 36 }}>
+        <Text variant="h2">
           {t('myRequests.title')}
         </Text>
         <Pressable
@@ -285,5 +287,6 @@ export default function RequestsScreen() {
         </Pressable>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }

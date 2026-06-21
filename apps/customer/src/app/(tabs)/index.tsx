@@ -202,7 +202,7 @@ export default function DiscoverScreen() {
               paddingBottom: 16,
               backgroundColor: 'rgba(43,34,51,0.35)',
             }}>
-            <Text variant="h3" color="#fff" style={{ lineHeight: 30 }}>
+            <Text variant="h3" color="#fff">
               {t('discover.heroTitle')}
             </Text>
             <Text variant="caption" color="rgba(255,255,255,0.85)" style={{ marginTop: 4 }}>
