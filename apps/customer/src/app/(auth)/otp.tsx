@@ -43,7 +43,7 @@ export default function OTPScreen() {
       setError(t('auth.errors.invalidCode'));
       return;
     }
-    router.replace('/(tabs)');
+    router.replace('/(auth)/reset-password');
   };
 
   return (

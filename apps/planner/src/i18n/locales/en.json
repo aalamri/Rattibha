@@ -31,7 +31,37 @@
     "signIn": "Sign in",
     "signingIn": "Signing in…",
     "signOut": "Sign out",
-    "error": "Invalid email or password. Try the seed account: planner@lumiere-events.sa / password123"
+    "error": "Invalid email or password. Try the seed account: planner@lumiere-events.sa / password123",
+    "forgotPassword": "Forgot password?",
+    "errors": {
+      "weakPassword": "Password must be at least 6 characters.",
+      "invalidCode": "That code didn't work. Please try again.",
+      "passwordMismatch": "Passwords don't match.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "forgotPasswordPage": {
+      "title": "Forgot password?",
+      "subtitle": "Enter the email linked to your account and we'll send a verification code.",
+      "emailLabel": "Email",
+      "sendCode": "Send code",
+      "rememberedIt": "Remembered it? ",
+      "backToSignIn": "Back to sign in"
+    },
+    "verifyOtpPage": {
+      "title": "Verify your email",
+      "subtitleWithEmail": "We sent a 6-digit code to {{email}}",
+      "codeLabel": "Verification code",
+      "resendIn": "Resend code in 0:{{seconds}}",
+      "resendCode": "Resend code",
+      "verifyAndContinue": "Verify & continue"
+    },
+    "resetPasswordPage": {
+      "title": "Set a new password",
+      "subtitle": "Choose a new password for your account.",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "resetButton": "Reset password"
+    }
   },
   "nav": {
     "overview": "Overview",
