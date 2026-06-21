@@ -240,6 +240,16 @@
       "website": "رابط الموقع",
       "websitePlaceholder": "https://",
       "city": "المدينة"
+    },
+    "servicesManager": {
+      "addService": "إضافة خدمة",
+      "newService": "خدمة جديدة",
+      "image": "الصورة",
+      "namePlaceholder": "اسم الخدمة",
+      "descriptionPlaceholder": "وصف مختصر",
+      "priceLabel": "تبدأ من (ر.س)",
+      "delete": "حذف الخدمة",
+      "empty": "لا توجد خدمات بعد — أضف أول خدمة أدناه."
     }
   },
   "toast": {

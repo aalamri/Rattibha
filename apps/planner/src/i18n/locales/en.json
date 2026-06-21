@@ -240,6 +240,16 @@
       "website": "Website URL",
       "websitePlaceholder": "https://",
       "city": "City"
+    },
+    "servicesManager": {
+      "addService": "Add service",
+      "newService": "New service",
+      "image": "Image",
+      "namePlaceholder": "Service name",
+      "descriptionPlaceholder": "Short description",
+      "priceLabel": "From price (SAR)",
+      "delete": "Delete service",
+      "empty": "No services yet — add your first one below."
     }
   },
   "toast": {
