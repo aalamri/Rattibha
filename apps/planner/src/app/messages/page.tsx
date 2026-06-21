@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { CalendarPlus, PaperPlaneRight, Paperclip } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +17,7 @@ import { supabase } from '@/lib/supabase';
 
 interface Conversation {
   requestId: string;
+  offerId: string;
   who: string;
   initials: string;
   seed: number;
@@ -43,10 +45,11 @@ export default function MessagesPage() {
 
     supabase
       .from('offers')
-      .select('request_id, requests(id, profiles(full_name, avatar_seed))')
+      .select('id, request_id, requests(id, profiles(full_name, avatar_seed))')
       .eq('planner_id', session.user.id)
       .then(({ data }) => {
         const rows = (data ?? []) as unknown as Array<{
+          id: string;
           request_id: string;
           requests: { id: string; profiles: { full_name: string; avatar_seed: number } | null } | null;
         }>;
@@ -56,6 +59,7 @@ export default function MessagesPage() {
           if (byRequest.has(r.request_id)) return;
           byRequest.set(r.request_id, {
             requestId: r.request_id,
+            offerId: r.id,
             who: r.requests?.profiles?.full_name ?? '—',
             initials: (r.requests?.profiles?.full_name ?? '?').charAt(0),
             seed: r.requests?.profiles?.avatar_seed ?? 0,
@@ -230,9 +234,11 @@ export default function MessagesPage() {
                 <div className="flex items-center gap-2.5 border-b border-border px-5 py-3">
                   <Avatar seed={activeConversation.seed} size={40} initials={activeConversation.initials} />
                   <div className="flex-1 text-[14.5px] font-semibold text-fg1">{activeConversation.who}</div>
-                  <Button variant="secondary" size="sm" icon={CalendarPlus}>
-                    {t('messages.createBooking')}
-                  </Button>
+                  <Link href={`/offers/${activeConversation.offerId}`}>
+                    <Button variant="secondary" size="sm" icon={CalendarPlus}>
+                      {t('messages.createBooking')}
+                    </Button>
+                  </Link>
                 </div>
                 <div className="flex flex-1 flex-col gap-2.5 overflow-y-auto bg-bg-app p-5.5" style={{ direction: 'ltr' }}>
                   {thread.map((m) => {
