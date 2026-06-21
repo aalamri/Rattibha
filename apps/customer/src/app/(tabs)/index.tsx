@@ -262,7 +262,15 @@ export default function DiscoverScreen() {
         ref={categoriesScrollRef}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ flexDirection: 'row', gap: 9, paddingHorizontal: 18, paddingTop: 12, paddingBottom: 6 }}>
+        contentContainerStyle={{
+          flexDirection: 'row',
+          gap: 9,
+          paddingHorizontal: 18,
+          paddingTop: 12,
+          paddingBottom: 6,
+          minWidth: '100%',
+          justifyContent: isRTL ? 'flex-end' : 'flex-start',
+        }}>
         {orderedCategoryKeys.map((key) => {
           const on = category === key;
           const c = categoryColors[key];
@@ -313,7 +321,14 @@ export default function DiscoverScreen() {
           ref={featuredScrollRef}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ flexDirection: 'row', gap: 13, paddingHorizontal: 18, paddingVertical: 4 }}>
+          contentContainerStyle={{
+            flexDirection: 'row',
+            gap: 13,
+            paddingHorizontal: 18,
+            paddingVertical: 4,
+            minWidth: '100%',
+            justifyContent: isRTL ? 'flex-end' : 'flex-start',
+          }}>
           {featured.map((p) => (
             <FeaturedCard key={p.id} planner={p} onPress={openPlanner} />
           ))}
