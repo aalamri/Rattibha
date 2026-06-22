@@ -138,7 +138,13 @@ export default function PlannerScreen() {
             ref={galleryScrollRef}
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ flexDirection: 'row', gap: 9, paddingTop: 14 }}>
+            contentContainerStyle={{
+              flexDirection: 'row',
+              gap: 9,
+              paddingTop: 14,
+              minWidth: '100%',
+              justifyContent: isRTL ? 'flex-end' : 'flex-start',
+            }}>
             {(isRTL ? [4, 3, 2, 1] : [1, 2, 3, 4]).map((i) => (
               <Photo key={i} seed={planner.seed + i} style={{ width: 108, height: 78, borderRadius: radii.sm }} />
             ))}
@@ -154,7 +160,14 @@ export default function PlannerScreen() {
                 ref={servicesScrollRef}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ flexDirection: 'row', gap: 11, paddingTop: 11, paddingBottom: 2 }}>
+                contentContainerStyle={{
+                  flexDirection: 'row',
+                  gap: 11,
+                  paddingTop: 11,
+                  paddingBottom: 2,
+                  minWidth: '100%',
+                  justifyContent: isRTL ? 'flex-end' : 'flex-start',
+                }}>
                 {(isRTL ? [...planner.services].reverse() : planner.services).map((service, i) => (
                   <ServiceCard key={i} service={service} />
                 ))}
