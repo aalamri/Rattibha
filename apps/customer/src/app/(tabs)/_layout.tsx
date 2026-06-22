@@ -22,6 +22,8 @@ const TAB_ICONS: Record<string, Icon> = {
   profile: User,
 };
 
+const TAB_NAMES = ['index', 'requests', 'bookings', 'messages', 'profile'] as const;
+
 /** Bottom tab navigator — matches `BottomNav` in screens2.jsx. */
 export default function TabsLayout() {
   const theme = useTheme();
@@ -29,6 +31,10 @@ export default function TabsLayout() {
   const isRTL = useIsRTL();
   const activeFont = isRTL ? fonts.arSans.bold : fonts.sans.bold;
   const inactiveFont = isRTL ? fonts.arSans.semibold : fonts.sans.semibold;
+  // The native tab bar always renders tabs in array order — unlike CSS flex,
+  // it never auto-mirrors for RTL — so Discover (the primary/first tab)
+  // needs to be explicitly reordered to the right end in Arabic.
+  const tabOrder = isRTL ? [...TAB_NAMES].reverse() : TAB_NAMES;
 
   return (
     <Tabs
@@ -44,7 +50,7 @@ export default function TabsLayout() {
           height: 64,
         },
       }}>
-      {(['index', 'requests', 'bookings', 'messages', 'profile'] as const).map((name) => {
+      {tabOrder.map((name) => {
         const IconComp = TAB_ICONS[name];
         const labelKey = name === 'index' ? 'discover' : name;
         const label = t(`nav.${labelKey}`);
