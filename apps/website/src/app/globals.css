@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/**
+ * Rattibha design tokens — ported from /colors_and_type.css and the planner
+ * app's globals.css. Marketing site is light-mode only (matches the
+ * ui_kits/website prototype, which has no theme toggle), so this omits the
+ * .dark overrides that exist in apps/planner.
+ */
+@theme {
+  /* Royal Purple — primary brand */
+  --color-purple-50: #F2EAF7;
+  --color-purple-100: #E4D4EF;
+  --color-purple-200: #C9A9DE;
+  --color-purple-300: #A875C9;
+  --color-purple-400: #7E3FAE;
+  --color-purple-500: #4B0082;
+  --color-purple-600: #3D0069;
+  --color-purple-700: #2E014F;
+  --color-purple-800: #21013A;
+
+  /* Soft Gold — accent */
+  --color-gold-200: #F2E2A6;
+  --color-gold-300: #EBD083;
+  --color-gold-400: #E3BE55;
+  --color-gold-500: #DAA520;
+  --color-gold-600: #B5881A;
+
+  /* Lavender — secondary */
+  --color-lavender-50: #F4EFF9;
+  --color-lavender-100: #EAE2F4;
+  --color-lavender-200: #D8C9E8;
+  --color-lavender-300: #B6A1D4;
+  --color-lavender-400: #9C82C2;
+
+  /* Plum / ink */
+  --color-plum-900: #2B2233;
+  --color-plum-800: #352A41;
+  --color-plum-700: #41324F;
+  --color-plum-600: #574667;
+  --color-plum-500: #6E5C80;
+
+  /* Emerald — success */
+  --color-emerald-100: #DCEFE4;
+  --color-emerald-500: #2E9E68;
+  --color-emerald-600: #1F7B4F;
+
+  /* Neutrals */
+  --color-cream: #FAF7F2;
+  --color-ivory: #FFFFFF;
+  --color-warm-50: #F4F0EA;
+  --color-warm-100: #ECE6DE;
+
+  /* Semantic roles */
+  --color-bg-app: #F7F4FA;
+  --color-bg-surface: var(--color-ivory);
+
+  --color-fg1: var(--color-plum-900);
+  --color-fg2: #5C5266;
+  --color-fg3: #877E92;
+  --color-fg-on-brand: #FBF7FF;
+
+  --color-brand: var(--color-purple-500);
+  --color-brand-hover: var(--color-purple-600);
+
+  --color-border: #ECE4F1;
+  --color-border-strong: #DCD0E4;
+
+  /* Radii */
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 30px;
+
+  /* Purple-tinted shadows */
+  --shadow-card: 0 14px 34px -20px rgba(43, 34, 51, 0.28);
+  --shadow-brand: 0 12px 26px -12px rgba(75, 0, 130, 0.55);
+
+  /* Fonts */
+  --font-display: var(--font-playfair), var(--font-el-messiri), serif;
+  --font-sans: var(--font-poppins), var(--font-tajawal), system-ui, sans-serif;
+  --font-display-ar: var(--font-el-messiri), serif;
+  --font-sans-ar: var(--font-tajawal), system-ui, sans-serif;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-sans-ar);
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-fg1);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}

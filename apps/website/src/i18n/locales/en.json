@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "title": "Rattibha · Plan a celebration worth remembering",
+    "description": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
+  },
+  "nav": {
+    "browsePlanners": "Browse planners",
+    "howItWorks": "How it works",
+    "forPlanners": "For planners",
+    "about": "About",
+    "signIn": "Sign in",
+    "getStarted": "Get started"
+  },
+  "hero": {
+    "trustBadge": "Trusted by 12,000+ celebrations",
+    "titleLine1": "Plan a celebration",
+    "titleWorth": "worth",
+    "titleRemembering": "remembering",
+    "subtitle": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence.",
+    "searchEvent": "Event",
+    "searchCity": "City",
+    "searchDate": "Date",
+    "eventValue": "Wedding",
+    "cityValue": "Riyadh",
+    "dateValue": "Mar 2026",
+    "reviewsCount": "from 8,400+ reviews",
+    "collageWeddings": "Weddings",
+    "collageGalas": "Galas",
+    "floatingPlannerCity": "Riyadh",
+    "floatingPlannerType": "Weddings"
+  },
+  "categories": {
+    "weddings": "Weddings",
+    "birthdays": "Birthdays",
+    "engagements": "Engagements",
+    "corporate": "Corporate",
+    "galas": "Galas",
+    "weddingsCount": "180+ planners",
+    "birthdaysCount": "120+ planners",
+    "engagementsCount": "90+ planners",
+    "corporateCount": "70+ planners",
+    "galasCount": "45+ planners"
+  },
+  "cities": {
+    "overline": "Riyadh-first, Kingdom-wide",
+    "title": "Find planners in your city",
+    "subtitle": "Every planner is matched to your event's city, so quotes always come from people who know the venues.",
+    "riyadh": "Riyadh",
+    "jeddah": "Jeddah",
+    "makkah": "Makkah",
+    "madinah": "Madinah",
+    "dammam": "Dammam",
+    "khobar": "Khobar",
+    "plannersCount": "{{count}}+ planners"
+  },
+  "featured": {
+    "overline": "Curated for you",
+    "title": "Featured planners",
+    "subtitle": "Hand-picked, verified studios with proven track records.",
+    "browseAll": "Browse all 500+",
+    "viewProfile": "View profile",
+    "from": "from",
+    "premium": "★ Premium"
+  },
+  "howItWorks": {
+    "overline": "Simple by design",
+    "title": "Three steps to a perfect event",
+    "subtitle": "From first idea to final toast, Rattibha keeps every detail coordinated.",
+    "step1Title": "Tell us your vision",
+    "step1Desc": "Share your event type, date, city and budget in under two minutes.",
+    "step2Title": "Get matched instantly",
+    "step2Desc": "We surface verified planners that fit your style — compare and message directly.",
+    "step3Title": "Book & celebrate",
+    "step3Desc": "Secure your date with a protected deposit and enjoy a perfectly coordinated day."
+  },
+  "testimonials": {
+    "overline": "Loved across the Gulf",
+    "title": "Celebrations, perfectly coordinated",
+    "quotes": [
+      { "who": "Noura A.", "role": "Bride · Riyadh", "text": "Rattibha matched us with a planner who understood our vision instantly. Our wedding was flawless." },
+      { "who": "Khalid M.", "role": "HR Lead · Orbit Co.", "text": "Booked our entire annual celebration in a week. Professional, transparent, stress-free." },
+      { "who": "Sara H.", "role": "Mother · Dammam", "text": "The birthday party exceeded every expectation. Booking and paying was effortless." }
+    ]
+  },
+  "cta": {
+    "badge": "For event planners",
+    "title": "Grow your events business with Rattibha",
+    "subtitle": "Reach thousands of clients planning their next celebration. Manage bookings, payments and reviews from one beautiful dashboard.",
+    "becomePlanner": "Become a planner",
+    "talkToSales": "Talk to sales"
+  },
+  "footer": {
+    "tagline": "The Gulf's marketplace for unforgettable events. Plan, celebrate, cherish.",
+    "customers": "Customers",
+    "planners": "Planners",
+    "company": "Company",
+    "customersLinks": ["Browse planners", "How it works", "Pricing", "Reviews"],
+    "plannersLinks": ["Join Rattibha", "Planner dashboard", "Success stories", "Resources"],
+    "companyLinks": ["About us", "Careers", "Press", "Contact"],
+    "copyright": "© 2026 Rattibha · رتّبها. All rights reserved.",
+    "legal": "Privacy · Terms · صُنع بحُبّ في الخليج"
+  },
+  "planners": [
+    { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas" },
+    { "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas" },
+    { "name": "Noor Weddings", "city": "Makkah", "type": "Weddings" },
+    { "name": "Marina Celebrations", "city": "Khobar", "type": "Engagements" },
+    { "name": "Saffron Events", "city": "Madinah", "type": "Weddings & Galas" },
+    { "name": "Rose Valley Events", "city": "Taif", "type": "Weddings" },
+    { "name": "Orbit Corporate", "city": "Riyadh", "type": "Corporate" },
+    { "name": "Zahra Parties", "city": "Dammam", "type": "Birthdays" }
+  ]
+}
