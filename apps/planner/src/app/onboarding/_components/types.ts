@@ -15,7 +15,10 @@ export interface OnboardingForm {
   startingPrice: string;
   crNumber: string;
   agreedToTerms: boolean;
+  portfolioFiles: File[];
 }
+
+export const MAX_PORTFOLIO_PHOTOS = 8;
 
 export const INITIAL_FORM: OnboardingForm = {
   businessName: '',
@@ -32,4 +35,5 @@ export const INITIAL_FORM: OnboardingForm = {
   startingPrice: '',
   crNumber: '',
   agreedToTerms: false,
+  portfolioFiles: [],
 };
