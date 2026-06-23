@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { El_Messiri, Playfair_Display, Poppins, Tajawal } from 'next/font/google';
+import { cookies } from 'next/headers';
 import { Toaster } from 'sonner';
 
 import { I18nProvider } from '@/i18n/I18nProvider';
+import { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from '@/i18n/constants';
 import { AuthProvider } from '@/lib/AuthContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -53,15 +55,29 @@ export const metadata: Metadata = {
   description: 'Manage leads, offers, bookings and your storefront on Rattibha.',
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // Reading the language from a cookie (rather than localStorage, which the
+  // server can't see) lets this server-rendered <html> tag and the i18n
+  // instance both start in the visitor's actual language on the very first
+  // response — no post-hydration flash, no hydration mismatch.
+  const cookieStore = await cookies();
+  const stored = cookieStore.get(LANGUAGE_STORAGE_KEY)?.value;
+  const initialLang: AppLanguage = stored === 'ar' ? 'ar' : 'en';
+  const dir = isRTLLanguage(initialLang) ? 'rtl' : 'ltr';
+
   return (
-    <html lang="en" dir="ltr" className={`${playfair.variable} ${poppins.variable} ${elMessiri.variable} ${tajawal.variable}`}>
+    <html
+      lang={initialLang}
+      dir={dir}
+      className={`${playfair.variable} ${poppins.variable} ${elMessiri.variable} ${tajawal.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="min-h-screen bg-bg-app text-fg1 antialiased">
         <ThemeProvider>
-          <I18nProvider>
+          <I18nProvider initialLang={initialLang}>
             <AuthProvider>{children}</AuthProvider>
             <Toaster
               position="top-center"
