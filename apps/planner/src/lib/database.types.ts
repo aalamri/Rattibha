@@ -51,6 +51,11 @@ export interface Database {
           reviews_count: number;
           instagram: string | null;
           website: string | null;
+          years_in_business: string | null;
+          team_size: string | null;
+          budget_tier: string | null;
+          starting_price: number | null;
+          cr_number: string | null;
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['planners']['Row']> & { user_id: string; business_name: string; city: CityKey };

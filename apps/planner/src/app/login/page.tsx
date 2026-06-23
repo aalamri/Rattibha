@@ -99,6 +99,13 @@ export default function LoginPage() {
             {submitting ? t('auth.signingIn') : t('auth.signIn')}
           </Button>
         </form>
+
+        <p className="mt-5 text-center text-[12.5px] text-fg3">
+          {t('auth.noAccount')}{' '}
+          <Link href="/onboarding" className="font-bold text-brand">
+            {t('auth.becomePlanner')}
+          </Link>
+        </p>
       </Card>
     </div>
   );
