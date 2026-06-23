@@ -1,12 +1,14 @@
 'use client';
 
-import { Bell, CircleHalfTilt, Globe, MagnifyingGlass, SignOut } from 'phosphor-react';
+import { CircleHalfTilt, Globe, MagnifyingGlass, SignOut } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@/components/ui/Avatar';
 import { setAppLanguage, type AppLanguage } from '@/i18n';
 import { useAuth } from '@/lib/AuthContext';
 import { useThemeMode } from '@/theme/ThemeContext';
+
+import { NotificationsPanel } from './NotificationsPanel';
 
 interface TopbarProps {
   title: string;
@@ -53,14 +55,7 @@ export function Topbar({ title, subtitle }: TopbarProps) {
         <CircleHalfTilt size={19} aria-hidden="true" />
       </button>
 
-      <button
-        type="button"
-        aria-label={t('common.notifications')}
-        className="relative grid h-[42px] w-[42px] place-items-center rounded-md border border-border"
-      >
-        <Bell size={19} className="text-fg1" aria-hidden="true" />
-        <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full border-2 border-bg-surface bg-danger" aria-hidden="true" />
-      </button>
+      <NotificationsPanel />
 
       <div className="flex items-center gap-2.5 ps-1.5">
         <Avatar seed={profile?.avatar_seed ?? 0} size={40} initials={(planner?.business_name ?? '?').charAt(0)} />
