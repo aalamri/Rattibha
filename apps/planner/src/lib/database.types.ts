@@ -71,6 +71,7 @@ export interface Database {
           description: string | null;
           from_price: number;
           seed: number;
+          image_url: string | null;
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['planner_services']['Row']> & { planner_id: string; name: string; from_price: number };

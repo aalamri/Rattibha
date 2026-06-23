@@ -13,12 +13,14 @@ import { DashboardShell } from '@/components/layout/DashboardShell';
 import { CITY_KEYS, type CityKey } from '@/data/categories';
 import { useAuth } from '@/lib/AuthContext';
 import { formatNumber } from '@/lib/format';
+import { deletePortfolioImage, uploadPortfolioImage } from '@/lib/portfolioStorage';
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/lib/database.types';
 
 type PlannerService = Database['public']['Tables']['planner_services']['Row'];
 
 const PORTFOLIO_SEEDS = [0, 1, 2, 3, 4, 5];
+const MAX_PORTFOLIO_PHOTOS = 8;
 
 function Field({
   label,
@@ -109,6 +111,7 @@ interface EditableService {
   description: string;
   fromPrice: string;
   seed: number;
+  imageUrl: string | null;
 }
 
 export default function ProfilePage() {
@@ -127,6 +130,7 @@ export default function ProfilePage() {
   const [city, setCity] = useState<CityKey>('riyadh');
   const [editableServices, setEditableServices] = useState<EditableService[]>([]);
   const [deletedServiceIds, setDeletedServiceIds] = useState<string[]>([]);
+  const [portfolioUrls, setPortfolioUrls] = useState<string[]>([]);
   const savedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const refetchServices = useCallback(() => {
@@ -157,21 +161,56 @@ export default function ProfilePage() {
         description: s.description ?? '',
         fromPrice: String(s.from_price),
         seed: s.seed,
+        imageUrl: s.image_url,
       }))
     );
     setDeletedServiceIds([]);
+    setPortfolioUrls(planner.portfolio_urls ?? []);
     setEditing(true);
   }
 
-  function updateServiceField(tempId: string, field: 'name' | 'description' | 'fromPrice' | 'seed', value: string | number) {
+  function updateServiceField(
+    tempId: string,
+    field: 'name' | 'description' | 'fromPrice' | 'seed' | 'imageUrl',
+    value: string | number | null
+  ) {
     setEditableServices((prev) => prev.map((s) => (s.tempId === tempId ? { ...s, [field]: value } : s)));
   }
 
   function addServiceRow() {
     setEditableServices((prev) => [
       ...prev,
-      { tempId: `new-${Date.now()}`, id: null, name: '', description: '', fromPrice: '', seed: prev.length },
+      { tempId: `new-${Date.now()}`, id: null, name: '', description: '', fromPrice: '', seed: prev.length, imageUrl: null },
     ]);
+  }
+
+  async function handlePortfolioFilesSelected(fileList: FileList | null) {
+    if (!fileList || !session) return;
+    const room = MAX_PORTFOLIO_PHOTOS - portfolioUrls.length;
+    if (room <= 0) return;
+    const files = Array.from(fileList)
+      .filter((file) => file.type.startsWith('image/'))
+      .slice(0, room);
+    const uploaded = await Promise.all(files.map((file) => uploadPortfolioImage(session.user.id, file)));
+    const urls = uploaded.filter((url): url is string => url !== null);
+    setPortfolioUrls((prev) => [...prev, ...urls]);
+  }
+
+  function removePortfolioImage(url: string) {
+    setPortfolioUrls((prev) => prev.filter((u) => u !== url));
+    void deletePortfolioImage(url);
+  }
+
+  async function handleServiceFileSelected(tempId: string, file: File) {
+    if (!session) return;
+    const url = await uploadPortfolioImage(session.user.id, file, 'services');
+    if (url) updateServiceField(tempId, 'imageUrl', url);
+  }
+
+  function removeServiceImage(tempId: string) {
+    const target = editableServices.find((s) => s.tempId === tempId);
+    if (target?.imageUrl) void deletePortfolioImage(target.imageUrl);
+    updateServiceField(tempId, 'imageUrl', null);
   }
 
   function removeServiceRow(tempId: string) {
@@ -200,6 +239,7 @@ export default function ProfilePage() {
         instagram: instagram.trim() || null,
         website: website.trim() || null,
         city,
+        portfolio_urls: portfolioUrls,
       })
       .eq('user_id', session.user.id);
 
@@ -214,6 +254,7 @@ export default function ProfilePage() {
         description: s.description.trim() || null,
         from_price: Number(s.fromPrice) || 0,
         seed: s.seed,
+        image_url: s.imageUrl,
       };
       if (!s.name.trim()) continue;
       if (s.id) {
@@ -238,6 +279,7 @@ export default function ProfilePage() {
     setInstagram(planner.instagram ?? '');
     setWebsite(planner.website ?? '');
     setCity((planner.city as CityKey) ?? 'riyadh');
+    setPortfolioUrls(planner.portfolio_urls ?? []);
     setEditing(false);
   }
 
@@ -363,9 +405,14 @@ export default function ProfilePage() {
                   <div key={s.tempId} className="flex flex-col gap-3 rounded-md border border-border p-3">
                     <div className="flex items-start gap-3.5">
                       <div
-                        className="h-16 w-16 flex-shrink-0 rounded-sm"
-                        style={{ background: GRADIENTS[s.seed % GRADIENTS.length] }}
-                      />
+                        className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-sm"
+                        style={s.imageUrl ? undefined : { background: GRADIENTS[s.seed % GRADIENTS.length] }}
+                      >
+                        {s.imageUrl && (
+                          // eslint-disable-next-line @next/next/no-img-element -- small storefront thumbnail, not worth next/image's overhead here
+                          <img src={s.imageUrl} alt="" className="h-full w-full object-cover" />
+                        )}
+                      </div>
                       <div className="flex min-w-0 flex-1 flex-col gap-2">
                         <input
                           type="text"
@@ -402,11 +449,43 @@ export default function ProfilePage() {
                           className="w-32 rounded-sm border border-border bg-bg-app px-3 py-2 text-[13px] text-fg1 outline-none focus:border-brand"
                         />
                       </label>
-                      <SeedSwatchPicker
-                        value={s.seed}
-                        onChange={(seed) => updateServiceField(s.tempId, 'seed', seed)}
-                        label={t('profile.servicesManager.image')}
-                      />
+                      {s.imageUrl ? (
+                        <div className="flex flex-col gap-1.5">
+                          <span className="text-[12px] font-semibold text-fg2">{t('profile.servicesManager.image')}</span>
+                          <button
+                            type="button"
+                            onClick={() => removeServiceImage(s.tempId)}
+                            className="self-start text-[11.5px] font-semibold text-danger"
+                          >
+                            {t('profile.servicesManager.removePhoto')}
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <SeedSwatchPicker
+                            value={s.seed}
+                            onChange={(seed) => updateServiceField(s.tempId, 'seed', seed)}
+                            label={t('profile.servicesManager.image')}
+                          />
+                          <input
+                            id={`service-photo-${s.tempId}`}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleServiceFileSelected(s.tempId, file);
+                              e.target.value = '';
+                            }}
+                          />
+                          <label
+                            htmlFor={`service-photo-${s.tempId}`}
+                            className="cursor-pointer self-end rounded-full border-[1.5px] border-border-strong px-2.5 py-2 text-[11.5px] font-semibold text-fg1"
+                          >
+                            {t('profile.servicesManager.uploadPhoto')}
+                          </label>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -419,9 +498,14 @@ export default function ProfilePage() {
                 {services.map((service) => (
                   <div key={service.id} className="flex items-center gap-3.5 rounded-md border border-border p-3">
                     <div
-                      className="h-16 w-16 flex-shrink-0 rounded-sm"
-                      style={{ background: GRADIENTS[service.seed % GRADIENTS.length] }}
-                    />
+                      className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-sm"
+                      style={service.image_url ? undefined : { background: GRADIENTS[service.seed % GRADIENTS.length] }}
+                    >
+                      {service.image_url && (
+                        // eslint-disable-next-line @next/next/no-img-element -- small storefront thumbnail, not worth next/image's overhead here
+                        <img src={service.image_url} alt="" className="h-full w-full object-cover" />
+                      )}
+                    </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-sm font-bold text-fg1">{service.name}</div>
                       {service.description && (
@@ -441,15 +525,67 @@ export default function ProfilePage() {
         {/* right rail */}
         <div className="flex flex-col gap-5">
           <Section title={t('profile.portfolio')}>
-            <div className="grid grid-cols-3 gap-2">
-              {PORTFOLIO_SEEDS.map((seed) => (
-                <div
-                  key={seed}
-                  className="aspect-square rounded-sm"
-                  style={{ background: GRADIENTS[seed % GRADIENTS.length] }}
+            {editing ? (
+              <>
+                <input
+                  id="portfolio-upload-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    handlePortfolioFilesSelected(e.target.files);
+                    e.target.value = '';
+                  }}
                 />
-              ))}
-            </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {portfolioUrls.map((url) => (
+                    <div key={url} className="relative aspect-square overflow-hidden rounded-sm">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- small gallery thumbnail, not worth next/image's overhead here */}
+                      <img src={url} alt="" className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removePortfolioImage(url)}
+                        aria-label={t('profile.portfolioManager.remove')}
+                        className="absolute end-1 top-1 grid h-5.5 w-5.5 place-items-center rounded-full bg-fg1/70 text-white"
+                      >
+                        <X size={12} weight="bold" />
+                      </button>
+                    </div>
+                  ))}
+                  {portfolioUrls.length < MAX_PORTFOLIO_PHOTOS && (
+                    <label
+                      htmlFor="portfolio-upload-input"
+                      className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-1 rounded-sm border-[1.5px] border-dashed border-border-strong bg-purple-50"
+                    >
+                      <Plus size={18} className="text-brand" />
+                    </label>
+                  )}
+                </div>
+                <div className="mt-2 text-[11.5px] text-fg3">
+                  {t('profile.portfolioManager.count', { current: portfolioUrls.length, max: MAX_PORTFOLIO_PHOTOS })}
+                </div>
+              </>
+            ) : planner.portfolio_urls.length > 0 ? (
+              <div className="grid grid-cols-3 gap-2">
+                {planner.portfolio_urls.map((url) => (
+                  <div key={url} className="aspect-square overflow-hidden rounded-sm">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- small gallery thumbnail, not worth next/image's overhead here */}
+                    <img src={url} alt="" className="h-full w-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-2">
+                {PORTFOLIO_SEEDS.map((seed) => (
+                  <div
+                    key={seed}
+                    className="aspect-square rounded-sm"
+                    style={{ background: GRADIENTS[seed % GRADIENTS.length] }}
+                  />
+                ))}
+              </div>
+            )}
           </Section>
 
           <Button variant="secondary" icon={StorefrontIcon} className="w-full">
