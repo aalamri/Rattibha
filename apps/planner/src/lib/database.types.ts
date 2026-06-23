@@ -56,6 +56,7 @@ export interface Database {
           budget_tier: string | null;
           starting_price: number | null;
           cr_number: string | null;
+          portfolio_urls: string[];
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['planners']['Row']> & { user_id: string; business_name: string; city: CityKey };

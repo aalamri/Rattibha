@@ -112,6 +112,18 @@ export default function OnboardingPage() {
       city: form.city,
     });
 
+    // Uploaded now rather than as each photo is picked, since Storage's RLS
+    // needs auth.uid() — there's no session until signUp above succeeds.
+    const portfolioUrls: string[] = [];
+    for (const [i, file] of form.portfolioFiles.entries()) {
+      const ext = file.name.split('.').pop() ?? 'jpg';
+      const path = `${userId}/${i}-${Date.now()}.${ext}`;
+      const { error: uploadError } = await supabase.storage.from('planner-portfolios').upload(path, file);
+      if (!uploadError) {
+        portfolioUrls.push(supabase.storage.from('planner-portfolios').getPublicUrl(path).data.publicUrl);
+      }
+    }
+
     const { error: plannerError } = await supabase.from('planners').insert({
       user_id: userId,
       business_name: form.businessName,
@@ -123,6 +135,7 @@ export default function OnboardingPage() {
       budget_tier: form.budgetTier,
       starting_price: Number(form.startingPrice),
       cr_number: form.crNumber,
+      portfolio_urls: portfolioUrls,
     });
 
     setSubmitting(false);
@@ -171,7 +184,7 @@ export default function OnboardingPage() {
                 {step === 0 && <StepAccount form={form} onChange={patchForm} />}
                 {step === 1 && <StepBusiness form={form} onChange={patchForm} />}
                 {step === 2 && <StepServices form={form} onChange={patchForm} />}
-                {step === 3 && <StepPortfolio />}
+                {step === 3 && <StepPortfolio form={form} onChange={patchForm} />}
                 {step === 4 && <StepVerify form={form} onChange={patchForm} />}
                 {error && <p className="mt-3 text-[12.5px] text-danger">{error}</p>}
               </div>

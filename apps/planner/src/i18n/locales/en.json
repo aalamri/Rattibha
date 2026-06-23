@@ -428,7 +428,10 @@
     },
     "portfolio": {
       "title": "Show your best work",
-      "subtitle": "A preview of your storefront gallery — you can add real photos once you're verified.",
+      "subtitle": "Upload photos from past events. They'll appear on your public storefront once you're verified.",
+      "addPhoto": "Add photo",
+      "remove": "Remove photo",
+      "count": "{{current}}/{{max}} photos",
       "tip": "Studios with 8+ high-quality photos get <bold>3× more</bold> booking requests."
     },
     "verify": {
