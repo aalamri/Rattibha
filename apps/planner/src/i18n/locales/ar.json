@@ -14,6 +14,7 @@
       "system": "النظام"
     },
     "notifications": "الإشعارات",
+    "close": "إغلاق",
     "budgets": {
       "under10": "< ١٠ آلاف",
       "10to20": "١٠–٢٠ ألف",
@@ -456,6 +457,24 @@
       "inReview": "قيد المراجعة",
       "previewDashboard": "معاينة لوحة التحكم",
       "questions": "لديك أسئلة؟ تواصل مع دعم الشركاء"
+    }
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "empty": "لا توجد إشعارات بعد",
+    "emptyNote": "ستظهر هنا الطلبات الجديدة والرسائل وتحديثات الحالة.",
+    "types": {
+      "newRequest": "طلب {{category}} جديد في {{city}}",
+      "newMessage": "رسالة جديدة من عميل",
+      "generic": "تحديث جديد",
+      "customerStatusFallback": "تم تحديث حالة الصفقة",
+      "customerStatus": {
+        "accepted": "قبل العميل عرضك",
+        "declined": "رفض العميل عرضك",
+        "deposit_paid": "دفع العميل العربون",
+        "reviewed": "أضاف العميل تقييمًا"
+      }
     }
   }
 }

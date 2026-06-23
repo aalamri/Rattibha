@@ -14,6 +14,7 @@
       "system": "System"
     },
     "notifications": "Notifications",
+    "close": "Close",
     "budgets": {
       "under10": "< 10k",
       "10to20": "10–20k",
@@ -456,6 +457,24 @@
       "inReview": "In review",
       "previewDashboard": "Preview my dashboard",
       "questions": "Questions? Contact partner support"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications yet",
+    "emptyNote": "New requests, messages and status updates will appear here.",
+    "types": {
+      "newRequest": "New {{category}} request in {{city}}",
+      "newMessage": "New message from a customer",
+      "generic": "New update",
+      "customerStatusFallback": "Deal status updated",
+      "customerStatus": {
+        "accepted": "Customer accepted your offer",
+        "declined": "Customer declined your offer",
+        "deposit_paid": "Customer paid the deposit",
+        "reviewed": "Customer left a review"
+      }
     }
   }
 }
