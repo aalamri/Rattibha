@@ -16,7 +16,7 @@ export function HowItWorks() {
   const { t } = useTranslation();
 
   return (
-    <div className="mx-auto max-w-[1180px] px-10 py-[72px]">
+    <div id="how-it-works" className="mx-auto max-w-[1180px] px-10 py-[72px]">
       <SectionHead center over={t('howItWorks.overline')} title={t('howItWorks.title')} sub={t('howItWorks.subtitle')} />
       <div className="mt-11 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {STEPS.map((step, i) => (

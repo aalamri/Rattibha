@@ -52,7 +52,7 @@ export function FeaturedGrid() {
   const planners = t('planners', { returnObjects: true }) as { name: string; city: string; type: string }[];
 
   return (
-    <div className="border-y border-border bg-white">
+    <div id="planners" className="border-y border-border bg-white">
       <div className="mx-auto max-w-[1180px] px-10 py-16">
         <SectionHead over={t('featured.overline')} title={t('featured.title')} sub={t('featured.subtitle')} action={t('featured.browseAll')} />
         <div className="mt-8 grid grid-cols-1 gap-5.5 sm:grid-cols-2 lg:grid-cols-4">

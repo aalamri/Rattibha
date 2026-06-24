@@ -9,21 +9,27 @@ import { setAppLanguage, type AppLanguage } from '@/i18n';
 
 const SIGN_IN_URL = process.env.NEXT_PUBLIC_CUSTOMER_APP_URL ?? '#';
 
+const LINKS = [
+  { key: 'browsePlanners', href: '#planners' },
+  { key: 'howItWorks', href: '#how-it-works' },
+  { key: 'forPlanners', href: '#for-planners' },
+  { key: 'about', href: '#about' },
+] as const;
+
 /** Sticky translucent nav — matches `NavBar` in sections.jsx. */
 export function NavBar() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as AppLanguage;
-  const links = [t('nav.browsePlanners'), t('nav.howItWorks'), t('nav.forPlanners'), t('nav.about')];
 
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-white/85 backdrop-blur-xl">
       <div className="mx-auto flex h-[74px] max-w-[1180px] items-center gap-7 px-10">
         <Logo size={38} />
         <div className="ms-4.5 flex gap-6.5">
-          {links.map((label) => (
-            <span key={label} className="cursor-pointer whitespace-nowrap text-[14.5px] font-semibold text-fg2">
-              {label}
-            </span>
+          {LINKS.map(({ key, href }) => (
+            <a key={key} href={href} className="cursor-pointer whitespace-nowrap text-[14.5px] font-semibold text-fg2">
+              {t(`nav.${key}`)}
+            </a>
           ))}
         </div>
         <div className="ms-auto flex items-center gap-3.5">

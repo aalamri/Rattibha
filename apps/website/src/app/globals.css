@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+  /* Matches NavBar's sticky height so anchor-linked sections (#planners,
+     #how-it-works, #for-planners, #about) land below it instead of under it. */
+  scroll-padding-top: 74px;
+}
+
 /**
  * Rattibha design tokens — ported from /colors_and_type.css and the planner
  * app's globals.css. Marketing site is light-mode only (matches the
