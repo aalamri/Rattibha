@@ -282,7 +282,13 @@
       "descriptionPlaceholder": "Short description",
       "priceLabel": "From price (SAR)",
       "delete": "Delete service",
-      "empty": "No services yet — add your first one below."
+      "empty": "No services yet — add your first one below.",
+      "uploadPhoto": "Upload photo",
+      "removePhoto": "Remove photo"
+    },
+    "portfolioManager": {
+      "remove": "Remove photo",
+      "count": "{{current}}/{{max}} photos"
     }
   },
   "toast": {

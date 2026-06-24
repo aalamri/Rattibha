@@ -282,7 +282,13 @@
       "descriptionPlaceholder": "وصف مختصر",
       "priceLabel": "تبدأ من (ر.س)",
       "delete": "حذف الخدمة",
-      "empty": "لا توجد خدمات بعد — أضف أول خدمة أدناه."
+      "empty": "لا توجد خدمات بعد — أضف أول خدمة أدناه.",
+      "uploadPhoto": "رفع صورة",
+      "removePhoto": "إزالة الصورة"
+    },
+    "portfolioManager": {
+      "remove": "إزالة الصورة",
+      "count": "{{current}}/{{max}} صور"
     }
   },
   "toast": {
