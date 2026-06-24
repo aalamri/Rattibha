@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { El_Messiri, Playfair_Display, Poppins, Tajawal } from 'next/font/google';
 import { cookies } from 'next/headers';
@@ -83,6 +84,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang={initialLang} dir={dir} className={`${playfair.variable} ${poppins.variable} ${elMessiri.variable} ${tajawal.variable}`}>
       <body className="bg-ivory text-fg1 antialiased">
         <I18nProvider initialLang={initialLang}>{children}</I18nProvider>
+        <Analytics />
       </body>
     </html>
   );
