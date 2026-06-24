@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rattibha.example.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ratibha.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // The language toggle is client-side (matches apps/planner and
