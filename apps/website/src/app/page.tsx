@@ -1,3 +1,4 @@
+import { About } from '@/components/sections/About';
 import { Categories } from '@/components/sections/Categories';
 import { CityGrid } from '@/components/sections/CityGrid';
 import { CTABand } from '@/components/sections/CTABand';
@@ -18,6 +19,7 @@ export default function HomePage() {
       <FeaturedGrid />
       <HowItWorks />
       <Testimonials />
+      <About />
       <CTABand />
       <Footer />
     </>

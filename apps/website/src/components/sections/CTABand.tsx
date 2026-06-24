@@ -14,7 +14,7 @@ export function CTABand() {
   const { t } = useTranslation();
 
   return (
-    <div className="mx-auto max-w-[1180px] px-10 py-[72px]">
+    <div id="for-planners" className="mx-auto max-w-[1180px] px-10 py-[72px]">
       <div className="relative overflow-hidden rounded-[30px] bg-fg1 p-9 sm:p-14">
         <div
           className="absolute inset-0 opacity-10 brightness-0 invert"

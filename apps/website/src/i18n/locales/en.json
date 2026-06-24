@@ -73,6 +73,17 @@
     "step3Title": "Book & celebrate",
     "step3Desc": "Secure your date with a protected deposit and enjoy a perfectly coordinated day."
   },
+  "about": {
+    "overline": "Our story",
+    "title": "Built for the Kingdom's celebrations",
+    "subtitle": "Rattibha started with a simple idea: finding a trustworthy event planner shouldn't take weeks of messaging and guesswork. We built a marketplace where every planner is verified, every quote is transparent, and every deposit is protected until the day goes exactly as planned.",
+    "stat1Value": "500+",
+    "stat1Label": "Verified planners",
+    "stat2Value": "12,000+",
+    "stat2Label": "Celebrations planned",
+    "stat3Value": "8,400+",
+    "stat3Label": "Customer reviews"
+  },
   "testimonials": {
     "overline": "Loved across the Gulf",
     "title": "Celebrations, perfectly coordinated",
