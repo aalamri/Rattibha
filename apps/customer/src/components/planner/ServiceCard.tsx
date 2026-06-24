@@ -33,7 +33,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           overflow: 'hidden',
         },
       ]}>
-      <Photo seed={service.seed} style={{ height: 92 }} />
+      <Photo seed={service.seed} uri={service.imageUrl} style={{ height: 92 }} />
       <View style={{ padding: 12, gap: 4 }}>
         <Text variant="small" style={{ fontFamily: isRTL ? fonts.arSans.bold : fonts.sans.bold }} numberOfLines={1}>
           {service.name}

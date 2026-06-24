@@ -43,6 +43,7 @@ export interface PlannerService {
   desc: string;
   from: number;
   seed: number;
+  imageUrl?: string | null;
 }
 
 export interface PlannerPackage {
@@ -66,6 +67,7 @@ export interface Planner {
   tags: string[];
   services: PlannerService[];
   packages: PlannerPackage[];
+  portfolioUrls?: string[];
 }
 
 export const PLANNERS: Planner[] = [
