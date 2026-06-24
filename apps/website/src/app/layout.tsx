@@ -7,7 +7,7 @@ import { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from '@/i18n/co
 
 import './globals.css';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rattibha.example.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ratibha.com';
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
