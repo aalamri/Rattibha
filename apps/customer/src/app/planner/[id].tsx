@@ -145,9 +145,13 @@ export default function PlannerScreen() {
               minWidth: '100%',
               justifyContent: isRTL ? 'flex-end' : 'flex-start',
             }}>
-            {(isRTL ? [4, 3, 2, 1] : [1, 2, 3, 4]).map((i) => (
-              <Photo key={i} seed={planner.seed + i} style={{ width: 108, height: 78, borderRadius: radii.sm }} />
-            ))}
+            {planner.portfolioUrls && planner.portfolioUrls.length > 0
+              ? (isRTL ? [...planner.portfolioUrls].reverse() : planner.portfolioUrls).map((uri) => (
+                  <Photo key={uri} uri={uri} style={{ width: 108, height: 78, borderRadius: radii.sm }} />
+                ))
+              : (isRTL ? [4, 3, 2, 1] : [1, 2, 3, 4]).map((i) => (
+                  <Photo key={i} seed={planner.seed + i} style={{ width: 108, height: 78, borderRadius: radii.sm }} />
+                ))}
           </ScrollView>
 
           {/* services */}

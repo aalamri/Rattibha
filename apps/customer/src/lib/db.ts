@@ -22,6 +22,7 @@ export interface DBService {
   description: string | null;
   from_price: number;
   seed: number;
+  image_url: string | null;
 }
 
 export interface DBReview {
@@ -44,6 +45,7 @@ export interface DBPlannerRow {
   reviews_count: number;
   instagram: string | null;
   website: string | null;
+  portfolio_urls: string[] | null;
   profiles: { avatar_seed: number } | null;
   planner_services: DBService[];
 }
@@ -110,6 +112,7 @@ export function toPlanner(row: DBPlannerRow): Planner {
     desc: s.description ?? '',
     from: s.from_price,
     seed: s.seed,
+    imageUrl: s.image_url,
   }));
 
   // Packages reuse the same service rows (name, price, description).
@@ -141,9 +144,10 @@ export function toPlanner(row: DBPlannerRow): Planner {
     tags: row.categories,
     services,
     packages,
+    portfolioUrls: row.portfolio_urls ?? [],
   };
 }
 
 /** Supabase select string for a full planner (includes services + profile seed). */
 export const PLANNER_SELECT =
-  '*, profiles(avatar_seed), planner_services(id, name, description, from_price, seed)' as const;
+  '*, profiles(avatar_seed), planner_services(id, name, description, from_price, seed, image_url)' as const;
