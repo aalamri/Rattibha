@@ -9,7 +9,9 @@
     "forPlanners": "For planners",
     "about": "About",
     "signIn": "Sign in",
-    "getStarted": "Get started"
+    "getStarted": "Get started",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "hero": {
     "trustBadge": "Trusted by 12,000+ celebrations",

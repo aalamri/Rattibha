@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { El_Messiri, Playfair_Display, Poppins, Tajawal } from 'next/font/google';
 import { cookies } from 'next/headers';
 
@@ -57,6 +57,15 @@ export const metadata: Metadata = {
   icons: {
     icon: '/app-icon.png',
   },
+};
+
+// Without this, mobile browsers fall back to a ~980px desktop-style layout
+// viewport and scale the whole page down to fit — every `sm:`/`md:` Tailwind
+// breakpoint becomes unreachable on a real phone since the browser never
+// thinks it's narrower than ~980px.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

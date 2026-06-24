@@ -1,6 +1,7 @@
 'use client';
 
-import { Globe, Sparkle } from 'phosphor-react';
+import { useState } from 'react';
+import { Globe, List, Sparkle, X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/Button';
@@ -16,31 +17,46 @@ const LINKS = [
   { key: 'about', href: '#about' },
 ] as const;
 
-/** Sticky translucent nav — matches `NavBar` in sections.jsx. */
+/**
+ * Sticky translucent nav — matches `NavBar` in sections.jsx. The full link
+ * row + secondary actions only fit from `lg` up (Hero's own grid stacks at
+ * the same breakpoint); below that, everything collapses into a hamburger
+ * menu, keeping just the logo and primary "Get started" CTA visible.
+ */
 export function NavBar() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as AppLanguage;
+  const [open, setOpen] = useState(false);
+
+  const langToggle = (
+    <button
+      type="button"
+      onClick={() => setAppLanguage(lang === 'en' ? 'ar' : 'en')}
+      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border-[1.5px] border-border-strong px-3.5 py-1.5 text-sm font-bold text-fg1"
+    >
+      <Globe size={16} />
+      {lang === 'en' ? 'العربية' : 'English'}
+    </button>
+  );
 
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-white/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-[74px] max-w-[1180px] items-center gap-7 px-10">
+      <div className="mx-auto flex h-[74px] max-w-[1180px] items-center gap-7 px-5 sm:px-10">
         <Logo size={38} />
-        <div className="ms-4.5 flex gap-6.5">
+        <div className="ms-4.5 hidden gap-6.5 lg:flex">
           {LINKS.map(({ key, href }) => (
-            <a key={key} href={href} className="cursor-pointer whitespace-nowrap text-[14.5px] font-semibold text-fg2">
+            <a
+              key={key}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="cursor-pointer whitespace-nowrap text-[14.5px] font-semibold text-fg2"
+            >
               {t(`nav.${key}`)}
             </a>
           ))}
         </div>
-        <div className="ms-auto flex items-center gap-3.5">
-          <button
-            type="button"
-            onClick={() => setAppLanguage(lang === 'en' ? 'ar' : 'en')}
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border-[1.5px] border-border-strong px-3.5 py-1.5 text-sm font-bold text-fg1"
-          >
-            <Globe size={16} />
-            {lang === 'en' ? 'العربية' : 'English'}
-          </button>
+        <div className="ms-auto hidden items-center gap-3.5 lg:flex">
+          {langToggle}
           <a href={SIGN_IN_URL} className="cursor-pointer whitespace-nowrap text-[14.5px] font-bold text-fg1">
             {t('nav.signIn')}
           </a>
@@ -50,7 +66,47 @@ export function NavBar() {
             </Button>
           </a>
         </div>
+
+        <div className="ms-auto flex items-center gap-2.5 lg:hidden">
+          <a href={SIGN_IN_URL}>
+            <Button size="sm" icon={Sparkle} className="whitespace-nowrap">
+              {t('nav.getStarted')}
+            </Button>
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
+            aria-expanded={open}
+            className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-border text-fg1"
+          >
+            {open ? <X size={20} /> : <List size={20} />}
+          </button>
+        </div>
       </div>
+
+      {open && (
+        <div className="border-t border-border bg-white px-5 py-5 lg:hidden">
+          <div className="flex flex-col gap-4">
+            {LINKS.map(({ key, href }) => (
+              <a
+                key={key}
+                href={href}
+                onClick={() => setOpen(false)}
+                className="cursor-pointer text-[15px] font-semibold text-fg2"
+              >
+                {t(`nav.${key}`)}
+              </a>
+            ))}
+          </div>
+          <div className="mt-5 flex items-center justify-between gap-3.5 border-t border-border pt-5">
+            {langToggle}
+            <a href={SIGN_IN_URL} className="cursor-pointer whitespace-nowrap text-[14.5px] font-bold text-fg1">
+              {t('nav.signIn')}
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
