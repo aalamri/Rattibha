@@ -38,27 +38,25 @@ export function Hero() {
         height={431}
         className="pointer-events-none absolute -top-14 end-0 -me-10 rotate-[-8deg] opacity-[0.16]"
       />
-      <div className="relative mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-10 py-16 pb-[72px] lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 py-16 pb-[72px] sm:px-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Badge bg="#F2E2A6" fg="#7a5a14" icon={Star}>
             {t('hero.trustBadge')}
           </Badge>
-          <h1 className="mt-4.5 font-display text-[66px] font-semibold leading-[1.02] tracking-[-0.02em] text-fg1">
+          <h1 className="mt-4.5 font-display text-[38px] font-semibold leading-[1.05] tracking-[-0.02em] text-fg1 sm:text-[52px] lg:text-[66px] lg:leading-[1.02]">
             {t('hero.titleLine1')}
             <br />
             {t('hero.titleWorth')} <span className="italic text-brand">{t('hero.titleRemembering')}</span>
           </h1>
-          <p className="mt-5 max-w-[460px] text-lg leading-[1.55] text-fg2">{t('hero.subtitle')}</p>
+          <p className="mt-5 max-w-[460px] text-base leading-[1.55] text-fg2 sm:text-lg">{t('hero.subtitle')}</p>
 
-          <div className="mt-7.5 flex max-w-[560px] items-stretch overflow-hidden rounded-2xl border border-border bg-white shadow-[0_18px_44px_-22px_rgba(43,34,51,0.3)]">
+          <div className="mt-7.5 flex w-full max-w-[560px] flex-col divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-[0_18px_44px_-22px_rgba(43,34,51,0.3)] sm:flex-row sm:divide-x sm:divide-y-0">
             <SearchSeg icon={Confetti} label={t('hero.searchEvent')} value={t('hero.eventValue')} />
-            <div className="my-3 w-px bg-border" />
             <SearchSeg icon={MapPin} label={t('hero.searchCity')} value={t('hero.cityValue')} />
-            <div className="my-3 w-px bg-border" />
             <SearchSeg icon={CalendarBlank} label={t('hero.searchDate')} value={t('hero.dateValue')} />
             <button
               type="button"
-              className="m-1.5 grid place-items-center rounded-xl bg-brand px-5 text-white"
+              className="m-1.5 flex items-center justify-center gap-2 rounded-xl bg-brand py-3.5 text-white sm:aspect-square sm:px-5 sm:py-0"
               aria-label={t('hero.searchEvent')}
             >
               <MagnifyingGlass size={21} weight="bold" />

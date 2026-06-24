@@ -9,7 +9,9 @@
     "forPlanners": "للمنظّمين",
     "about": "من نحن",
     "signIn": "تسجيل الدخول",
-    "getStarted": "ابدأ الآن"
+    "getStarted": "ابدأ الآن",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة"
   },
   "hero": {
     "trustBadge": "موثوق به في أكثر من ١٢٬٠٠٠ مناسبة",
