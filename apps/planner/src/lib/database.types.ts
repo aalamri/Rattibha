@@ -32,6 +32,7 @@ export interface Database {
           city: CityKey | null;
           avatar_seed: number;
           expo_push_token: string | null;
+          is_admin: boolean;
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['profiles']['Row']> & { id: string; role: UserRole; full_name: string };
@@ -208,6 +209,18 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      admin_list_users: {
+        Args: { search?: string };
+        Returns: {
+          id: string;
+          email: string;
+          full_name: string;
+          role: UserRole;
+          is_admin: boolean;
+          created_at: string;
+        }[];
+      };
+    };
   };
 }

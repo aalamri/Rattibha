@@ -2,9 +2,11 @@ import {
   CalendarCheck,
   ChatCircle,
   Megaphone,
+  ShieldCheck,
   SquaresFour,
   Storefront,
   Tray,
+  UserGear,
   Wallet,
   type Icon,
 } from 'phosphor-react';
@@ -14,6 +16,8 @@ export interface NavItem {
   labelKey: string;
   href: string;
   icon: Icon;
+  /** Only shown to profiles with is_admin = true — see Sidebar.tsx. */
+  adminOnly?: boolean;
 }
 
 /** Sidebar navigation — matches NAV in dash.jsx. Badge counts are computed
@@ -27,4 +31,6 @@ export const NAV: NavItem[] = [
   { key: 'messages', labelKey: 'nav.messages', href: '/messages', icon: ChatCircle },
   { key: 'earnings', labelKey: 'nav.earnings', href: '/earnings', icon: Wallet },
   { key: 'profile', labelKey: 'nav.profile', href: '/profile', icon: Storefront },
+  { key: 'adminApprovals', labelKey: 'nav.adminApprovals', href: '/admin', icon: ShieldCheck, adminOnly: true },
+  { key: 'adminUsers', labelKey: 'nav.adminUsers', href: '/admin/users', icon: UserGear, adminOnly: true },
 ];

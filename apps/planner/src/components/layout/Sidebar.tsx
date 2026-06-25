@@ -16,8 +16,9 @@ import { supabase } from '@/lib/supabase';
 export function Sidebar() {
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
-  const { session } = useAuth();
+  const { session, profile } = useAuth();
   const [badges, setBadges] = useState<Record<string, number>>({});
+  const visibleNav = NAV.filter((item) => !item.adminOnly || profile?.is_admin);
 
   useEffect(() => {
     if (!session) return;
@@ -76,7 +77,7 @@ export function Sidebar() {
       </div>
 
       <nav aria-label={t('sidebar.navLabel')} className="flex flex-col gap-0.5">
-        {NAV.map((item) => {
+        {visibleNav.map((item) => {
           const active = pathname === item.href;
           const ItemIcon = item.icon;
           const badge = badges[item.key];
