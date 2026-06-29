@@ -18,8 +18,8 @@ export default function LoginPage() {
   const { session, loading } = useAuth();
   const router = useRouter();
 
-  const [email, setEmail] = useState('planner@lumiere-events.sa');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 

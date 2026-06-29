@@ -32,7 +32,7 @@
     "signIn": "Sign in",
     "signingIn": "Signing in…",
     "signOut": "Sign out",
-    "error": "Invalid email or password. Try the seed account: planner@lumiere-events.sa / password123",
+    "error": "Invalid email or password.",
     "forgotPassword": "Forgot password?",
     "noAccount": "New to Rattibha?",
     "becomePlanner": "Become a planner",
