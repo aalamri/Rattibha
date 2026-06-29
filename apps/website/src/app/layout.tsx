@@ -73,11 +73,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // Reading the language from a cookie (rather than localStorage, which the
   // server can't see) lets this server-rendered <html> tag and the i18n
   // instance both start in the visitor's actual language on the very first
-  // response — no post-hydration flash, and crawlers/Arabic-locale visitors
-  // get Arabic content immediately instead of only after a client toggle.
+  // response — no post-hydration flash. Arabic is the default; a visitor
+  // only gets English once they've explicitly toggled it (or proxy.ts
+  // detected an English-preferring browser on first visit).
   const cookieStore = await cookies();
   const stored = cookieStore.get(LANGUAGE_STORAGE_KEY)?.value;
-  const initialLang: AppLanguage = stored === 'ar' ? 'ar' : 'en';
+  const initialLang: AppLanguage = stored === 'en' ? 'en' : 'ar';
   const dir = isRTLLanguage(initialLang) ? 'rtl' : 'ltr';
 
   return (
