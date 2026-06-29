@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { CheckCircle, MapPin, ShieldCheck, XCircle } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
@@ -111,30 +112,32 @@ export default function AdminApprovalsPage() {
           <div className="flex flex-col gap-3">
             {shown.map((p) => (
               <Card key={p.userId} pad={16} className="flex items-center gap-3.5">
-                <Avatar seed={p.seed} size={44} initials={p.businessName.charAt(0)} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[14.5px] font-semibold text-fg1">{p.businessName}</span>
-                    <Badge tone={p.verified ? 'green' : 'amber'}>
-                      {t(p.verified ? 'admin.approvals.verified' : 'admin.approvals.pending')}
-                    </Badge>
-                  </div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[12.5px] text-fg3">
-                    <span>{p.fullName}</span>
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin size={13} />
-                      {t(`cities.${p.city}`)}
-                    </span>
-                    <span>{formatDate(p.createdAt, i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                  </div>
-                  <div className="mt-1.5 flex gap-1.5">
-                    {p.categories.map((c) => (
-                      <Badge key={c} tone="purple">
-                        {t(`categories.${c}`)}
+                <Link href={`/admin/${p.userId}`} className="flex min-w-0 flex-1 items-center gap-3.5">
+                  <Avatar seed={p.seed} size={44} initials={p.businessName.charAt(0)} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[14.5px] font-semibold text-fg1">{p.businessName}</span>
+                      <Badge tone={p.verified ? 'green' : 'amber'}>
+                        {t(p.verified ? 'admin.approvals.verified' : 'admin.approvals.pending')}
                       </Badge>
-                    ))}
+                    </div>
+                    <div className="mt-0.5 flex items-center gap-3 text-[12.5px] text-fg3">
+                      <span>{p.fullName}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin size={13} />
+                        {t(`cities.${p.city}`)}
+                      </span>
+                      <span>{formatDate(p.createdAt, i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    </div>
+                    <div className="mt-1.5 flex gap-1.5">
+                      {p.categories.map((c) => (
+                        <Badge key={c} tone="purple">
+                          {t(`categories.${c}`)}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </Link>
                 {p.verified ? (
                   <Button
                     variant="secondary"

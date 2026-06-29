@@ -94,6 +94,22 @@
       "emptyTitle": "Nothing here",
       "emptySub": "No planners match this filter right now."
     },
+    "detail": {
+      "title": "Planner review",
+      "subtitle": "Full profile details before approving",
+      "back": "Back to approvals",
+      "notFound": "Planner not found.",
+      "teamSize": "Team size",
+      "yearsInBusiness": "Years in business",
+      "budgetTier": "Budget tier",
+      "startingPrice": "Starting price",
+      "crNumber": "CR number",
+      "appliedOn": "Applied on",
+      "services": "Services & packages",
+      "portfolio": "Portfolio",
+      "noPortfolio": "No photos uploaded yet.",
+      "actions": "Actions"
+    },
     "users": {
       "title": "Admin users",
       "subtitle": "Grant or remove admin access",
