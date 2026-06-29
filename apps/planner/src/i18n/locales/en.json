@@ -74,7 +74,56 @@
     "calendar": "Calendar",
     "messages": "Messages",
     "earnings": "Earnings",
-    "profile": "Profile"
+    "profile": "Profile",
+    "adminApprovals": "Approvals",
+    "adminUsers": "Admin users"
+  },
+  "admin": {
+    "approvals": {
+      "title": "Planner approvals",
+      "subtitle": "Review and approve planner storefronts before they go live",
+      "filters": {
+        "pending": "Pending",
+        "verified": "Verified",
+        "all": "All"
+      },
+      "pending": "Pending review",
+      "verified": "Verified",
+      "approve": "Approve",
+      "reject": "Reject",
+      "emptyTitle": "Nothing here",
+      "emptySub": "No planners match this filter right now."
+    },
+    "detail": {
+      "title": "Planner review",
+      "subtitle": "Full profile details before approving",
+      "back": "Back to approvals",
+      "notFound": "Planner not found.",
+      "teamSize": "Team size",
+      "yearsInBusiness": "Years in business",
+      "budgetTier": "Budget tier",
+      "startingPrice": "Starting price",
+      "crNumber": "CR number",
+      "appliedOn": "Applied on",
+      "services": "Services & packages",
+      "portfolio": "Portfolio",
+      "noPortfolio": "No photos uploaded yet.",
+      "actions": "Actions"
+    },
+    "users": {
+      "title": "Admin users",
+      "subtitle": "Grant or remove admin access",
+      "searchPlaceholder": "Search by name or email",
+      "admin": "Admin",
+      "makeAdmin": "Make admin",
+      "removeAdmin": "Remove admin",
+      "emptyTitle": "No users found",
+      "emptySub": "Try a different search.",
+      "roles": {
+        "customer": "Customer",
+        "planner": "Planner"
+      }
+    }
   },
   "cities": {
     "all": "All Saudi Arabia",
