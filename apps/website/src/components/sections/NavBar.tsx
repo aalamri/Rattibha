@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Globe, List, Sparkle, X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
-import { setAppLanguage, type AppLanguage } from '@/i18n';
+import { type AppLanguage } from '@/i18n';
+import { LANGUAGE_STORAGE_KEY } from '@/i18n/constants';
 
 const SIGN_IN_URL = process.env.NEXT_PUBLIC_CUSTOMER_APP_URL ?? '#';
 
@@ -25,13 +27,28 @@ const LINKS = [
  */
 export function NavBar() {
   const { t, i18n } = useTranslation();
+  const pathname = usePathname();
   const lang = i18n.language as AppLanguage;
   const [open, setOpen] = useState(false);
+
+  // Arabic is the unprefixed default route, English is "/en" — switching
+  // languages means navigating to the other real route (not just flipping
+  // i18next state), since the URL is what makes each language
+  // independently crawlable/indexable. A hard navigation (rather than
+  // client-side router.push) keeps this foolproof: the new route's layout
+  // re-runs server-side with the correct <html lang/dir> from scratch.
+  function switchLanguage() {
+    const withoutLocalePrefix = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+    const targetHref = lang === 'en' ? withoutLocalePrefix : `/en${withoutLocalePrefix === '/' ? '' : withoutLocalePrefix}`;
+    const nextLang: AppLanguage = lang === 'en' ? 'ar' : 'en';
+    document.cookie = `${LANGUAGE_STORAGE_KEY}=${nextLang}; path=/; max-age=31536000; samesite=lax`;
+    window.location.href = targetHref;
+  }
 
   const langToggle = (
     <button
       type="button"
-      onClick={() => setAppLanguage(lang === 'en' ? 'ar' : 'en')}
+      onClick={switchLanguage}
       className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border-[1.5px] border-border-strong px-3.5 py-1.5 text-sm font-bold text-fg1"
     >
       <Globe size={16} />

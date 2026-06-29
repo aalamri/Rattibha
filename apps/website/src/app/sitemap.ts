@@ -3,10 +3,9 @@ import type { MetadataRoute } from 'next';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ratibha.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // The language toggle is client-side (matches apps/planner and
-  // apps/customer's pattern) rather than per-locale routes, so there isn't
-  // a distinct Arabic URL to declare as an hreflang alternate — only one
-  // crawlable entry exists.
+  // TODO: list both "/" (Arabic) and "/en" with hreflang alternates now that
+  // each language is a real, independently crawlable route — see the
+  // locale-routing follow-up task for per-locale metadata/sitemap work.
   return [
     {
       url: SITE_URL,
