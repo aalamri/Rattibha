@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Rattibha · Plan a celebration worth remembering",
-    "description": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
+    "description": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
   },
   "nav": {
     "browsePlanners": "Browse planners",
@@ -18,7 +18,7 @@
     "titleLine1": "Plan a celebration",
     "titleWorth": "worth",
     "titleRemembering": "remembering",
-    "subtitle": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence.",
+    "subtitle": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence.",
     "searchEvent": "Event",
     "searchCity": "City",
     "searchDate": "Date",
@@ -87,7 +87,7 @@
     "stat3Label": "Customer reviews"
   },
   "testimonials": {
-    "overline": "Loved across the Gulf",
+    "overline": "Loved across Saudi Arabia",
     "title": "Celebrations, perfectly coordinated",
     "quotes": [
       { "who": "Noura A.", "role": "Bride · Riyadh", "text": "Rattibha matched us with a planner who understood our vision instantly. Our wedding was flawless." },
@@ -103,7 +103,7 @@
     "talkToSales": "Talk to sales"
   },
   "footer": {
-    "tagline": "The Gulf's marketplace for unforgettable events. Plan, celebrate, cherish.",
+    "tagline": "Saudi Arabia's marketplace for unforgettable events. Plan, celebrate, cherish.",
     "customers": "Customers",
     "planners": "Planners",
     "company": "Company",
@@ -111,7 +111,7 @@
     "plannersLinks": ["Join Rattibha", "Planner dashboard", "Success stories", "Resources"],
     "companyLinks": ["About us", "Careers", "Press", "Contact"],
     "copyright": "© 2026 Rattibha · رتّبها. All rights reserved.",
-    "legal": "Privacy · Terms · صُنع بحُبّ في الخليج"
+    "legal": "Privacy · Terms · صُنع بحُبّ في المملكة"
   },
   "planners": [
     { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas" },
