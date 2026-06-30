@@ -50,11 +50,16 @@ export function generateStaticParams() {
 
 const DICTS: Record<AppLanguage, typeof en> = { en, ar };
 const OG_LOCALE: Record<AppLanguage, string> = { en: 'en_US', ar: 'ar_SA' };
+// Arabic is the unprefixed default route ("/"), English is "/en" — see
+// proxy.ts. x-default also points at Arabic, matching that default.
+const PATH_FOR_LOCALE: Record<AppLanguage, string> = { ar: '/', en: '/en' };
 
 // Real per-locale metadata — each language gets its own genuinely-written
 // title/description (from the locale JSON's `meta` namespace, not a
 // machine translation of the other), used for the page title, OG, and
-// Twitter card alike. hreflang/canonical are a separate follow-up task.
+// Twitter card alike, plus hreflang/canonical so each route is correctly
+// understood as a distinct, independently indexable language version of
+// the same page (rather than search engines guessing or picking one).
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const lang: AppLanguage = SUPPORTED_LANGUAGES.includes(locale as AppLanguage) ? (locale as AppLanguage) : 'ar';
@@ -65,6 +70,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
+    alternates: {
+      canonical: PATH_FOR_LOCALE[lang],
+      languages: {
+        ar: PATH_FOR_LOCALE.ar,
+        en: PATH_FOR_LOCALE.en,
+        'x-default': PATH_FOR_LOCALE.ar,
+      },
+    },
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
