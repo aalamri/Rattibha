@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { useIsRTL } from '@/i18n/useIsRTL';
 
 const PLANNER_SIGNUP_URL = `${process.env.NEXT_PUBLIC_PLANNER_APP_URL ?? ''}/onboarding`;
 
 /** Aubergine "for planners" panel — matches `CTABand` in sections.jsx. */
 export function CTABand() {
   const { t } = useTranslation();
+  const isRTL = useIsRTL();
 
   return (
     <div id="for-planners" className="mx-auto max-w-[1180px] px-10 py-[72px]">
@@ -33,7 +35,9 @@ export function CTABand() {
             <Badge bg="rgba(255,255,255,0.12)" fg="#DAA520" icon={CrownSimple}>
               {t('cta.badge')}
             </Badge>
-            <h2 className="mt-4 font-display text-[44px] font-semibold leading-[1.04] text-[#EFE9F3]">{t('cta.title')}</h2>
+            <h2 className={`mt-4 font-display text-[44px] font-semibold text-[#EFE9F3] ${isRTL ? 'leading-[1.2]' : 'leading-[1.04]'}`}>
+              {t('cta.title')}
+            </h2>
             <p className="mt-3.5 text-[16.5px] leading-[1.55] text-[rgba(244,232,223,0.75)]">{t('cta.subtitle')}</p>
           </div>
           <div className="flex flex-shrink-0 flex-col gap-3">

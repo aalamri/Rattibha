@@ -93,6 +93,14 @@ html[dir="rtl"] body {
   font-family: var(--font-sans-ar);
 }
 
+/* --font-display falls back from Playfair (Latin-only) to El Messiri per
+   glyph, which happens to render Arabic correctly today since Playfair has
+   no Arabic coverage — but that's incidental, not guaranteed. Pin it
+   explicitly for RTL so Arabic display type is a deliberate choice. */
+html[dir="rtl"] .font-display {
+  font-family: var(--font-display-ar);
+}
+
 body {
   background: var(--color-ivory);
   color: var(--color-fg1);

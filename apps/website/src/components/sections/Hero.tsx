@@ -7,13 +7,16 @@ import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { Photo } from '@/components/ui/Photo';
+import { useIsRTL } from '@/i18n/useIsRTL';
 
 function SearchSeg({ icon: IconComp, label, value }: { icon: typeof CalendarBlank; label: string; value: string }) {
+  const isRTL = useIsRTL();
   return (
     <div className="flex flex-1 items-center gap-2.5 px-4 py-3.5">
       <IconComp size={19} className="text-brand" />
       <div>
-        <div className="text-[10.5px] font-bold uppercase tracking-wider text-fg3">{label}</div>
+        {/* Letter-spacing breaks Arabic's joined letterforms — see SectionHead. */}
+        <div className={`text-[10.5px] font-bold uppercase text-fg3 ${isRTL ? '' : 'tracking-wider'}`}>{label}</div>
         <div className="text-sm font-semibold text-fg1">{value}</div>
       </div>
     </div>
@@ -23,6 +26,7 @@ function SearchSeg({ icon: IconComp, label, value }: { icon: typeof CalendarBlan
 /** Display headline + search bar + photo collage — matches `Hero` in sections.jsx. */
 export function Hero() {
   const { t } = useTranslation();
+  const isRTL = useIsRTL();
 
   return (
     <div className="relative overflow-hidden">
@@ -43,7 +47,11 @@ export function Hero() {
           <Badge bg="#F2E2A6" fg="#7a5a14" icon={Star}>
             {t('hero.trustBadge')}
           </Badge>
-          <h1 className="mt-4.5 font-display text-[38px] font-semibold leading-[1.05] tracking-[-0.02em] text-fg1 sm:text-[52px] lg:text-[66px] lg:leading-[1.02]">
+          <h1
+            className={`mt-4.5 font-display text-[38px] font-semibold text-fg1 sm:text-[52px] lg:text-[66px] ${
+              isRTL ? 'leading-[1.2] lg:leading-[1.15]' : 'leading-[1.05] tracking-[-0.02em] lg:leading-[1.02]'
+            }`}
+          >
             {t('hero.titleLine1')}
             <br />
             {t('hero.titleWorth')} <span className="italic text-brand">{t('hero.titleRemembering')}</span>
