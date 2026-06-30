@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { Photo } from '@/components/ui/Photo';
+import { formatLocaleNumber } from '@/i18n';
 import { useIsRTL } from '@/i18n/useIsRTL';
 
 function SearchSeg({ icon: IconComp, label, value }: { icon: typeof CalendarBlank; label: string; value: string }) {
@@ -25,7 +26,7 @@ function SearchSeg({ icon: IconComp, label, value }: { icon: typeof CalendarBlan
 
 /** Display headline + search bar + photo collage — matches `Hero` in sections.jsx. */
 export function Hero() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isRTL = useIsRTL();
 
   return (
@@ -80,7 +81,10 @@ export function Hero() {
               ))}
             </div>
             <span className="text-[13.5px] text-fg2">
-              <b className="text-fg1">4.9/5</b> {t('hero.reviewsCount')}
+              <b className="text-fg1">
+                {formatLocaleNumber(4.9, i18n.language, { minimumFractionDigits: 1 })}/{formatLocaleNumber(5, i18n.language)}
+              </b>{' '}
+              {t('hero.reviewsCount')}
             </span>
           </div>
         </div>
@@ -97,7 +101,7 @@ export function Hero() {
               </div>
             </div>
             <Badge bg="#F2E2A6" fg="#7a5a14" icon={Star}>
-              4.9
+              {formatLocaleNumber(4.9, i18n.language, { minimumFractionDigits: 1 })}
             </Badge>
           </div>
         </div>

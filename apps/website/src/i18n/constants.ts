@@ -14,3 +14,14 @@ export type AppLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export function isRTLLanguage(lang: string) {
   return lang === 'ar';
 }
+
+/**
+ * `Intl.NumberFormat`/`toLocaleString` render Western digits for the bare
+ * 'ar' tag — only the region-qualified 'ar-SA' produces Arabic-Indic
+ * numerals (١٢٣). Centralizes the locale-tag mapping so every on-page
+ * number (ratings, prices, counts) renders consistently instead of some
+ * being Arabic-Indic and others silently staying Western.
+ */
+export function formatLocaleNumber(value: number, lang: string, options?: Intl.NumberFormatOptions) {
+  return value.toLocaleString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
+}

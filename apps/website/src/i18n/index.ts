@@ -4,9 +4,9 @@ import { initReactI18next } from 'react-i18next';
 import ar from './locales/ar.json';
 import en from './locales/en.json';
 
-import { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from './constants';
+import { formatLocaleNumber, isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from './constants';
 
-export { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage };
+export { formatLocaleNumber, isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage };
 
 export const resources = {
   en: { translation: en },

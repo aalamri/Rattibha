@@ -4,6 +4,7 @@ import { MapPin } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { CITY_KEYS, CITY_PLANNER_COUNTS } from '@/data/planners';
+import { formatLocaleNumber } from '@/i18n';
 import { SectionHead } from './SectionHead';
 
 /** Browse-by-city grid — not in the original prototype; added per the
@@ -26,7 +27,7 @@ export function CityGrid() {
             </div>
             <div className="text-[15px] font-bold text-fg1">{t(`cities.${key}`)}</div>
             <div className="mt-0.5 text-[12.5px] text-fg3">
-              {t('cities.plannersCount', { count: CITY_PLANNER_COUNTS[key].toLocaleString(i18n.language === 'ar' ? 'ar-SA' : 'en-US') })}
+              {t('cities.plannersCount', { count: formatLocaleNumber(CITY_PLANNER_COUNTS[key], i18n.language) })}
             </div>
           </div>
         ))}
