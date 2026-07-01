@@ -1,5 +1,5 @@
 /**
- * Rattibha design tokens — colors.
+ * Ratibha design tokens — colors.
  * Ported from colors_and_type.css. Keep in sync with tailwind.config.js.
  */
 

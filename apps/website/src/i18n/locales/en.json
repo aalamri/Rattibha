@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Rattibha · Plan a celebration worth remembering",
-    "description": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
+    "title": "Ratibha · Plan a celebration worth remembering",
+    "description": "Ratibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
   },
   "nav": {
     "browsePlanners": "Browse planners",
@@ -18,7 +18,7 @@
     "titleLine1": "Plan a celebration",
     "titleWorth": "worth",
     "titleRemembering": "remembering",
-    "subtitle": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Meet, message and book with confidence.",
+    "subtitle": "Ratibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Meet, message and book with confidence.",
     "searchEvent": "Event",
     "searchCity": "City",
     "searchDate": "Date",
@@ -67,7 +67,7 @@
   "howItWorks": {
     "overline": "Simple by design",
     "title": "Three steps to a perfect event",
-    "subtitle": "From first idea to final toast, Rattibha keeps every detail coordinated.",
+    "subtitle": "From first idea to final toast, Ratibha keeps every detail coordinated.",
     "step1Title": "Tell us your vision",
     "step1Desc": "Share your event type, date, city and budget in under two minutes.",
     "step2Title": "Get matched instantly",
@@ -78,7 +78,7 @@
   "about": {
     "overline": "Our story",
     "title": "Built for the Kingdom's celebrations",
-    "subtitle": "Rattibha started with a simple idea: finding a trustworthy event planner shouldn't take weeks of messaging and guesswork. We built a marketplace where every planner is verified, every quote is transparent, and every deposit is protected until the day goes exactly as planned.",
+    "subtitle": "Ratibha started with a simple idea: finding a trustworthy event planner shouldn't take weeks of messaging and guesswork. We built a marketplace where every planner is verified, every quote is transparent, and every deposit is protected until the day goes exactly as planned.",
     "stat1Value": "500+",
     "stat1Label": "Verified planners",
     "stat2Value": "12,000+",
@@ -90,15 +90,15 @@
     "overline": "Loved across Saudi Arabia",
     "title": "Celebrations, perfectly coordinated",
     "quotes": [
-      { "who": "Noura A.", "role": "Bride · Riyadh", "text": "Rattibha matched us with a planner who understood our vision instantly. Our wedding was flawless." },
+      { "who": "Noura A.", "role": "Bride · Riyadh", "text": "Ratibha matched us with a planner who understood our vision instantly. Our wedding was flawless." },
       { "who": "Khalid M.", "role": "HR Lead · Orbit Co.", "text": "Booked our entire annual celebration in a week. Professional, transparent, stress-free." },
       { "who": "Sara H.", "role": "Mother · Dammam", "text": "The birthday party exceeded every expectation. Booking and paying was effortless." }
     ]
   },
   "cta": {
     "badge": "For event planners",
-    "title": "Grow your planning practice with Rattibha",
-    "subtitle": "Reach clients who are ready to invest in a perfectly coordinated celebration. Rattibha handles bookings, payments and reviews so you can focus on the craft.",
+    "title": "Grow your planning practice with Ratibha",
+    "subtitle": "Reach clients who are ready to invest in a perfectly coordinated celebration. Ratibha handles bookings, payments and reviews so you can focus on the craft.",
     "becomePlanner": "Become a planner",
     "talkToSales": "Talk to sales"
   },
@@ -108,9 +108,9 @@
     "planners": "Planners",
     "company": "Company",
     "customersLinks": ["Browse planners", "How it works", "Pricing", "Reviews"],
-    "plannersLinks": ["Join Rattibha", "Planner dashboard", "Success stories", "Resources"],
+    "plannersLinks": ["Join Ratibha", "Planner dashboard", "Success stories", "Resources"],
     "companyLinks": ["About us", "Careers", "Press", "Contact"],
-    "copyright": "© 2026 Rattibha · رتّبها. All rights reserved.",
+    "copyright": "© 2026 Ratibha · رتّبها. All rights reserved.",
     "legal": "Privacy · Terms · صُنع بحُبّ في المملكة"
   },
   "trust": {
@@ -118,7 +118,7 @@
     "title": "Peace of mind, every step",
     "subtitle": "From first quote to final toast — your experience is protected.",
     "verifiedTitle": "Verified coordinators",
-    "verifiedDesc": "Every coordinator passes a background, portfolio and reference check before joining Rattibha.",
+    "verifiedDesc": "Every coordinator passes a background, portfolio and reference check before joining Ratibha.",
     "quotesTitle": "Transparent quotes",
     "quotesDesc": "You receive itemised, written quotes — no hidden fees, no surprises on the day.",
     "depositTitle": "Protected deposit",

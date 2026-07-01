@@ -1,4 +1,4 @@
--- Rattibha core schema: profiles, planners, requests, offers, contracts,
+-- Ratibha core schema: profiles, planners, requests, offers, contracts,
 -- payments, bookings, reviews, messages, notifications + the shared deal
 -- state machine (request -> offer_sent -> accepted -> countersigned ->
 -- deposit_paid -> completed -> reviewed).

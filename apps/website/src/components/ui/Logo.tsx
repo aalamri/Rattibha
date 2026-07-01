@@ -8,7 +8,7 @@ export function Logo({ dark = false, size = 38 }: { dark?: boolean; size?: numbe
   return (
     <Image
       src={dark ? '/logo-wordmark-light.png' : '/logo-wordmark.png'}
-      alt="رتّبها · Rattibha"
+      alt="رتّبها · Ratibha"
       height={height}
       width={Math.round(height * ASPECT_RATIO)}
       priority

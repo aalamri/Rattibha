@@ -51,8 +51,8 @@ const tajawal = Tajawal({
 });
 
 export const metadata: Metadata = {
-  title: 'Rattibha — Planner Dashboard',
-  description: 'Manage leads, offers, bookings and your storefront on Rattibha.',
+  title: 'Ratibha — Planner Dashboard',
+  description: 'Manage leads, offers, bookings and your storefront on Ratibha.',
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

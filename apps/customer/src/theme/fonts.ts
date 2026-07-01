@@ -1,5 +1,5 @@
 /**
- * Rattibha type families.
+ * Ratibha type families.
  * Latin: Playfair Display (display) + Poppins (UI/body).
  * Arabic: El Messiri (display) + Tajawal (UI/body).
  */
