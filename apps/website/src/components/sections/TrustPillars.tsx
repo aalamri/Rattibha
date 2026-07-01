@@ -3,6 +3,8 @@
 import { ListChecks, LockKey, ShieldCheck, Star } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
+import { type AppLanguage } from '@/i18n';
+import { localeHref } from '@/lib/seo';
 import { SectionHead } from './SectionHead';
 
 const PILLARS = [
@@ -14,7 +16,8 @@ const PILLARS = [
 
 /** Four trust/credibility pillars — inserted between HowItWorks and Testimonials. */
 export function TrustPillars() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as AppLanguage;
 
   return (
     <div className="border-y border-border bg-[#F5F0FA]">
@@ -36,6 +39,27 @@ export function TrustPillars() {
               <p className="mt-1.5 text-[13.5px] leading-[1.55] text-fg2">{t(`trust.${key}Desc`)}</p>
             </div>
           ))}
+        </div>
+
+        {/* Concrete, verifiable proof (not just claims) — registered
+            business, real payment provider, and links to the actual
+            policy pages, distinct from the emotional pillars above. */}
+        <div className="mt-6 flex flex-col flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-border bg-white px-6 py-5 text-center sm:flex-row">
+          <span className="text-[13px] font-semibold text-fg2">{t('trust.proofBusiness')}</span>
+          <span className="hidden h-4 w-px bg-border sm:block" />
+          <span className="text-[13px] font-semibold text-fg2">{t('trust.proofPayment')}</span>
+          <span className="hidden h-4 w-px bg-border sm:block" />
+          <a href={`mailto:${t('trust.proofSupport')}`} className="text-[13px] font-semibold text-brand">
+            {t('trust.proofSupport')}
+          </a>
+          <span className="hidden h-4 w-px bg-border sm:block" />
+          <a href={localeHref(lang, '/refund-policy')} className="text-[13px] font-semibold text-brand">
+            {t('trust.proofRefundLink')}
+          </a>
+          <span className="hidden h-4 w-px bg-border sm:block" />
+          <a href={localeHref(lang, '/planner-verification')} className="text-[13px] font-semibold text-brand">
+            {t('trust.proofVerificationLink')}
+          </a>
         </div>
       </div>
     </div>

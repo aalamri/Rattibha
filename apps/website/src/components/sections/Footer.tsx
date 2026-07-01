@@ -4,12 +4,26 @@ import { InstagramLogo, SnapchatLogo, TiktokLogo, TwitterLogo } from 'phosphor-r
 import { useTranslation } from 'react-i18next';
 
 import { Logo } from '@/components/ui/Logo';
+import { type AppLanguage } from '@/i18n';
+import { localeHref } from '@/lib/seo';
 
 const SOCIAL_ICONS = [InstagramLogo, TwitterLogo, TiktokLogo, SnapchatLogo];
 
+// Real routes (see task #20) — kept separate from `columns` below since
+// those are still plain decorative labels, not yet wired to real pages.
+const LEGAL_LINKS = [
+  { key: 'privacy', href: '/privacy' },
+  { key: 'terms', href: '/terms' },
+  { key: 'refundPolicy', href: '/refund-policy' },
+  { key: 'cancellationPolicy', href: '/cancellation-policy' },
+  { key: 'disputeResolution', href: '/dispute-resolution' },
+  { key: 'plannerVerification', href: '/planner-verification' },
+] as const;
+
 /** Link columns + social + legal row — matches `Footer` in sections.jsx. */
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as AppLanguage;
 
   const columns = [
     { heading: t('footer.customers'), links: t('footer.customersLinks', { returnObjects: true }) as string[] },
@@ -19,7 +33,7 @@ export function Footer() {
 
   return (
     <div className="border-t border-border bg-white">
-      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.85fr_0.85fr_0.85fr_0.85fr]">
         <div>
           <Logo size={40} />
           <p className="my-4 max-w-[280px] text-[13.5px] leading-[1.55] text-fg2">{t('footer.tagline')}</p>
@@ -43,9 +57,20 @@ export function Footer() {
             </div>
           </div>
         ))}
+        <div>
+          <div className="mb-3.5 text-[13px] font-extrabold text-fg1">{t('footer.legalHeading')}</div>
+          <div className="flex flex-col gap-2.5">
+            {LEGAL_LINKS.map(({ key, href }) => (
+              <a key={key} href={localeHref(lang, href)} className="text-[13.5px] text-fg2 hover:text-fg1">
+                {t(`footer.legalLinks.${key}`)}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="mx-auto flex max-w-[1180px] flex-col items-center justify-between gap-2 border-t border-border px-10 py-4.5 sm:flex-row">
         <span className="text-[12.5px] text-fg3">{t('footer.copyright')}</span>
+        <span className="text-[12px] text-fg3">{t('footer.crNotice')}</span>
         <span className="text-[12.5px] text-fg3">{t('footer.legal')}</span>
       </div>
     </div>
