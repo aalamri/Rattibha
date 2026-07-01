@@ -124,6 +124,10 @@
     "crNotice": "Dakkah Information Technology Est. · CR 7021679076",
     "legal": "صُنع بحُبّ في المملكة"
   },
+  "whatsapp": {
+    "ariaLabel": "Chat with us on WhatsApp",
+    "prefillMessage": "Hi! I'm looking for an event planner in Saudi Arabia and found you through Ratibha."
+  },
   "trust": {
     "overline": "Built for confidence",
     "title": "Peace of mind, every step",
