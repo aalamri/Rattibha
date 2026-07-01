@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { El_Messiri, Playfair_Display, Poppins, Tajawal } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { I18nProvider } from '@/i18n/I18nProvider';
 import { isRTLLanguage, SUPPORTED_LANGUAGES, type AppLanguage } from '@/i18n/constants';
 // Server Components must not import from i18n/index.ts — it pulls in
@@ -157,7 +158,10 @@ export default async function LocaleLayout({
     <html lang={initialLang} dir={dir} className={`${playfair.variable} ${poppins.variable} ${elMessiri.variable} ${tajawal.variable}`}>
       <body className="bg-ivory text-fg1 antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <I18nProvider initialLang={initialLang}>{children}</I18nProvider>
+        <I18nProvider initialLang={initialLang}>
+          {children}
+          <WhatsAppButton />
+        </I18nProvider>
         <Analytics />
       </body>
     </html>
