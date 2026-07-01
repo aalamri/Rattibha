@@ -4,6 +4,8 @@ import { Balloon, Briefcase, Cake, HeartStraight, type Icon, Wine } from 'phosph
 import { useTranslation } from 'react-i18next';
 
 import { CATEGORY_KEYS, type CategoryKey } from '@/data/planners';
+import { type AppLanguage } from '@/i18n';
+import { localeHref } from '@/lib/seo';
 
 const CATEGORY_ICONS: Record<CategoryKey, Icon> = {
   weddings: HeartStraight,
@@ -21,9 +23,12 @@ const CATEGORY_TONES: Record<CategoryKey, { color: string; tint: string }> = {
   galas: { color: '#DAA520', tint: '#F2E2A6' },
 };
 
-/** Five category cards — matches `Categories` in sections.jsx. */
+/** Five category cards — matches `Categories` in sections.jsx. Each card
+ * links to that category's public SEO landing page (/categories/[key]) —
+ * see task #17. */
 export function Categories() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as AppLanguage;
 
   return (
     <div className="mx-auto max-w-[1180px] px-10 pb-10 pt-2">
@@ -32,8 +37,9 @@ export function Categories() {
           const IconComp = CATEGORY_ICONS[key];
           const tones = CATEGORY_TONES[key];
           return (
-            <div
+            <a
               key={key}
+              href={localeHref(lang, `/categories/${key}`)}
               className="cursor-pointer rounded-[18px] border border-border bg-white p-5 text-center shadow-[0_8px_22px_-16px_rgba(43,34,51,0.2)] transition-all"
             >
               <div className="mx-auto mb-3 grid h-13 w-13 place-items-center rounded-2xl" style={{ background: tones.tint }}>
@@ -41,7 +47,7 @@ export function Categories() {
               </div>
               <div className="text-[15px] font-bold text-fg1">{t(`categories.${key}`)}</div>
               <div className="mt-0.5 text-[12.5px] text-fg3">{t(`categories.${key}Count`)}</div>
-            </div>
+            </a>
           );
         })}
       </div>
