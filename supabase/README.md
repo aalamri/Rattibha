@@ -1,4 +1,4 @@
-# Rattibha backend (Supabase)
+# Ratibha backend (Supabase)
 
 Local Postgres + Auth + Storage backing both `apps/planner` and `apps/customer`.
 

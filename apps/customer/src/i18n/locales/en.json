@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Rattibha",
+    "appName": "Ratibha",
     "tagline": "Plan beautifully. Celebrate effortlessly.",
     "language": "Language",
     "sar": "SAR",
@@ -103,7 +103,7 @@
     },
     "register": {
       "title": "Create your account",
-      "subtitle": "Join Rattibha and start planning in minutes",
+      "subtitle": "Join Ratibha and start planning in minutes",
       "agreeToTerms": "I agree to the <terms>Terms</terms> & <privacy>Privacy Policy</privacy>",
       "orSignUpWith": "or sign up with",
       "alreadyHaveAccount": "Already have an account? ",

@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const RESEND_API_URL = 'https://api.resend.com/emails';
-const FROM_ADDRESS = 'Rattibha <no-reply@ratibha.com>';
+const FROM_ADDRESS = 'Ratibha <no-reply@ratibha.com>';
 const LOGIN_URL = 'https://app.ratibha.com/login';
 
 interface EmailPayload {
@@ -82,7 +82,7 @@ async function plannerApprovedMessage(supabase: SupabaseClient, plannerId: strin
   return {
     from: FROM_ADDRESS,
     to: email,
-    subject: ar ? 'تمت الموافقة على ملفك في رتّبها! 🎉' : 'Your Rattibha planner profile is approved! 🎉',
+    subject: ar ? 'تمت الموافقة على ملفك في رتّبها! 🎉' : 'Your Ratibha planner profile is approved! 🎉',
     html: ar
       ? `<h2>تهانينا، ${businessName}!</h2><p>راجع فريقنا ملفك التعريفي وتمت الموافقة عليه. أنت الآن جاهز لاستقبال طلبات العملاء.</p><p><a href="${LOGIN_URL}">تسجيل الدخول إلى لوحة التحكم</a></p>`
       : `<h2>Congratulations, ${businessName}!</h2><p>Our team reviewed your profile and it's been approved. You're now ready to receive client requests.</p><p><a href="${LOGIN_URL}">Sign in to your dashboard</a></p>`,

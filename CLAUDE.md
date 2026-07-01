@@ -1,6 +1,6 @@
-# CLAUDE.md — Rattibha build instructions
+# CLAUDE.md — Ratibha build instructions
 
-You are implementing **Rattibha (رتّبها)**, a bilingual (Arabic RTL + English LTR) two-sided
+You are implementing **Ratibha (رتّبها)**, a bilingual (Arabic RTL + English LTR) two-sided
 event-planning marketplace for Saudi Arabia. This folder is a **high-fidelity design reference**
 (HTML/JSX prototypes) — recreate it in a real codebase, do NOT ship the HTML directly.
 

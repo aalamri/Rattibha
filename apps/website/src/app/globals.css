@@ -8,7 +8,7 @@ html {
 }
 
 /**
- * Rattibha design tokens — ported from /colors_and_type.css and the planner
+ * Ratibha design tokens — ported from /colors_and_type.css and the planner
  * app's globals.css. Marketing site is light-mode only (matches the
  * ui_kits/website prototype, which has no theme toggle), so this omits the
  * .dark overrides that exist in apps/planner.

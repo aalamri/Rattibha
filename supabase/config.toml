@@ -252,7 +252,7 @@ otp_expiry = 3600
 # text so it can be typed into the app, instead of Supabase's default
 # click-only magic-link template.
 [auth.email.template.recovery]
-subject = "Reset your Rattibha password"
+subject = "Reset your Ratibha password"
 content_path = "./supabase/templates/recovery.html"
 
 # Uncomment to customize notification email template

@@ -1,5 +1,5 @@
 /**
- * Rattibha design tokens — spacing, radii, shadows, motion.
+ * Ratibha design tokens — spacing, radii, shadows, motion.
  * Ported from colors_and_type.css. Keep in sync with tailwind.config.js.
  */
 import { Platform } from 'react-native';

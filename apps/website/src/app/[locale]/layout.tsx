@@ -53,7 +53,7 @@ const OG_LOCALE: Record<AppLanguage, string> = { en: 'en_US', ar: 'ar_SA' };
 // Arabic is the unprefixed default route ("/"), English is "/en" — see
 // proxy.ts. x-default also points at Arabic, matching that default.
 const PATH_FOR_LOCALE: Record<AppLanguage, string> = { ar: '/', en: '/en' };
-const BRAND_NAME: Record<AppLanguage, string> = { en: 'Rattibha', ar: 'رتّبها' };
+const BRAND_NAME: Record<AppLanguage, string> = { en: 'Ratibha', ar: 'رتّبها' };
 const COUNTRY_NAME: Record<AppLanguage, string> = { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' };
 
 // Organization + WebSite JSON-LD, written per-locale (not a translated
@@ -116,7 +116,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      siteName: 'Rattibha',
+      siteName: 'Ratibha',
       locale: OG_LOCALE[lang],
       alternateLocale: OG_LOCALE[otherLang],
       type: 'website',

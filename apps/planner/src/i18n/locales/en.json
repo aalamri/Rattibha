@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Rattibha",
+    "appName": "Ratibha",
     "sar": "SAR",
     "pro": "Pro",
     "searchPlaceholder": "Search…",
@@ -26,7 +26,7 @@
   },
   "auth": {
     "title": "Welcome back",
-    "subtitle": "Sign in to your Rattibha planner dashboard",
+    "subtitle": "Sign in to your Ratibha planner dashboard",
     "email": "Email",
     "password": "Password",
     "signIn": "Sign in",
@@ -34,7 +34,7 @@
     "signOut": "Sign out",
     "error": "Invalid email or password.",
     "forgotPassword": "Forgot password?",
-    "noAccount": "New to Rattibha?",
+    "noAccount": "New to Ratibha?",
     "becomePlanner": "Become a planner",
     "errors": {
       "weakPassword": "Password must be at least 6 characters.",
@@ -510,7 +510,7 @@
         "account": "Account created",
         "business": "Business details",
         "review": "Documents under review",
-        "live": "Go live on Rattibha"
+        "live": "Go live on Ratibha"
       },
       "inReview": "In review",
       "previewDashboard": "Preview my dashboard",
