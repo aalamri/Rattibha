@@ -90,6 +90,10 @@ export const TERMS_OF_SERVICE: Record<AppLanguage, LegalPageContent> = {
       'These Terms govern your use of Ratibha — a marketplace connecting customers planning events with independent, verified event planners across Saudi Arabia. By creating an account, you agree to these Terms.',
     sections: [
       {
+        heading: 'The legal entity behind Ratibha',
+        body: 'Ratibha ("we", "us") is operated by Dakkah Information Technology Est. (مؤسسة دكة لتقنية المعلومات), a Saudi establishment registered under commercial registration / unified national number 7021679076.',
+      },
+      {
         heading: "What Ratibha is — and isn't",
         body: 'Ratibha is a marketplace that facilitates introductions, messaging, quoting and payment between customers and independent planners. Planners are independent businesses, not employees or agents of Ratibha — Ratibha is not itself an event planning company and does not guarantee the outcome of any event.',
       },
@@ -124,6 +128,10 @@ export const TERMS_OF_SERVICE: Record<AppLanguage, LegalPageContent> = {
     intro:
       'تحكم هذه الشروط استخدامك لرتّبها — سوق يربط العملاء الذين يخطّطون لمناسباتهم بمنظّمي مناسبات مستقلين وموثّقين في أنحاء المملكة. بإنشائك حساباً، فإنك توافق على هذه الشروط.',
     sections: [
+      {
+        heading: 'الكيان القانوني وراء رتّبها',
+        body: 'رتّبها ("نحن") مملوكة ومُشغَّلة من قبل مؤسسة دكة لتقنية المعلومات، مؤسسة سعودية مسجّلة بالسجل التجاري / الرقم الوطني الموحد 7021679076.',
+      },
       {
         heading: 'ما هي رتّبها — وما ليست عليه',
         body: 'رتّبها سوق يسهّل التعارف والمراسلة وتقديم العروض والدفع بين العملاء والمنظّمين المستقلين. المنظّمون أصحاب أعمال مستقلة، وليسوا موظفين أو وكلاء لرتّبها — رتّبها ليست شركة تنظيم مناسبات بحد ذاتها ولا تضمن نتيجة أي مناسبة.',

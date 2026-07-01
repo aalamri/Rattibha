@@ -70,6 +70,7 @@ export function Footer() {
       </div>
       <div className="mx-auto flex max-w-[1180px] flex-col items-center justify-between gap-2 border-t border-border px-10 py-4.5 sm:flex-row">
         <span className="text-[12.5px] text-fg3">{t('footer.copyright')}</span>
+        <span className="text-[12px] text-fg3">{t('footer.crNotice')}</span>
         <span className="text-[12.5px] text-fg3">{t('footer.legal')}</span>
       </div>
     </div>
