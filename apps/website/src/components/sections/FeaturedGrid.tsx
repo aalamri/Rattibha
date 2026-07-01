@@ -32,13 +32,16 @@ function PlannerCard({ name, city, type, rating, from, seed, premium }: PlannerC
             {formatLocaleNumber(rating, i18n.language, { minimumFractionDigits: 1 })}
           </Badge>
         </div>
-        <div className="mt-1 flex items-center gap-1.5 text-[13px] text-fg2">
-          <MapPin size={15} />
-          {city} · {type}
+        <div className="mt-2 inline-flex items-center rounded-full bg-purple-50 px-2.5 py-0.5 text-[12px] font-semibold text-brand">
+          {type}
+        </div>
+        <div className="mt-1.5 flex items-center gap-1.5 text-[12.5px] text-fg3">
+          <MapPin size={14} />
+          {city}
         </div>
         <div className="mt-3.5 flex items-center justify-between">
-          <span className="text-[12.5px] text-fg3">
-            {t('featured.from')} <b className="text-[15px] text-fg1">SAR {formatLocaleNumber(from, i18n.language)}</b>
+          <span className="text-[11.5px] text-fg3">
+            {t('featured.from')} {formatLocaleNumber(from, i18n.language)} SAR
           </span>
           <Button size="sm">{t('featured.viewProfile')}</Button>
         </div>
