@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { CalendarBlank, Confetti, MagnifyingGlass, MapPin, Star } from 'phosphor-react';
+import { CalendarBlank, Confetti, MagnifyingGlass, MapPin, Star, Wallet } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@/components/ui/Avatar';
@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Photo } from '@/components/ui/Photo';
 import { formatLocaleNumber } from '@/i18n';
 import { useIsRTL } from '@/i18n/useIsRTL';
+
+const CTA_URL = process.env.NEXT_PUBLIC_CUSTOMER_APP_URL ?? '#';
 
 function SearchSeg({ icon: IconComp, label, value }: { icon: typeof CalendarBlank; label: string; value: string }) {
   const isRTL = useIsRTL();
@@ -43,33 +45,34 @@ export function Hero() {
         height={431}
         className="pointer-events-none absolute -top-14 end-0 -me-10 rotate-[-8deg] opacity-[0.16]"
       />
-      <div className="relative mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 py-16 pb-[72px] sm:px-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 py-16 pb-[72px] sm:px-10 lg:grid-cols-[1.25fr_0.75fr]">
         <div>
           <Badge bg="#F2E2A6" fg="#7a5a14" icon={Star}>
             {t('hero.trustBadge')}
           </Badge>
           <h1
-            className={`mt-4.5 font-display text-[38px] font-semibold text-fg1 sm:text-[52px] lg:text-[66px] ${
-              isRTL ? 'leading-[1.2] lg:leading-[1.15]' : 'leading-[1.05] tracking-[-0.02em] lg:leading-[1.02]'
+            className={`mt-4.5 font-display text-[34px] font-semibold text-fg1 sm:text-[46px] lg:text-[54px] ${
+              isRTL ? 'leading-[1.25] lg:leading-[1.2]' : 'leading-[1.1] tracking-[-0.01em] lg:leading-[1.08]'
             }`}
           >
-            {t('hero.titleLine1')}
-            <br />
-            {t('hero.titleWorth')} <span className="italic text-brand">{t('hero.titleRemembering')}</span>
+            {t('hero.titlePrefix')} <span className="italic text-brand">{t('hero.titleAccent')}</span> {t('hero.titleSuffix')}
           </h1>
-          <p className="mt-5 max-w-[460px] text-base leading-[1.55] text-fg2 sm:text-lg">{t('hero.subtitle')}</p>
+          <p className="mt-5 max-w-[480px] text-base leading-[1.55] text-fg2 sm:text-lg">{t('hero.subtitle')}</p>
 
-          <div className="mt-7.5 flex w-full max-w-[560px] flex-col divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-[0_18px_44px_-22px_rgba(43,34,51,0.3)] sm:flex-row sm:divide-x sm:divide-y-0">
+          <div className="mt-7.5 flex w-full max-w-[720px] flex-col divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-[0_18px_44px_-22px_rgba(43,34,51,0.3)] sm:flex-row sm:flex-wrap sm:divide-x sm:divide-y-0">
             <SearchSeg icon={Confetti} label={t('hero.searchEvent')} value={t('hero.eventValue')} />
             <SearchSeg icon={MapPin} label={t('hero.searchCity')} value={t('hero.cityValue')} />
             <SearchSeg icon={CalendarBlank} label={t('hero.searchDate')} value={t('hero.dateValue')} />
-            <button
-              type="button"
-              className="m-1.5 flex items-center justify-center gap-2 rounded-xl bg-brand py-3.5 text-white sm:aspect-square sm:px-5 sm:py-0"
-              aria-label={t('hero.searchEvent')}
-            >
-              <MagnifyingGlass size={21} weight="bold" />
-            </button>
+            <SearchSeg icon={Wallet} label={t('hero.searchBudget')} value={t('hero.budgetValue')} />
+            <a href={CTA_URL} className="flex w-full sm:w-auto sm:flex-1">
+              <button
+                type="button"
+                className="m-1.5 flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-brand px-5 py-3.5 text-sm font-bold text-white"
+              >
+                <MagnifyingGlass size={19} weight="bold" />
+                {t('hero.ctaLabel')}
+              </button>
+            </a>
           </div>
 
           <div className="mt-6 flex items-center gap-4.5">
