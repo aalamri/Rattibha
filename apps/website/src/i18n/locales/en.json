@@ -18,7 +18,7 @@
     "titleLine1": "Plan a celebration",
     "titleWorth": "worth",
     "titleRemembering": "remembering",
-    "subtitle": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence.",
+    "subtitle": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Meet, message and book with confidence.",
     "searchEvent": "Event",
     "searchCity": "City",
     "searchDate": "Date",
@@ -58,7 +58,7 @@
   "featured": {
     "overline": "Curated for you",
     "title": "Featured planners",
-    "subtitle": "Hand-picked, verified studios with proven track records.",
+    "subtitle": "Verified professionals, matched to your vision and vetted for excellence.",
     "browseAll": "Browse all 500+",
     "viewProfile": "View profile",
     "from": "from",
@@ -71,7 +71,7 @@
     "step1Title": "Tell us your vision",
     "step1Desc": "Share your event type, date, city and budget in under two minutes.",
     "step2Title": "Get matched instantly",
-    "step2Desc": "We surface verified planners that fit your style — compare and message directly.",
+    "step2Desc": "We surface verified planners that fit your vision — review their work and message directly.",
     "step3Title": "Book & celebrate",
     "step3Desc": "Secure your date with a protected deposit and enjoy a perfectly coordinated day."
   },
@@ -97,8 +97,8 @@
   },
   "cta": {
     "badge": "For event planners",
-    "title": "Grow your events business with Rattibha",
-    "subtitle": "Reach thousands of clients planning their next celebration. Manage bookings, payments and reviews from one beautiful dashboard.",
+    "title": "Grow your planning practice with Rattibha",
+    "subtitle": "Reach clients who are ready to invest in a perfectly coordinated celebration. Rattibha handles bookings, payments and reviews so you can focus on the craft.",
     "becomePlanner": "Become a planner",
     "talkToSales": "Talk to sales"
   },
