@@ -4,9 +4,9 @@ import { initReactI18next } from 'react-i18next';
 import ar from './locales/ar.json';
 import en from './locales/en.json';
 
-import { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from './constants';
+import { formatLocaleNumber, isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage } from './constants';
 
-export { isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage };
+export { formatLocaleNumber, isRTLLanguage, LANGUAGE_STORAGE_KEY, type AppLanguage };
 
 export const resources = {
   en: { translation: en },
@@ -29,8 +29,9 @@ function addArabicNumberFormatter() {
  * `useEffect`. Resources are bundled statically (no async backend), so
  * `t()` calls immediately after this reflect `lang` within the same render
  * pass. This is what keeps server and client output identical: the server
- * reads the `rtb_lang` cookie and passes it down as `initialLang`, and the
- * client reads the same cookie value back out of the server-rendered HTML.
+ * derives `lang` from the [locale] route segment and passes it down as
+ * `initialLang`, and the client's hydration render receives that same prop
+ * straight out of the server-rendered HTML/RSC payload.
  *
  * Caveat: i18next here is a single module-level instance shared by every
  * request this Node process handles. For a marketing site without
@@ -53,20 +54,6 @@ export function ensureI18nInitialized(lang: AppLanguage) {
     i18n.changeLanguage(lang);
   }
   return i18n;
-}
-
-export function setAppLanguage(lang: AppLanguage) {
-  i18n.changeLanguage(lang);
-  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
-  document.cookie = `${LANGUAGE_STORAGE_KEY}=${lang}; path=/; max-age=31536000; samesite=lax`;
-  syncDocumentDirection(lang);
-}
-
-export function syncDocumentDirection(lang: string) {
-  if (typeof document === 'undefined') return;
-  const rtl = isRTLLanguage(lang);
-  document.documentElement.dir = rtl ? 'rtl' : 'ltr';
-  document.documentElement.lang = lang;
 }
 
 export default i18n;

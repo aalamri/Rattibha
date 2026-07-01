@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Rattibha · Plan a celebration worth remembering",
-    "description": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
+    "description": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
   },
   "nav": {
     "browsePlanners": "Browse planners",
@@ -18,7 +18,7 @@
     "titleLine1": "Plan a celebration",
     "titleWorth": "worth",
     "titleRemembering": "remembering",
-    "subtitle": "Rattibha connects you with the Gulf's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence.",
+    "subtitle": "Rattibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Meet, message and book with confidence.",
     "searchEvent": "Event",
     "searchCity": "City",
     "searchDate": "Date",
@@ -58,7 +58,7 @@
   "featured": {
     "overline": "Curated for you",
     "title": "Featured planners",
-    "subtitle": "Hand-picked, verified studios with proven track records.",
+    "subtitle": "Verified professionals, matched to your vision and vetted for excellence.",
     "browseAll": "Browse all 500+",
     "viewProfile": "View profile",
     "from": "from",
@@ -71,7 +71,7 @@
     "step1Title": "Tell us your vision",
     "step1Desc": "Share your event type, date, city and budget in under two minutes.",
     "step2Title": "Get matched instantly",
-    "step2Desc": "We surface verified planners that fit your style — compare and message directly.",
+    "step2Desc": "We surface verified planners that fit your vision — review their work and message directly.",
     "step3Title": "Book & celebrate",
     "step3Desc": "Secure your date with a protected deposit and enjoy a perfectly coordinated day."
   },
@@ -87,7 +87,7 @@
     "stat3Label": "Customer reviews"
   },
   "testimonials": {
-    "overline": "Loved across the Gulf",
+    "overline": "Loved across Saudi Arabia",
     "title": "Celebrations, perfectly coordinated",
     "quotes": [
       { "who": "Noura A.", "role": "Bride · Riyadh", "text": "Rattibha matched us with a planner who understood our vision instantly. Our wedding was flawless." },
@@ -97,13 +97,13 @@
   },
   "cta": {
     "badge": "For event planners",
-    "title": "Grow your events business with Rattibha",
-    "subtitle": "Reach thousands of clients planning their next celebration. Manage bookings, payments and reviews from one beautiful dashboard.",
+    "title": "Grow your planning practice with Rattibha",
+    "subtitle": "Reach clients who are ready to invest in a perfectly coordinated celebration. Rattibha handles bookings, payments and reviews so you can focus on the craft.",
     "becomePlanner": "Become a planner",
     "talkToSales": "Talk to sales"
   },
   "footer": {
-    "tagline": "The Gulf's marketplace for unforgettable events. Plan, celebrate, cherish.",
+    "tagline": "Saudi Arabia's marketplace for unforgettable events. Plan, celebrate, cherish.",
     "customers": "Customers",
     "planners": "Planners",
     "company": "Company",
@@ -111,7 +111,20 @@
     "plannersLinks": ["Join Rattibha", "Planner dashboard", "Success stories", "Resources"],
     "companyLinks": ["About us", "Careers", "Press", "Contact"],
     "copyright": "© 2026 Rattibha · رتّبها. All rights reserved.",
-    "legal": "Privacy · Terms · صُنع بحُبّ في الخليج"
+    "legal": "Privacy · Terms · صُنع بحُبّ في المملكة"
+  },
+  "trust": {
+    "overline": "Built for confidence",
+    "title": "Peace of mind, every step",
+    "subtitle": "From first quote to final toast — your experience is protected.",
+    "verifiedTitle": "Verified coordinators",
+    "verifiedDesc": "Every coordinator passes a background, portfolio and reference check before joining Rattibha.",
+    "quotesTitle": "Transparent quotes",
+    "quotesDesc": "You receive itemised, written quotes — no hidden fees, no surprises on the day.",
+    "depositTitle": "Protected deposit",
+    "depositDesc": "Your deposit is held securely and only released to your coordinator after the event is delivered.",
+    "reviewsTitle": "Honest reviews",
+    "reviewsDesc": "Reviews come only from verified bookings — so you always know what past clients truly experienced."
   },
   "planners": [
     { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas" },

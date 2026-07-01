@@ -13,8 +13,19 @@ interface SectionHeadProps {
 /** Overline + display title + optional subtitle/action — matches `SectionHead` in sections.jsx. */
 export function SectionHead({ over, title, sub, action, center }: SectionHeadProps) {
   const isRTL = useIsRTL();
-  const overEl = <div className="text-[12.5px] font-extrabold uppercase tracking-[0.14em] text-gold-500">{over}</div>;
-  const titleEl = <h2 className="mt-2.5 font-display text-[42px] font-semibold leading-[1.08] tracking-[-0.01em] text-fg1">{title}</h2>;
+  // Arabic is a cursive, joined script — letter-spacing breaks the visual
+  // connections between joined letterforms, and Latin display type's tight
+  // leading clips Arabic ascenders/diacritics, so both are relaxed for RTL.
+  const overEl = (
+    <div className={`text-[12.5px] font-extrabold uppercase text-gold-500 ${isRTL ? '' : 'tracking-[0.14em]'}`}>{over}</div>
+  );
+  const titleEl = (
+    <h2
+      className={`mt-2.5 font-display text-[42px] font-semibold text-fg1 ${isRTL ? 'leading-[1.25]' : 'leading-[1.08] tracking-[-0.01em]'}`}
+    >
+      {title}
+    </h2>
+  );
   const subEl = sub && <p className="mt-3 text-base leading-[1.5] text-fg2">{sub}</p>;
 
   if (center) {
