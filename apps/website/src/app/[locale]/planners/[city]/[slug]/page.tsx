@@ -1,14 +1,45 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '@/components/JsonLd';
 import { Footer } from '@/components/sections/Footer';
 import { NavBar } from '@/components/sections/NavBar';
 import { PlannerProfileSection } from '@/components/sections/PlannerProfileSection';
-import { PLANNER_STATS } from '@/data/planners';
+import { CITY_KEYS, type CityKey, PLANNER_STATS, type PlannerStat } from '@/data/planners';
 import { SUPPORTED_LANGUAGES, type AppLanguage } from '@/i18n/constants';
 import ar from '@/i18n/locales/ar.json';
 import en from '@/i18n/locales/en.json';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildBreadcrumbJsonLd, localeHref, SITE_URL } from '@/lib/seo';
+
+interface PlannerEntry {
+  name: string;
+  city: string;
+  type: string;
+  bio: string;
+}
+
+// LocalBusiness + a nested Service offer — no aggregateRating is claimed
+// here despite the star rating shown in the UI, since we don't have a real
+// per-planner review count to back one (see task #19's Review schema on
+// the homepage instead, which only covers reviews we can genuinely quote).
+function buildProfileJsonLd(entry: PlannerEntry, stat: PlannerStat, pageUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${pageUrl}#business`,
+    name: entry.name,
+    description: entry.bio,
+    url: pageUrl,
+    areaServed: { '@type': 'City', name: entry.city },
+    address: { '@type': 'PostalAddress', addressLocality: entry.city, addressCountry: 'SA' },
+    makesOffer: {
+      '@type': 'Offer',
+      priceCurrency: 'SAR',
+      price: stat.from,
+      itemOffered: { '@type': 'Service', name: entry.type },
+    },
+  };
+}
 
 const DICTS: Record<AppLanguage, typeof en> = { en, ar };
 
@@ -52,10 +83,21 @@ export default async function PlannerProfilePage({ params }: { params: Promise<{
     notFound();
   }
   const stat = PLANNER_STATS[index];
-  const entry = DICTS[lang].planners[index];
+  const dict = DICTS[lang];
+  const entry = dict.planners[index];
+  const path = `/planners/${city}/${slug}`;
+  const pageUrl = `${SITE_URL}${localeHref(lang, path)}`;
+
+  const breadcrumbItems = [{ name: dict.nav.home, path: localeHref(lang, '/') }];
+  if (CITY_KEYS.includes(city as CityKey)) {
+    breadcrumbItems.push({ name: dict.cities[city as CityKey], path: localeHref(lang, `/planners/${city}`) });
+  }
+  breadcrumbItems.push({ name: entry.name, path: localeHref(lang, path) });
 
   return (
     <>
+      <JsonLd data={buildProfileJsonLd(entry, stat, pageUrl)} />
+      <JsonLd data={buildBreadcrumbJsonLd(breadcrumbItems)} />
       <NavBar />
       <PlannerProfileSection entry={entry} stat={stat} />
       <Footer />
