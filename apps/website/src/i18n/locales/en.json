@@ -135,7 +135,12 @@
     "depositTitle": "Protected deposit",
     "depositDesc": "Your deposit is held securely and only released to your coordinator after the event is delivered.",
     "reviewsTitle": "Honest reviews",
-    "reviewsDesc": "Reviews come only from verified bookings — so you always know what past clients truly experienced."
+    "reviewsDesc": "Reviews come only from verified bookings — so you always know what past clients truly experienced.",
+    "proofBusiness": "Dakkah Information Technology Est. · CR 7021679076",
+    "proofPayment": "Payments secured by Moyasar",
+    "proofSupport": "support@ratibha.com",
+    "proofRefundLink": "Refund policy",
+    "proofVerificationLink": "Verification criteria"
   },
   "planners": [
     { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas", "bio": "Lumière Events has spent seven years staging Riyadh's most photographed weddings and galas, known for signature floral archways and precise day-of coordination." },
