@@ -111,8 +111,17 @@
     "customersLinks": ["Browse planners", "How it works", "Pricing", "Reviews"],
     "plannersLinks": ["Join Ratibha", "Planner dashboard", "Success stories", "Resources"],
     "companyLinks": ["About us", "Careers", "Press", "Contact"],
+    "legalHeading": "Legal",
+    "legalLinks": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "refundPolicy": "Refund Policy",
+      "cancellationPolicy": "Cancellation Policy",
+      "disputeResolution": "Dispute Resolution",
+      "plannerVerification": "Planner Verification"
+    },
     "copyright": "© 2026 Ratibha · رتّبها. All rights reserved.",
-    "legal": "Privacy · Terms · صُنع بحُبّ في المملكة"
+    "legal": "صُنع بحُبّ في المملكة"
   },
   "trust": {
     "overline": "Built for confidence",

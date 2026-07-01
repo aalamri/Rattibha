@@ -1,3 +1,6 @@
+import type { Metadata } from 'next';
+
+import type { LegalPageContent } from '@/content/legalPages';
 import type { AppLanguage } from '@/i18n/constants';
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ratibha.com';
@@ -36,5 +39,16 @@ export function buildAlternates(lang: AppLanguage, path: string) {
   return {
     canonical: lang === 'en' ? enPath : arPath,
     languages: { ar: arPath, en: enPath, 'x-default': arPath },
+  };
+}
+
+/** Shared `generateMetadata` body for the six legal/policy pages — they
+ * only differ in path and content object, so this collapses six otherwise
+ * near-identical metadata blocks into one call each. */
+export function buildLegalMetadata(lang: AppLanguage, path: string, content: LegalPageContent): Metadata {
+  return {
+    title: `${content.title} · Ratibha`,
+    description: content.intro,
+    alternates: buildAlternates(lang, path),
   };
 }
