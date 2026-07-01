@@ -23,7 +23,7 @@ const LINKS = [
  * Sticky translucent nav — matches `NavBar` in sections.jsx. The full link
  * row + secondary actions only fit from `lg` up (Hero's own grid stacks at
  * the same breakpoint); below that, everything collapses into a hamburger
- * menu, keeping just the logo and primary "Get started" CTA visible.
+ * menu, keeping just the logo and primary "Get quotes" CTA visible.
  */
 export function NavBar() {
   const { t, i18n } = useTranslation();
@@ -79,7 +79,7 @@ export function NavBar() {
           </a>
           <a href={SIGN_IN_URL}>
             <Button size="sm" icon={Sparkle} className="whitespace-nowrap">
-              {t('nav.getStarted')}
+              {t('nav.getQuotes')}
             </Button>
           </a>
         </div>
@@ -87,7 +87,7 @@ export function NavBar() {
         <div className="ms-auto flex items-center gap-2.5 lg:hidden">
           <a href={SIGN_IN_URL}>
             <Button size="sm" icon={Sparkle} className="whitespace-nowrap">
-              {t('nav.getStarted')}
+              {t('nav.getQuotes')}
             </Button>
           </a>
           <button
