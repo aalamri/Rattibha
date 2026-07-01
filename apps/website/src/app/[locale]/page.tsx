@@ -8,6 +8,7 @@ import { Hero } from '@/components/sections/Hero';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { NavBar } from '@/components/sections/NavBar';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { TrustPillars } from '@/components/sections/TrustPillars';
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
       <CityGrid />
       <FeaturedGrid />
       <HowItWorks />
+      <TrustPillars />
       <Testimonials />
       <About />
       <CTABand />

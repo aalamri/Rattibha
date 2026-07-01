@@ -113,6 +113,19 @@
     "copyright": "© 2026 Rattibha · رتّبها. All rights reserved.",
     "legal": "Privacy · Terms · صُنع بحُبّ في المملكة"
   },
+  "trust": {
+    "overline": "Built for confidence",
+    "title": "Peace of mind, every step",
+    "subtitle": "From first quote to final toast — your experience is protected.",
+    "verifiedTitle": "Verified coordinators",
+    "verifiedDesc": "Every coordinator passes a background, portfolio and reference check before joining Rattibha.",
+    "quotesTitle": "Transparent quotes",
+    "quotesDesc": "You receive itemised, written quotes — no hidden fees, no surprises on the day.",
+    "depositTitle": "Protected deposit",
+    "depositDesc": "Your deposit is held securely and only released to your coordinator after the event is delivered.",
+    "reviewsTitle": "Honest reviews",
+    "reviewsDesc": "Reviews come only from verified bookings — so you always know what past clients truly experienced."
+  },
   "planners": [
     { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas" },
     { "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas" },
