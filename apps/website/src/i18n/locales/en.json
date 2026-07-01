@@ -4,6 +4,7 @@
     "description": "Ratibha connects you with Saudi Arabia's most trusted event planners — for weddings, engagements, birthdays and corporate galas. Compare, message and book with confidence."
   },
   "nav": {
+    "home": "Home",
     "browsePlanners": "Browse planners",
     "howItWorks": "How it works",
     "forPlanners": "For planners",
@@ -191,5 +192,16 @@
     "startingFrom": "Starting from",
     "contactCta": "Get a quote",
     "backToCity": "More planners in {{city}}"
+  },
+  "faq": {
+    "overline": "Common questions",
+    "title": "Frequently asked questions",
+    "items": [
+      { "q": "How does Ratibha match me with a planner?", "a": "Tell us your event type, city, date and budget, and we surface verified planners who fit — you compare their work and message them directly before deciding." },
+      { "q": "Is my deposit protected?", "a": "Yes. Your deposit is held securely and only released to your planner after the event is delivered as agreed." },
+      { "q": "Does it cost anything to use Ratibha?", "a": "Browsing planners, comparing quotes and messaging is free for customers. Planners pay a commission only on confirmed bookings." },
+      { "q": "Can I message a planner before booking?", "a": "Yes — every planner profile lets you reach out directly to ask questions or request a custom quote before you commit." },
+      { "q": "Are all planners on Ratibha verified?", "a": "Every planner passes a background, portfolio and reference check before their profile goes live." }
+    ]
   }
 }

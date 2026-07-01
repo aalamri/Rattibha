@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '@/components/JsonLd';
 import { CityPlannersSection } from '@/components/sections/CityPlannersSection';
 import { Footer } from '@/components/sections/Footer';
 import { NavBar } from '@/components/sections/NavBar';
@@ -8,7 +9,7 @@ import { CITY_KEYS, type CityKey } from '@/data/planners';
 import { SUPPORTED_LANGUAGES, type AppLanguage } from '@/i18n/constants';
 import ar from '@/i18n/locales/ar.json';
 import en from '@/i18n/locales/en.json';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, buildBreadcrumbJsonLd, localeHref } from '@/lib/seo';
 
 const DICTS: Record<AppLanguage, typeof en> = { en, ar };
 
@@ -37,14 +38,21 @@ export async function generateMetadata({
   };
 }
 
-export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
-  const { city } = await params;
+export default async function CityPage({ params }: { params: Promise<{ locale: string; city: string }> }) {
+  const { locale, city } = await params;
   if (!CITY_KEYS.includes(city as CityKey)) {
     notFound();
   }
+  const lang: AppLanguage = SUPPORTED_LANGUAGES.includes(locale as AppLanguage) ? (locale as AppLanguage) : 'ar';
+  const dict = DICTS[lang];
+  const breadcrumb = buildBreadcrumbJsonLd([
+    { name: dict.nav.home, path: localeHref(lang, '/') },
+    { name: dict.cities[city as CityKey], path: localeHref(lang, `/planners/${city}`) },
+  ]);
 
   return (
     <>
+      <JsonLd data={breadcrumb} />
       <NavBar />
       <CityPlannersSection city={city as CityKey} />
       <Footer />
