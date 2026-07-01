@@ -127,13 +127,69 @@
     "reviewsDesc": "Reviews come only from verified bookings — so you always know what past clients truly experienced."
   },
   "planners": [
-    { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas" },
-    { "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas" },
-    { "name": "Noor Weddings", "city": "Makkah", "type": "Weddings" },
-    { "name": "Marina Celebrations", "city": "Khobar", "type": "Engagements" },
-    { "name": "Saffron Events", "city": "Madinah", "type": "Weddings & Galas" },
-    { "name": "Rose Valley Events", "city": "Taif", "type": "Weddings" },
-    { "name": "Orbit Corporate", "city": "Riyadh", "type": "Corporate" },
-    { "name": "Zahra Parties", "city": "Dammam", "type": "Birthdays" }
-  ]
+    { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas", "bio": "Lumière Events has spent seven years staging Riyadh's most photographed weddings and galas, known for signature floral archways and precise day-of coordination." },
+    { "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas", "bio": "Based on Jeddah's Corniche, Coral Coast Events specializes in beachfront galas and large-scale celebrations, with a design language built around the city's coastal light." },
+    { "name": "Noor Weddings", "city": "Makkah", "type": "Weddings", "bio": "Noor Weddings has built its reputation on intimate, family-first wedding coordination near the Haram, balancing tradition with modern styling." },
+    { "name": "Marina Celebrations", "city": "Khobar", "type": "Engagements", "bio": "Marina Celebrations is Khobar's go-to name for engagement parties, pairing polished stage design with warm, personal hospitality for both families." },
+    { "name": "Saffron Events", "city": "Madinah", "type": "Weddings & Galas", "bio": "Saffron Events blends Hijazi hospitality with contemporary production values across Madinah's hotel ballrooms and garden venues." },
+    { "name": "Rose Valley Events", "city": "Taif", "type": "Weddings", "bio": "Rose Valley Events brings Taif's rose-season charm into every wedding it designs, with a focus on garden venues and natural floral styling." },
+    { "name": "Orbit Corporate", "city": "Riyadh", "type": "Corporate", "bio": "Orbit Corporate runs product launches and annual company celebrations for some of Riyadh's fastest-growing firms, handling logistics from stage build to guest registration." },
+    { "name": "Zahra Parties", "city": "Dammam", "type": "Birthdays", "bio": "Zahra Parties designs birthday celebrations across Dammam and the Eastern Province, known for playful themed setups that scale from small family gatherings to large parties." }
+  ],
+  "cityPages": {
+    "overline": "Local expertise",
+    "backLink": "All cities",
+    "riyadh": {
+      "title": "Event planners in Riyadh",
+      "intro": "Riyadh's planners know its ballrooms, palace venues and rooftop spaces inside out — from Diriyah's historic courtyards to the capital's newest five-star hotels. Get matched with a coordinator who already has relationships with the venues you're considering."
+    },
+    "jeddah": {
+      "title": "Event planners in Jeddah",
+      "intro": "From beachfront gala spaces on the Corniche to Al-Balad's heritage courtyards, Jeddah's planners bring a coastal, cosmopolitan touch to weddings and corporate celebrations alike."
+    },
+    "makkah": {
+      "title": "Event planners in Makkah",
+      "intro": "Makkah's planners specialize in family-centered celebrations near the Haram, with deep familiarity with the city's hotels and event halls."
+    },
+    "madinah": {
+      "title": "Event planners in Madinah",
+      "intro": "Madinah's planners combine traditional Hijazi hospitality with modern event production, coordinating weddings and galas across the city's hotel ballrooms and garden venues."
+    },
+    "dammam": {
+      "title": "Event planners in Dammam",
+      "intro": "In the Eastern Province's business hub, Dammam's planners handle everything from intimate birthday celebrations to large corporate galas."
+    },
+    "khobar": {
+      "title": "Event planners in Khobar",
+      "intro": "Khobar's planners are known for polished engagement parties and family celebrations, with strong relationships across the corniche's hotels and private venues."
+    }
+  },
+  "categoryPages": {
+    "overline": "Browse by occasion",
+    "weddings": {
+      "title": "Wedding planners in Saudi Arabia",
+      "intro": "From the initial vision to the final dance, these coordinators specialize in Saudi weddings — managing venues, catering, décor and every guest-day detail so your family can simply celebrate."
+    },
+    "birthdays": {
+      "title": "Birthday party planners in Saudi Arabia",
+      "intro": "Whether it's a child's first birthday or a milestone celebration, these planners design birthday parties that fit your family's style and budget."
+    },
+    "engagements": {
+      "title": "Engagement party planners in Saudi Arabia",
+      "intro": "Engagement celebrations set the tone for the wedding to come — these coordinators specialize in the traditions, staging and timing that make a Saudi engagement memorable."
+    },
+    "corporate": {
+      "title": "Corporate event planners in Saudi Arabia",
+      "intro": "From product launches to annual company celebrations, these planners handle the logistics, staging and hospitality that reflect well on your brand."
+    },
+    "galas": {
+      "title": "Gala and large-event planners in Saudi Arabia",
+      "intro": "For galas, award nights and large-scale celebrations, these coordinators manage everything from stage production to VIP guest experience."
+    }
+  },
+  "plannerProfile": {
+    "startingFrom": "Starting from",
+    "contactCta": "Get a quote",
+    "backToCity": "More planners in {{city}}"
+  }
 }
