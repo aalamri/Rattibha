@@ -9,14 +9,18 @@ import { Button } from '@/components/ui/Button';
 import { useIsRTL } from '@/i18n/useIsRTL';
 
 const PLANNER_SIGNUP_URL = `${process.env.NEXT_PUBLIC_PLANNER_APP_URL ?? ''}/onboarding`;
+const SALES_EMAIL = 'support@ratibha.com';
 
-/** Aubergine "for planners" panel — matches `CTABand` in sections.jsx. */
+/** Aubergine "for planners" hero — matches `CTABand` in sections.jsx.
+ * Lives only on /for-planners now (task #28 removed it from the customer
+ * homepage to keep each audience's funnel focused), so this is that page's
+ * <h1>, not a mid-page <h2>. */
 export function CTABand() {
   const { t } = useTranslation();
   const isRTL = useIsRTL();
 
   return (
-    <div id="for-planners" className="mx-auto max-w-[1180px] px-10 py-[72px]">
+    <div className="mx-auto max-w-[1180px] px-10 py-[72px]">
       <div className="relative overflow-hidden rounded-[30px] bg-fg1 p-9 sm:p-14">
         <div
           className="absolute inset-0 opacity-10 brightness-0 invert"
@@ -35,9 +39,9 @@ export function CTABand() {
             <Badge bg="rgba(255,255,255,0.12)" fg="#DAA520" icon={CrownSimple}>
               {t('cta.badge')}
             </Badge>
-            <h2 className={`mt-4 font-display text-[44px] font-semibold text-[#EFE9F3] ${isRTL ? 'leading-[1.2]' : 'leading-[1.04]'}`}>
+            <h1 className={`mt-4 font-display text-[44px] font-semibold text-[#EFE9F3] ${isRTL ? 'leading-[1.2]' : 'leading-[1.04]'}`}>
               {t('cta.title')}
-            </h2>
+            </h1>
             <p className="mt-3.5 text-[16.5px] leading-[1.55] text-[rgba(244,232,223,0.75)]">{t('cta.subtitle')}</p>
           </div>
           <div className="flex flex-shrink-0 flex-col gap-3">
@@ -46,9 +50,11 @@ export function CTABand() {
                 {t('cta.becomePlanner')}
               </Button>
             </a>
-            <Button variant="light" size="lg">
-              {t('cta.talkToSales')}
-            </Button>
+            <a href={`mailto:${SALES_EMAIL}`}>
+              <Button variant="light" size="lg" className="w-full">
+                {t('cta.talkToSales')}
+              </Button>
+            </a>
           </div>
         </div>
       </div>

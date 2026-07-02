@@ -50,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const plannerPaths = PLANNER_STATS.map((stat) => `/planners/${stat.cityKey ?? 'taif'}/${stat.slug}`);
   const cityCategoryPaths = CATEGORY_CITY_COMBOS.map(({ category, city }) => `/categories/${category}/${city}`);
   const legalPaths = ['/privacy', '/terms', '/refund-policy', '/cancellation-policy', '/dispute-resolution', '/planner-verification'];
+  const plannerRecruitmentPaths = ['/for-planners'];
 
   return [
     {
@@ -71,5 +72,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...plannerPaths.flatMap((path) => [entry(path, lastModified, 0.6), entryEn(path, lastModified, 0.6)]),
     ...cityCategoryPaths.flatMap((path) => [entry(path, lastModified, 0.7), entryEn(path, lastModified, 0.7)]),
     ...legalPaths.flatMap((path) => [entry(path, lastModified, 0.3), entryEn(path, lastModified, 0.3)]),
+    ...plannerRecruitmentPaths.flatMap((path) => [entry(path, lastModified, 0.7), entryEn(path, lastModified, 0.7)]),
   ];
 }

@@ -9,13 +9,14 @@ import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
 import { type AppLanguage } from '@/i18n';
 import { LANGUAGE_STORAGE_KEY } from '@/i18n/constants';
+import { localeHref } from '@/lib/seo';
 
 const SIGN_IN_URL = process.env.NEXT_PUBLIC_CUSTOMER_APP_URL ?? '#';
 
 const LINKS = [
   { key: 'browsePlanners', href: '#planners' },
   { key: 'howItWorks', href: '#how-it-works' },
-  { key: 'forPlanners', href: '#for-planners' },
+  { key: 'forPlanners', href: '/for-planners' },
   { key: 'about', href: '#about' },
 ] as const;
 
@@ -45,6 +46,11 @@ export function NavBar() {
     window.location.href = targetHref;
   }
 
+  // "forPlanners" points at a real page (/for-planners), not a homepage
+  // anchor like the other links — needs the same locale-prefix treatment
+  // as any other internal link (see task #28).
+  const links = LINKS.map((link) => (link.key === 'forPlanners' ? { ...link, href: localeHref(lang, link.href) } : link));
+
   const langToggle = (
     <button
       type="button"
@@ -61,7 +67,7 @@ export function NavBar() {
       <div className="mx-auto flex h-[74px] max-w-[1180px] items-center gap-7 px-5 sm:px-10">
         <Logo size={38} />
         <div className="ms-4.5 hidden gap-6.5 lg:flex">
-          {LINKS.map(({ key, href }) => (
+          {links.map(({ key, href }) => (
             <a
               key={key}
               href={href}
@@ -105,7 +111,7 @@ export function NavBar() {
       {open && (
         <div className="border-t border-border bg-white px-5 py-5 lg:hidden">
           <div className="flex flex-col gap-4">
-            {LINKS.map(({ key, href }) => (
+            {links.map(({ key, href }) => (
               <a
                 key={key}
                 href={href}
