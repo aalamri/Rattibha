@@ -11,6 +11,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { TrustPillars } from '@/components/sections/TrustPillars';
 import { WhatsAppHelp } from '@/components/sections/WhatsAppHelp';
 import { JsonLd } from '@/components/JsonLd';
+import { ScrollToHash } from '@/components/ScrollToHash';
 import { SUPPORTED_LANGUAGES, type AppLanguage } from '@/i18n/constants';
 import ar from '@/i18n/locales/ar.json';
 import en from '@/i18n/locales/en.json';
@@ -66,6 +67,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <JsonLd key={i} data={block} />
       ))}
       <NavBar />
+      <ScrollToHash />
       {/* Funnel core, in the order set by task #27: search/CTA, matched
           planners, how it works, real reviews, deposit protection, FAQ,
           then a direct WhatsApp path for anyone still undecided. */}
