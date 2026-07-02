@@ -7,11 +7,12 @@ interface SectionHeadProps {
   title: string;
   sub?: string;
   action?: string;
+  actionHref?: string;
   center?: boolean;
 }
 
 /** Overline + display title + optional subtitle/action — matches `SectionHead` in sections.jsx. */
-export function SectionHead({ over, title, sub, action, center }: SectionHeadProps) {
+export function SectionHead({ over, title, sub, action, actionHref, center }: SectionHeadProps) {
   const isRTL = useIsRTL();
   // Arabic is a cursive, joined script — letter-spacing breaks the visual
   // connections between joined letterforms, and Latin display type's tight
@@ -45,8 +46,13 @@ export function SectionHead({ over, title, sub, action, center }: SectionHeadPro
         {titleEl}
         {subEl}
       </div>
-      {action && (
-        <span className="cursor-pointer whitespace-nowrap text-[14.5px] font-bold text-brand">
+      {action && actionHref && (
+        <a href={actionHref} className="whitespace-nowrap text-[14.5px] font-bold text-brand">
+          {action} {isRTL ? '←' : '→'}
+        </a>
+      )}
+      {action && !actionHref && (
+        <span className="whitespace-nowrap text-[14.5px] font-bold text-brand">
           {action} {isRTL ? '←' : '→'}
         </span>
       )}

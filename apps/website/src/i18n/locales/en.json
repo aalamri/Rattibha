@@ -132,9 +132,10 @@
     "customers": "Customers",
     "planners": "Planners",
     "company": "Company",
-    "customersLinks": ["Browse planners", "How it works", "Pricing", "Reviews"],
-    "plannersLinks": ["Join Ratibha", "Planner dashboard", "Success stories", "Resources"],
-    "companyLinks": ["About us", "Careers", "Press", "Contact"],
+    "reviews": "Reviews",
+    "joinRatibha": "Join Ratibha",
+    "plannerDashboard": "Planner dashboard",
+    "contact": "Contact",
     "legalHeading": "Legal",
     "legalLinks": {
       "privacy": "Privacy Policy",
@@ -279,6 +280,10 @@
       ]
     }
   ],
+  "plannersHub": {
+    "title": "Browse all planners",
+    "intro": "Find verified event planners across Saudi Arabia — browse by city or by the type of celebration you're planning."
+  },
   "cityPages": {
     "overline": "Local expertise",
     "backLink": "All cities",

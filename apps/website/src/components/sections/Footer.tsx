@@ -1,16 +1,35 @@
 'use client';
 
-import { InstagramLogo, SnapchatLogo, TiktokLogo, TwitterLogo } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Logo } from '@/components/ui/Logo';
 import { type AppLanguage } from '@/i18n';
 import { localeHref } from '@/lib/seo';
 
-const SOCIAL_ICONS = [InstagramLogo, TwitterLogo, TiktokLogo, SnapchatLogo];
+const PLANNER_APP_URL = process.env.NEXT_PUBLIC_PLANNER_APP_URL ?? '#';
+const SUPPORT_EMAIL = 'support@ratibha.com';
 
-// Real routes (see task #20) — kept separate from `columns` below since
-// those are still plain decorative labels, not yet wired to real pages.
+// Every link below has a genuine destination — no decorative-only labels.
+// "Pricing"/"Success stories"/"Resources"/"Careers"/"Press" and the social
+// icon row were removed rather than left as fake affordances, since none of
+// those had a real page or account to point to (see the end-to-end audit
+// that found these). Re-add once real destinations exist.
+const CUSTOMER_LINKS = [
+  { key: 'nav.browsePlanners', getHref: (lang: AppLanguage) => `${localeHref(lang, '/')}#planners` },
+  { key: 'nav.howItWorks', getHref: (lang: AppLanguage) => `${localeHref(lang, '/')}#how-it-works` },
+  { key: 'footer.reviews', getHref: (lang: AppLanguage) => `${localeHref(lang, '/')}#testimonials` },
+] as const;
+
+const PLANNER_LINKS = [
+  { key: 'footer.joinRatibha', getHref: (lang: AppLanguage) => localeHref(lang, '/for-planners') },
+  { key: 'footer.plannerDashboard', getHref: () => PLANNER_APP_URL },
+] as const;
+
+const COMPANY_LINKS = [
+  { key: 'nav.about', getHref: (lang: AppLanguage) => `${localeHref(lang, '/')}#about` },
+  { key: 'footer.contact', getHref: () => `mailto:${SUPPORT_EMAIL}` },
+] as const;
+
 const LEGAL_LINKS = [
   { key: 'privacy', href: '/privacy' },
   { key: 'terms', href: '/terms' },
@@ -20,15 +39,15 @@ const LEGAL_LINKS = [
   { key: 'plannerVerification', href: '/planner-verification' },
 ] as const;
 
-/** Link columns + social + legal row — matches `Footer` in sections.jsx. */
+/** Link columns + legal row — matches `Footer` in sections.jsx. */
 export function Footer() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as AppLanguage;
 
   const columns = [
-    { heading: t('footer.customers'), links: t('footer.customersLinks', { returnObjects: true }) as string[] },
-    { heading: t('footer.planners'), links: t('footer.plannersLinks', { returnObjects: true }) as string[] },
-    { heading: t('footer.company'), links: t('footer.companyLinks', { returnObjects: true }) as string[] },
+    { heading: t('footer.customers'), links: CUSTOMER_LINKS },
+    { heading: t('footer.planners'), links: PLANNER_LINKS },
+    { heading: t('footer.company'), links: COMPANY_LINKS },
   ];
 
   return (
@@ -37,22 +56,15 @@ export function Footer() {
         <div>
           <Logo size={40} />
           <p className="my-4 max-w-[280px] text-[13.5px] leading-[1.55] text-fg2">{t('footer.tagline')}</p>
-          <div className="flex gap-2.5">
-            {SOCIAL_ICONS.map((IconComp, i) => (
-              <div key={i} className="grid h-9.5 w-9.5 cursor-pointer place-items-center rounded-full border-[1.5px] border-border-strong">
-                <IconComp size={18} className="text-fg1" />
-              </div>
-            ))}
-          </div>
         </div>
         {columns.map((col) => (
           <div key={col.heading}>
             <div className="mb-3.5 text-[13px] font-extrabold text-fg1">{col.heading}</div>
             <div className="flex flex-col gap-2.5">
               {col.links.map((link) => (
-                <span key={link} className="cursor-pointer text-[13.5px] text-fg2">
-                  {link}
-                </span>
+                <a key={link.key} href={link.getHref(lang)} className="text-[13.5px] text-fg2 hover:text-fg1">
+                  {t(link.key)}
+                </a>
               ))}
             </div>
           </div>
