@@ -162,6 +162,7 @@
   "cityPages": {
     "overline": "Local expertise",
     "backLink": "All cities",
+    "refineByCategory": "Browse by category:",
     "riyadh": {
       "title": "Event planners in Riyadh",
       "intro": "Riyadh's planners know its ballrooms, palace venues and rooftop spaces inside out — from Diriyah's historic courtyards to the capital's newest five-star hotels. Get matched with a coordinator who already has relationships with the venues you're considering."
@@ -189,6 +190,7 @@
   },
   "categoryPages": {
     "overline": "Browse by occasion",
+    "refineByCity": "Browse by city:",
     "weddings": {
       "title": "Wedding planners in Saudi Arabia",
       "intro": "From the initial vision to the final dance, these coordinators specialize in Saudi weddings — managing venues, catering, décor and every guest-day detail so your family can simply celebrate."
@@ -214,6 +216,44 @@
     "startingFrom": "Starting from",
     "contactCta": "Get a quote",
     "backToCity": "More planners in {{city}}"
+  },
+  "cityCategoryPages": {
+    "riyadh-weddings": {
+      "title": "Wedding planners in Riyadh",
+      "intro": "Riyadh's wedding planners handle everything from palace-style ballroom celebrations to intimate garden ceremonies, with established relationships at the capital's leading venues."
+    },
+    "riyadh-galas": {
+      "title": "Gala planners in Riyadh",
+      "intro": "For galas and large-scale celebrations in Riyadh, these planners manage stage production, VIP hospitality and guest logistics at the city's premier event spaces."
+    },
+    "riyadh-corporate": {
+      "title": "Corporate event planners in Riyadh",
+      "intro": "Riyadh's corporate event planners run product launches, annual company celebrations and executive gatherings for the capital's fastest-growing businesses."
+    },
+    "jeddah-galas": {
+      "title": "Gala planners in Jeddah",
+      "intro": "Jeddah's gala planners bring a coastal, cosmopolitan energy to large-scale celebrations, with venues ranging from Corniche-front ballrooms to heritage courtyards in Al-Balad."
+    },
+    "makkah-weddings": {
+      "title": "Wedding planners in Makkah",
+      "intro": "Makkah's wedding planners specialize in family-centered ceremonies close to the Haram, balancing tradition with modern styling across the city's hotels and event halls."
+    },
+    "khobar-engagements": {
+      "title": "Engagement planners in Khobar",
+      "intro": "Khobar's engagement planners are known for polished, intimate celebrations that set the tone for the wedding to come, with strong relationships across the corniche's private venues."
+    },
+    "madinah-weddings": {
+      "title": "Wedding planners in Madinah",
+      "intro": "Madinah's wedding planners combine Hijazi hospitality with contemporary production values, coordinating ceremonies across the city's hotel ballrooms and garden venues."
+    },
+    "madinah-galas": {
+      "title": "Gala planners in Madinah",
+      "intro": "For galas in Madinah, these planners bring the same attention to hospitality and detail to large-scale celebrations and corporate gatherings."
+    },
+    "dammam-birthdays": {
+      "title": "Birthday planners in Dammam",
+      "intro": "Dammam's birthday planners design celebrations that scale from intimate family gatherings to large themed parties, serving the Eastern Province's growing communities."
+    }
   },
   "faq": {
     "overline": "Common questions",

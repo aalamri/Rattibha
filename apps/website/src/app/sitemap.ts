@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-import { CATEGORY_KEYS, CITY_KEYS, PLANNER_STATS } from '@/data/planners';
+import { CATEGORY_CITY_COMBOS, CATEGORY_KEYS, CITY_KEYS, PLANNER_STATS } from '@/data/planners';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ratibha.com';
 
@@ -48,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const cityPaths = CITY_KEYS.map((city) => `/planners/${city}`);
   const categoryPaths = CATEGORY_KEYS.map((category) => `/categories/${category}`);
   const plannerPaths = PLANNER_STATS.map((stat) => `/planners/${stat.cityKey ?? 'taif'}/${stat.slug}`);
+  const cityCategoryPaths = CATEGORY_CITY_COMBOS.map(({ category, city }) => `/categories/${category}/${city}`);
   const legalPaths = ['/privacy', '/terms', '/refund-policy', '/cancellation-policy', '/dispute-resolution', '/planner-verification'];
 
   return [
@@ -68,6 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cityPaths.flatMap((path) => [entry(path, lastModified, 0.8), entryEn(path, lastModified, 0.8)]),
     ...categoryPaths.flatMap((path) => [entry(path, lastModified, 0.8), entryEn(path, lastModified, 0.8)]),
     ...plannerPaths.flatMap((path) => [entry(path, lastModified, 0.6), entryEn(path, lastModified, 0.6)]),
+    ...cityCategoryPaths.flatMap((path) => [entry(path, lastModified, 0.7), entryEn(path, lastModified, 0.7)]),
     ...legalPaths.flatMap((path) => [entry(path, lastModified, 0.3), entryEn(path, lastModified, 0.3)]),
   ];
 }
