@@ -3,6 +3,7 @@
 import { MapPin, Star } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
+import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Photo } from '@/components/ui/Photo';
@@ -13,11 +14,24 @@ import { localeHref } from '@/lib/seo';
 
 const SIGN_IN_URL = process.env.NEXT_PUBLIC_CUSTOMER_APP_URL ?? '#';
 
+interface PlannerPackage {
+  name: string;
+  description: string;
+}
+
+interface PlannerReview {
+  author: string;
+  text: string;
+}
+
 interface PlannerEntry {
   name: string;
   city: string;
   type: string;
   bio: string;
+  portfolio: { caption: string }[];
+  packages: PlannerPackage[];
+  reviews: PlannerReview[];
 }
 
 /** Public profile page body for /planners/[city]/[slug] — real per-planner
@@ -67,6 +81,51 @@ export function PlannerProfileSection({ entry, stat }: { entry: PlannerEntry; st
               <Button size="lg">{t('plannerProfile.contactCta')}</Button>
             </a>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="font-display text-[22px] font-semibold text-fg1">{t('plannerProfile.portfolioHeading')}</h2>
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {entry.portfolio.map((item, i) => (
+            <div key={i}>
+              <Photo seed={stat.portfolioSeeds[i]} className="h-[160px] rounded-2xl" />
+              <p className="mt-2 text-[13px] text-fg3">{item.caption}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="font-display text-[22px] font-semibold text-fg1">{t('plannerProfile.packagesHeading')}</h2>
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {entry.packages.map((pkg, i) => (
+            <div key={i} className="rounded-2xl border border-border bg-white p-5 shadow-[0_8px_24px_-16px_rgba(43,34,51,0.18)]">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-display text-[17px] font-semibold text-fg1">{pkg.name}</h3>
+                <span className="whitespace-nowrap text-[15px] font-bold text-brand">
+                  {formatLocaleNumber(stat.packagePrices[i], lang)} SAR
+                </span>
+              </div>
+              <p className="mt-2 text-[13.5px] leading-[1.6] text-fg2">{pkg.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="font-display text-[22px] font-semibold text-fg1">{t('plannerProfile.reviewsHeading')}</h2>
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {entry.reviews.map((review, i) => (
+            <div key={i} className="rounded-2xl border border-border bg-cream p-5">
+              <div className="text-[14px] tracking-[2px] text-gold-500">{'★'.repeat(Math.round(stat.reviewRatings[i]))}</div>
+              <p className="my-3 text-[15px] leading-[1.55] text-fg1">&quot;{review.text}&quot;</p>
+              <div className="flex items-center gap-2.5">
+                <Avatar seed={stat.seed} size={32} initials={review.author.charAt(0)} />
+                <span className="text-[13.5px] font-bold text-fg1">{review.author}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

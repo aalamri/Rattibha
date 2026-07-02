@@ -150,14 +150,110 @@
     "proofVerificationLink": "Verification criteria"
   },
   "planners": [
-    { "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas", "bio": "Lumière Events has spent seven years staging Riyadh's most photographed weddings and galas, known for signature floral archways and precise day-of coordination." },
-    { "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas", "bio": "Based on Jeddah's Corniche, Coral Coast Events specializes in beachfront galas and large-scale celebrations, with a design language built around the city's coastal light." },
-    { "name": "Noor Weddings", "city": "Makkah", "type": "Weddings", "bio": "Noor Weddings has built its reputation on intimate, family-first wedding coordination near the Haram, balancing tradition with modern styling." },
-    { "name": "Marina Celebrations", "city": "Khobar", "type": "Engagements", "bio": "Marina Celebrations is Khobar's go-to name for engagement parties, pairing polished stage design with warm, personal hospitality for both families." },
-    { "name": "Saffron Events", "city": "Madinah", "type": "Weddings & Galas", "bio": "Saffron Events blends Hijazi hospitality with contemporary production values across Madinah's hotel ballrooms and garden venues." },
-    { "name": "Rose Valley Events", "city": "Taif", "type": "Weddings", "bio": "Rose Valley Events brings Taif's rose-season charm into every wedding it designs, with a focus on garden venues and natural floral styling." },
-    { "name": "Orbit Corporate", "city": "Riyadh", "type": "Corporate", "bio": "Orbit Corporate runs product launches and annual company celebrations for some of Riyadh's fastest-growing firms, handling logistics from stage build to guest registration." },
-    { "name": "Zahra Parties", "city": "Dammam", "type": "Birthdays", "bio": "Zahra Parties designs birthday celebrations across Dammam and the Eastern Province, known for playful themed setups that scale from small family gatherings to large parties." }
+    {
+      "name": "Lumière Events", "city": "Riyadh", "type": "Weddings & Galas",
+      "bio": "Lumière Events has spent seven years staging Riyadh's most photographed weddings and galas, known for signature floral archways and precise day-of coordination.",
+      "portfolio": [{ "caption": "Floral archway ceremony" }, { "caption": "Ballroom reception" }, { "caption": "Evening gala stage" }],
+      "packages": [
+        { "name": "Essential Wedding", "description": "Ceremony styling, floral archway and day-of coordination for up to 150 guests." },
+        { "name": "Signature Gala", "description": "Full-scale gala production with stage design, lighting and VIP hospitality." }
+      ],
+      "reviews": [
+        { "author": "Hind S.", "text": "Lumière turned our engagement vision into reality down to the smallest detail. The floral archway was breathtaking." },
+        { "author": "Faisal M.", "text": "Booked them for our company's anniversary gala — flawless execution from start to finish." }
+      ]
+    },
+    {
+      "name": "Coral Coast Events", "city": "Jeddah", "type": "Galas",
+      "bio": "Based on Jeddah's Corniche, Coral Coast Events specializes in beachfront galas and large-scale celebrations, with a design language built around the city's coastal light.",
+      "portfolio": [{ "caption": "Corniche-front gala setup" }, { "caption": "VIP lounge styling" }, { "caption": "Evening stage lighting" }],
+      "packages": [
+        { "name": "Coastal Gala", "description": "Beachfront staging with lighting design and guest lounge areas for up to 200 guests." },
+        { "name": "Grand Celebration", "description": "Full production for large-scale galas, including VIP hospitality and entertainment coordination." }
+      ],
+      "reviews": [
+        { "author": "Lama K.", "text": "Our gala on the Corniche was unforgettable — the lighting and staging were exactly what we envisioned." },
+        { "author": "Abdullah R.", "text": "Professional team, stunning venue styling, and everything ran exactly on schedule." }
+      ]
+    },
+    {
+      "name": "Noor Weddings", "city": "Makkah", "type": "Weddings",
+      "bio": "Noor Weddings has built its reputation on intimate, family-first wedding coordination near the Haram, balancing tradition with modern styling.",
+      "portfolio": [{ "caption": "Family ceremony setup" }, { "caption": "Traditional henna night" }, { "caption": "Reception hall styling" }],
+      "packages": [
+        { "name": "Intimate Ceremony", "description": "Family-centered wedding coordination for up to 100 guests, close to the Haram." },
+        { "name": "Full Wedding Package", "description": "Complete coordination from henna night through reception, including décor and catering liaison." }
+      ],
+      "reviews": [
+        { "author": "Amani T.", "text": "Noor Weddings understood exactly what our family wanted — warm, traditional, and beautifully organized." },
+        { "author": "Yousef A.", "text": "Every detail from the henna night to the reception was handled with real care." }
+      ]
+    },
+    {
+      "name": "Marina Celebrations", "city": "Khobar", "type": "Engagements",
+      "bio": "Marina Celebrations is Khobar's go-to name for engagement parties, pairing polished stage design with warm, personal hospitality for both families.",
+      "portfolio": [{ "caption": "Engagement stage design" }, { "caption": "Corniche venue setup" }, { "caption": "Family reception styling" }],
+      "packages": [
+        { "name": "Classic Engagement", "description": "Stage design and hospitality coordination for an intimate engagement celebration." },
+        { "name": "Premium Engagement", "description": "Full staging, entertainment coordination and guest hospitality for larger celebrations." }
+      ],
+      "reviews": [
+        { "author": "Reem H.", "text": "Marina made our engagement night so elegant — the stage design was stunning." },
+        { "author": "Mohammed S.", "text": "Warm hospitality and a beautifully organized evening for both families." }
+      ]
+    },
+    {
+      "name": "Saffron Events", "city": "Madinah", "type": "Weddings & Galas",
+      "bio": "Saffron Events blends Hijazi hospitality with contemporary production values across Madinah's hotel ballrooms and garden venues.",
+      "portfolio": [{ "caption": "Hotel ballroom ceremony" }, { "caption": "Garden reception" }, { "caption": "Gala stage setup" }],
+      "packages": [
+        { "name": "Garden Wedding", "description": "Ceremony and reception coordination across Madinah's garden venues, up to 150 guests." },
+        { "name": "Ballroom Gala", "description": "Full gala production in hotel ballrooms, including stage and hospitality coordination." }
+      ],
+      "reviews": [
+        { "author": "Sara N.", "text": "Saffron blended tradition and elegance perfectly for our wedding — every guest was impressed." },
+        { "author": "Khalid B.", "text": "Their gala production was flawless — professional staging and warm hospitality throughout." }
+      ]
+    },
+    {
+      "name": "Rose Valley Events", "city": "Taif", "type": "Weddings",
+      "bio": "Rose Valley Events brings Taif's rose-season charm into every wedding it designs, with a focus on garden venues and natural floral styling.",
+      "portfolio": [{ "caption": "Garden ceremony" }, { "caption": "Rose-themed décor" }, { "caption": "Outdoor reception" }],
+      "packages": [
+        { "name": "Rose Garden Ceremony", "description": "Natural floral styling and garden-venue coordination for intimate weddings." },
+        { "name": "Full Garden Wedding", "description": "Complete ceremony and reception coordination with signature rose-season styling." }
+      ],
+      "reviews": [
+        { "author": "Nada F.", "text": "Rose Valley's garden styling was magical — exactly the rose-season wedding we dreamed of." },
+        { "author": "Turki M.", "text": "Beautiful natural décor and a team that clearly loves what they do." }
+      ]
+    },
+    {
+      "name": "Orbit Corporate", "city": "Riyadh", "type": "Corporate",
+      "bio": "Orbit Corporate runs product launches and annual company celebrations for some of Riyadh's fastest-growing firms, handling logistics from stage build to guest registration.",
+      "portfolio": [{ "caption": "Product launch stage" }, { "caption": "Executive gathering setup" }, { "caption": "Annual gala production" }],
+      "packages": [
+        { "name": "Product Launch", "description": "Stage build, AV coordination and guest registration for a single-day launch event." },
+        { "name": "Annual Celebration", "description": "Full-scale corporate celebration production, including entertainment and hospitality coordination." }
+      ],
+      "reviews": [
+        { "author": "Sultan A.", "text": "Orbit ran our product launch flawlessly — every logistical detail was handled." },
+        { "author": "Nouf Z.", "text": "Our annual company celebration was the best yet, thanks to their meticulous planning." }
+      ]
+    },
+    {
+      "name": "Zahra Parties", "city": "Dammam", "type": "Birthdays",
+      "bio": "Zahra Parties designs birthday celebrations across Dammam and the Eastern Province, known for playful themed setups that scale from small family gatherings to large parties.",
+      "portfolio": [{ "caption": "Themed birthday setup" }, { "caption": "Kids' party décor" }, { "caption": "Family celebration styling" }],
+      "packages": [
+        { "name": "Classic Birthday", "description": "Themed décor and coordination for family birthday celebrations, up to 50 guests." },
+        { "name": "Grand Birthday Bash", "description": "Full themed production with entertainment coordination for larger celebrations." }
+      ],
+      "reviews": [
+        { "author": "Hessa D.", "text": "Zahra Parties made my daughter's birthday so magical — the themed décor was perfect." },
+        { "author": "Ahmad Y.", "text": "Fun, organized, and the kids had an amazing time. Highly recommend." }
+      ]
+    }
   ],
   "cityPages": {
     "overline": "Local expertise",
@@ -215,7 +311,10 @@
   "plannerProfile": {
     "startingFrom": "Starting from",
     "contactCta": "Get a quote",
-    "backToCity": "More planners in {{city}}"
+    "backToCity": "More planners in {{city}}",
+    "portfolioHeading": "Portfolio",
+    "packagesHeading": "Packages",
+    "reviewsHeading": "Reviews"
   },
   "cityCategoryPages": {
     "riyadh-weddings": {

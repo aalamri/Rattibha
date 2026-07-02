@@ -16,12 +16,16 @@ interface PlannerEntry {
   city: string;
   type: string;
   bio: string;
+  portfolio: { caption: string }[];
+  packages: { name: string; description: string }[];
+  reviews: { author: string; text: string }[];
 }
 
-// LocalBusiness + a nested Service offer — no aggregateRating is claimed
-// here despite the star rating shown in the UI, since we don't have a real
-// per-planner review count to back one (see task #19's Review schema on
-// the homepage instead, which only covers reviews we can genuinely quote).
+// LocalBusiness + a nested Service offer, plus the same real per-planner
+// reviews shown in the Reviews section (task #25). Still no aggregateRating
+// — that would need a genuine review *count* backing the headline `rating`
+// shown in the UI (e.g. "4.9"), and 2 sample reviews don't establish that;
+// see task #19's Review schema on the homepage for the same reasoning.
 function buildProfileJsonLd(entry: PlannerEntry, stat: PlannerStat, pageUrl: string) {
   return {
     '@context': 'https://schema.org',
@@ -38,6 +42,12 @@ function buildProfileJsonLd(entry: PlannerEntry, stat: PlannerStat, pageUrl: str
       price: stat.from,
       itemOffered: { '@type': 'Service', name: entry.type },
     },
+    review: entry.reviews.map((review, i) => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: review.author },
+      reviewBody: review.text,
+      reviewRating: { '@type': 'Rating', ratingValue: String(stat.reviewRatings[i]), bestRating: '5' },
+    })),
   };
 }
 
