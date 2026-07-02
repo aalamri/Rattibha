@@ -19,7 +19,7 @@ export function Testimonials() {
   const quotes = t('testimonials.quotes', { returnObjects: true }) as Quote[];
 
   return (
-    <div className="border-y border-border bg-white">
+    <div id="testimonials" className="border-y border-border bg-white">
       <div className="mx-auto max-w-[1180px] px-10 py-16">
         <SectionHead center over={t('testimonials.overline')} title={t('testimonials.title')} />
         <div className="mt-10 grid grid-cols-1 gap-5.5 sm:grid-cols-3">
