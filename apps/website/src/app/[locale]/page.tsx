@@ -10,6 +10,7 @@ import { HowItWorks } from '@/components/sections/HowItWorks';
 import { NavBar } from '@/components/sections/NavBar';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { TrustPillars } from '@/components/sections/TrustPillars';
+import { WhatsAppHelp } from '@/components/sections/WhatsAppHelp';
 import { JsonLd } from '@/components/JsonLd';
 import { SUPPORTED_LANGUAGES, type AppLanguage } from '@/i18n/constants';
 import ar from '@/i18n/locales/ar.json';
@@ -66,15 +67,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <JsonLd key={i} data={block} />
       ))}
       <NavBar />
+      {/* Funnel core, in the order set by task #27: search/CTA, matched
+          planners, how it works, real reviews, deposit protection, FAQ,
+          then a direct WhatsApp path for anyone still undecided. */}
       <Hero />
-      <Categories />
-      <CityGrid />
       <FeaturedGrid />
       <HowItWorks />
-      <TrustPillars />
       <Testimonials />
-      <About />
+      <TrustPillars />
       <FAQSection />
+      <WhatsAppHelp />
+      {/* Secondary navigation/context — useful, but not funnel-critical,
+          so placed after the primary conversion path above. */}
+      <Categories />
+      <CityGrid />
+      <About />
       <CTABand />
       <Footer />
     </>

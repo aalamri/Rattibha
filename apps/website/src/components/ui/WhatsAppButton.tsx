@@ -3,11 +3,7 @@
 import { WhatsappLogo } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
-// Digits only, country code included, no "+"/spaces/dashes (e.g. 9665XXXXXXXX)
-// — the format wa.me requires. Sanitized defensively in case it's set with
-// formatting. Set in .env.local / the deployment's env config; never
-// hardcoded here.
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]/g, '');
+import { getWhatsAppHref } from '@/lib/whatsapp';
 
 /**
  * Floating, site-wide WhatsApp lead-capture button — Saudi users often
@@ -18,9 +14,8 @@ const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/[^0-9]
  */
 export function WhatsAppButton() {
   const { t } = useTranslation();
-  if (!WHATSAPP_NUMBER) return null;
-
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t('whatsapp.prefillMessage'))}`;
+  const href = getWhatsAppHref(t('whatsapp.prefillMessage'));
+  if (!href) return null;
 
   return (
     <a

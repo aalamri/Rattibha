@@ -1,6 +1,6 @@
 import type { Icon } from 'phosphor-react';
 
-export type ButtonVariant = 'primary' | 'gold' | 'secondary' | 'ghost' | 'light';
+export type ButtonVariant = 'primary' | 'gold' | 'secondary' | 'ghost' | 'light' | 'whatsapp';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
@@ -9,6 +9,7 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   secondary: 'bg-bg-surface text-fg1 border-border-strong hover:bg-bg-app',
   ghost: 'bg-transparent text-fg1 border-transparent hover:bg-bg-app',
   light: 'bg-white/[0.14] text-white border-white/25 hover:bg-white/20',
+  whatsapp: 'bg-[#25D366] text-white border-transparent hover:brightness-95',
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

@@ -129,7 +129,10 @@
   },
   "whatsapp": {
     "ariaLabel": "Chat with us on WhatsApp",
-    "prefillMessage": "Hi! I'm looking for an event planner in Saudi Arabia and found you through Ratibha."
+    "prefillMessage": "Hi! I'm looking for an event planner in Saudi Arabia and found you through Ratibha.",
+    "helpTitle": "Still have questions?",
+    "helpSubtitle": "Chat with our team directly on WhatsApp — we're happy to help you find the right planner.",
+    "helpCta": "Chat on WhatsApp"
   },
   "trust": {
     "overline": "Built for confidence",
