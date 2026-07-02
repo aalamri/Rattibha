@@ -43,3 +43,30 @@ export const PLANNER_STATS: PlannerStat[] = [
   { slug: 'orbit-corporate', rating: 4.7, from: 25000, seed: 2, premium: true, cityKey: 'riyadh', categoryKeys: ['corporate'] },
   { slug: 'zahra-parties', rating: 4.9, from: 3200, seed: 4, premium: false, cityKey: 'dammam', categoryKeys: ['birthdays'] },
 ];
+
+export interface CategoryCityCombo {
+  category: CategoryKey;
+  city: CityKey;
+}
+
+/** Every (category, city) pair with at least one real planner match,
+ * derived from PLANNER_STATS so it can never drift out of sync with the
+ * underlying data. Backs the long-tail "[category] in [city]" landing
+ * pages (/categories/[category]/[city]) — see task #24. Combos with zero
+ * matching planners are deliberately not generated, to avoid shipping
+ * thin/empty pages. */
+export const CATEGORY_CITY_COMBOS: CategoryCityCombo[] = (() => {
+  const seen = new Set<string>();
+  const combos: CategoryCityCombo[] = [];
+  for (const stat of PLANNER_STATS) {
+    if (!stat.cityKey) continue;
+    for (const category of stat.categoryKeys) {
+      const key = `${stat.cityKey}-${category}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        combos.push({ category, city: stat.cityKey });
+      }
+    }
+  }
+  return combos;
+})();
