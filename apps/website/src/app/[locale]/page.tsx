@@ -1,7 +1,6 @@
 import { About } from '@/components/sections/About';
 import { Categories } from '@/components/sections/Categories';
 import { CityGrid } from '@/components/sections/CityGrid';
-import { CTABand } from '@/components/sections/CTABand';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { FeaturedGrid } from '@/components/sections/FeaturedGrid';
 import { Footer } from '@/components/sections/Footer';
@@ -78,11 +77,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <FAQSection />
       <WhatsAppHelp />
       {/* Secondary navigation/context — useful, but not funnel-critical,
-          so placed after the primary conversion path above. */}
+          so placed after the primary conversion path above. Planner
+          recruitment messaging (formerly CTABand here) now lives on its
+          own /for-planners page — see task #28 — to keep this funnel
+          customer-only. */}
       <Categories />
       <CityGrid />
       <About />
-      <CTABand />
       <Footer />
     </>
   );

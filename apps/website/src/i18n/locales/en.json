@@ -106,6 +106,27 @@
     "becomePlanner": "Become a planner",
     "talkToSales": "Talk to sales"
   },
+  "forPlanners": {
+    "metaTitle": "For Event Planners — Grow Your Business",
+    "metaDescription": "Join Ratibha as a verified event planner — reach engaged customers, get paid securely, and grow your bookings. Free to join, 15% only on confirmed bookings.",
+    "valuePropsOverline": "Why planners choose Ratibha",
+    "valuePropsTitle": "Everything you need to grow your bookings",
+    "valueProps": [
+      { "title": "Reach engaged customers", "description": "Every request comes from a customer actively planning and ready to book — no cold leads, no wasted quotes." },
+      { "title": "Get paid securely", "description": "Deposits are held safely and released automatically once your event is delivered — no chasing payments." },
+      { "title": "Build your reputation", "description": "Verified reviews from real, completed bookings help serious planners stand out." },
+      { "title": "No upfront cost", "description": "Joining and browsing requests is free — Ratibha only earns when you do, taking 15% on confirmed bookings." }
+    ],
+    "howItWorksOverline": "Simple by design",
+    "howItWorksTitle": "Three steps to your next booking",
+    "steps": [
+      { "title": "Get verified", "description": "Submit your business details and portfolio — most planners are approved within a few days." },
+      { "title": "Receive matched requests", "description": "See customer requests that fit your city and specialty, and send a custom quote." },
+      { "title": "Get booked and paid", "description": "Once a customer accepts your offer, the deposit is secured and released after your event is delivered." }
+    ],
+    "closingTitle": "Ready to grow your bookings?",
+    "closingSubtitle": "Join hundreds of verified planners already using Ratibha to find new clients."
+  },
   "footer": {
     "tagline": "Saudi Arabia's marketplace for unforgettable events. Plan, celebrate, cherish.",
     "customers": "Customers",
