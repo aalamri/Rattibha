@@ -3,7 +3,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { PlannerCard } from '@/components/ui/PlannerCard';
-import { CATEGORY_CITY_COMBOS, type CategoryKey, CITY_KEYS, PLANNER_STATS } from '@/data/planners';
+import { CATEGORY_CITY_COMBOS, type CategoryKey, PLANNER_STATS } from '@/data/planners';
 import { type AppLanguage } from '@/i18n';
 import { localeHref } from '@/lib/seo';
 
@@ -47,7 +47,10 @@ export function CategoryPlannersSection({ category }: { category: CategoryKey })
       )}
       <div className="mt-9 grid grid-cols-1 gap-5.5 sm:grid-cols-2 lg:grid-cols-4">
         {matches.map(({ stat, entry }) => {
-          const cityKey = stat.cityKey ?? CITY_KEYS[0];
+          // Planners without a cityKey (e.g. Rose Valley Events, Taif)
+          // still get a real profile URL — see [slug]/page.tsx's
+          // generateStaticParams, which uses the same 'taif' fallback.
+          const cityKey = stat.cityKey ?? 'taif';
           return (
             <PlannerCard
               key={stat.slug}

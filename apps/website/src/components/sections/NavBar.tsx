@@ -46,10 +46,18 @@ export function NavBar() {
     window.location.href = targetHref;
   }
 
-  // "forPlanners" points at a real page (/for-planners), not a homepage
-  // anchor like the other links — needs the same locale-prefix treatment
-  // as any other internal link (see task #28).
-  const links = LINKS.map((link) => (link.key === 'forPlanners' ? { ...link, href: localeHref(lang, link.href) } : link));
+  // NavBar renders on every page (legal pages, planner profiles, city/
+  // category pages, /for-planners...), but "browsePlanners"/"howItWorks"/
+  // "about" are anchors that only exist as sections on the homepage. A bare
+  // "#planners" href only scrolls correctly when already on the homepage —
+  // from anywhere else it's a silent no-op. Prefixing every anchor with the
+  // locale-aware homepage path (e.g. "/en#planners") fixes that everywhere
+  // while still behaving as a same-page smooth-scroll when already on the
+  // homepage, since the path then matches the current URL exactly.
+  const homeHref = localeHref(lang, '/');
+  const links = LINKS.map((link) =>
+    link.key === 'forPlanners' ? { ...link, href: localeHref(lang, link.href) } : { ...link, href: `${homeHref}${link.href}` }
+  );
 
   const langToggle = (
     <button
