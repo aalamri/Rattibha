@@ -19,6 +19,15 @@ Notifications.setNotificationHandler({
  * Request permission, obtain an Expo push token, and persist it to the
  * profiles table so the backend can address notifications to this device.
  * Safe to call multiple times — exits early if already registered.
+ *
+ * Note for local testing: Expo Go on Android hard-blocks the entire app
+ * from loading if this module is even imported, starting SDK 53 (remote
+ * notifications were removed from the generic client). That's a project-
+ * level block on importing `expo-notifications` at all, not something
+ * this function's own error handling can prevent — to test the rest of
+ * the app in Expo Go, temporarily remove the "expo-notifications" plugin
+ * entry from app.json and stub this file, then restore both before a
+ * real development-client or production build.
  */
 export async function registerForPushNotifications(userId: string): Promise<string | null> {
   if (!Device.isDevice) return null; // simulators can't receive pushes
@@ -42,8 +51,17 @@ export async function registerForPushNotifications(userId: string): Promise<stri
     });
   }
 
-  const tokenData = await Notifications.getExpoPushTokenAsync();
-  const token = tokenData.data;
+  // Wrapped in try/catch since getExpoPushTokenAsync() can still fail for
+  // reasons unrelated to Expo Go (no network, misconfigured project ID,
+  // etc.) — better to skip registration than throw and disrupt sign-in.
+  let token: string;
+  try {
+    const tokenData = await Notifications.getExpoPushTokenAsync();
+    token = tokenData.data;
+  } catch (error) {
+    console.warn('[pushNotifications] Skipping push token registration:', error);
+    return null;
+  }
 
   // Persist — upsert so re-installs or token rotations are handled.
   await supabase

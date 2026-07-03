@@ -34,12 +34,34 @@ export default function RegisterScreen() {
 
   const handleCreateAccount = async () => {
     setError('');
+
+    if (password.length < 6) {
+      setError(t('auth.errors.weakPassword'));
+      return;
+    }
+
     setLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
     if (signUpError) {
       setLoading(false);
-      setError(signUpError.message.toLowerCase().includes('already') ? t('auth.errors.emailInUse') : t('auth.errors.weakPassword'));
+      const message = signUpError.message.toLowerCase();
+      if (message.includes('already')) {
+        setError(t('auth.errors.emailInUse'));
+      } else if (message.includes('password')) {
+        // Only claim "weak password" when Supabase's own message says so —
+        // our client-side check above already confirmed 6+ characters, so
+        // this means a stricter server-side policy (e.g. Supabase project
+        // configured to require more than 6, or additional complexity).
+        setError(t('auth.errors.weakPassword'));
+      } else {
+        // Surface the real reason rather than defaulting to "weak
+        // password" for errors that have nothing to do with the password
+        // (rate limiting, disabled email signups, network issues, etc.) —
+        // that mismatch was the bug: every non-"already registered" error
+        // was shown as a password complaint regardless of the actual cause.
+        setError(signUpError.message);
+      }
       return;
     }
 
