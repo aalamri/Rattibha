@@ -1,6 +1,7 @@
 import { CheckCircle, GlobeHemisphereEast, MagnifyingGlass, MapPin, X } from 'phosphor-react-native';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Pressable, ScrollView, View } from 'react-native';
+import { Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
 
 import { Text } from '@/components/ui/Text';
 import { CITY_KEYS, type CityKey } from '@/data/planners';
@@ -22,11 +23,19 @@ export function CitySheet({ visible, current, onSelect, onClose }: CitySheetProp
   const { t } = useTranslation();
   const isRTL = useIsRTL();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
+  const [query, setQuery] = useState('');
 
-  const options: { key: CityKey | undefined; label: string }[] = [
+  useEffect(() => {
+    if (!visible) setQuery('');
+  }, [visible]);
+
+  const allOptions: { key: CityKey | undefined; label: string }[] = [
     { key: undefined, label: t('cities.all') },
     ...CITY_KEYS.map((c) => ({ key: c, label: t(`cities.${c}`) })),
   ];
+  const options = query.trim()
+    ? allOptions.filter((opt) => opt.label.toLowerCase().includes(query.trim().toLowerCase()))
+    : allOptions;
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
@@ -70,12 +79,27 @@ export function CitySheet({ visible, current, onSelect, onClose }: CitySheetProp
               },
             ]}>
             <MagnifyingGlass size={17} color={theme.fg3} />
-            <Text variant="small" color={theme.fg3}>
-              {t('discover.searchCities')}
-            </Text>
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder={t('discover.searchCities')}
+              placeholderTextColor={theme.fg3}
+              style={{
+                flex: 1,
+                fontFamily: isRTL ? fonts.arSans.regular : fonts.sans.regular,
+                fontSize: 13.5,
+                color: theme.fg1,
+                textAlign: isRTL ? 'right' : 'left',
+              }}
+            />
           </View>
 
           <ScrollView contentContainerStyle={{ paddingHorizontal: 14 }}>
+            {options.length === 0 && (
+              <Text variant="small" color={theme.fg3} style={{ textAlign: 'center', paddingVertical: 20 }}>
+                {t('discover.noCitiesFound')}
+              </Text>
+            )}
             {options.map((opt) => {
               const on = current === opt.key;
               const IconComp = opt.key === undefined ? GlobeHemisphereEast : MapPin;

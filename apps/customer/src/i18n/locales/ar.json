@@ -154,6 +154,7 @@
     "filters": "تصفية",
     "chooseCity": "اختر مدينتك",
     "searchCities": "ابحث عن مدينة في السعودية…",
+    "noCitiesFound": "لا توجد مدن مطابقة لبحثك.",
     "emptyCity": "لا يوجد منظّمون في {{city}} بعد — <link>انشر طلباً</link> وسيصلونك.",
     "loadMore": "عرض منظّمين آخرين",
     "loadingMore": "جارٍ التحميل…"
@@ -428,7 +429,13 @@
       "system": "النظام"
     },
     "signOut": "تسجيل الخروج",
-    "language": "اللغة"
+    "language": "اللغة",
+    "editProfile": {
+      "title": "تعديل الملف الشخصي",
+      "shuffleAvatar": "تبديل الصورة الرمزية",
+      "save": "حفظ التغييرات",
+      "saved": "تم تحديث الملف الشخصي."
+    }
   },
   "notifications": {
     "types": {

@@ -154,6 +154,7 @@
     "filters": "Filters",
     "chooseCity": "Choose your city",
     "searchCities": "Search cities in Saudi Arabia…",
+    "noCitiesFound": "No cities match your search.",
     "emptyCity": "No planners in {{city}} yet — <link>post a request</link> and they’ll come to you.",
     "loadMore": "Load more planners",
     "loadingMore": "Loading…"
@@ -428,7 +429,13 @@
       "system": "System"
     },
     "signOut": "Sign out",
-    "language": "Language"
+    "language": "Language",
+    "editProfile": {
+      "title": "Edit profile",
+      "shuffleAvatar": "Shuffle avatar",
+      "save": "Save changes",
+      "saved": "Profile updated."
+    }
   },
   "notifications": {
     "title": "Notifications",
