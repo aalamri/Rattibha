@@ -58,14 +58,64 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .select('*')
       .eq('id', userId)
       .single()
-      .then(({ data }) => setProfile(data ?? null));
+      .then(async ({ data }) => {
+        if (data) {
+          setProfile(data);
+          return;
+        }
+        // First authenticated load with no profile row — onboarding
+        // couldn't create it at signup time because email confirmation was
+        // required (no session yet). Create it now from the metadata
+        // captured at signUp().
+        const meta = session.user.user_metadata as Record<string, unknown> | undefined;
+        const { data: created } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            role: 'planner',
+            full_name: (meta?.full_name as string) || session.user.email || '—',
+            phone: (meta?.phone as string) || null,
+            city: (meta?.city as Profile['city']) || null,
+          })
+          .select('*')
+          .single();
+        setProfile(created ?? null);
+      });
 
     supabase
       .from('planners')
       .select('*')
       .eq('user_id', userId)
       .single()
-      .then(({ data }) => setPlanner(data ?? null));
+      .then(async ({ data }) => {
+        if (data) {
+          setPlanner(data);
+          return;
+        }
+        const meta = session.user.user_metadata as Record<string, unknown> | undefined;
+        if (!meta?.business_name) {
+          // Not a planner signup with pending metadata (or already handled) — leave null.
+          setPlanner(null);
+          return;
+        }
+        const { data: created } = await supabase
+          .from('planners')
+          .insert({
+            user_id: userId,
+            business_name: meta.business_name as string,
+            bio: (meta.bio as string) || null,
+            city: (meta.city as Planner['city']) || 'riyadh',
+            categories: (meta.categories as Planner['categories']) || [],
+            years_in_business: (meta.years_in_business as string) || null,
+            team_size: (meta.team_size as string) || null,
+            budget_tier: (meta.budget_tier as string) || null,
+            starting_price: meta.starting_price ? Number(meta.starting_price) : null,
+            cr_number: (meta.cr_number as string) || null,
+          })
+          .select('*')
+          .single();
+        setPlanner(created ?? null);
+      });
   }, [session]);
 
   const signOut = async () => {

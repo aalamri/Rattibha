@@ -503,6 +503,7 @@
       "agreeRequired": "You need to agree to the Partner Terms to continue.",
       "submitFailed": "We couldn't submit your application. Please try again."
     },
+    "confirmEmailSent": "Check your email to confirm your account, then sign in to finish your application.",
     "pending": {
       "title": "Application submitted!",
       "subtitle": "Thanks, <bold>{{businessName}}</bold>. Our team reviews most applications within <bold>24–48 hours</bold>. We'll email you the moment you're verified and ready to receive leads.",
