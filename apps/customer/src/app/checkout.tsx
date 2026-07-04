@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, CalendarBlank, CreditCard, HourglassMedium, Info, Lock, PenNib, ShieldCheck, SquaresFour, User } from 'phosphor-react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,7 +35,7 @@ export default function CheckoutScreen() {
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const { show: showToast } = useToast();
 
-  async function loadOffer() {
+  const loadOffer = useCallback(async () => {
     if (!offerId) return;
     const { data } = await supabase
       .from('offers')
@@ -43,7 +43,7 @@ export default function CheckoutScreen() {
       .eq('id', offerId)
       .single();
     if (data) setOffer(data as unknown as DBOfferRow);
-  }
+  }, [offerId]);
 
   useEffect(() => {
     if (!offerId) return;
@@ -67,7 +67,18 @@ export default function CheckoutScreen() {
         channelRef.current = null;
       }
     };
-  }, [offerId]);
+  }, [offerId, loadOffer]);
+
+  // Fallback for when the realtime subscription above misses an update (e.g.
+  // the countersign happened while this screen was backgrounded, or the
+  // channel dropped) — re-fetch whenever the screen regains focus so the
+  // customer always has a way to unstick "awaiting countersign" besides
+  // waiting on the socket.
+  useFocusEffect(
+    useCallback(() => {
+      loadOffer();
+    }, [loadOffer])
+  );
 
   const plannerName = offer?.planners?.business_name ?? '—';
   const seed = offer?.planners?.profiles?.avatar_seed ?? 0;
