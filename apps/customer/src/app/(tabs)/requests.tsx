@@ -11,7 +11,7 @@ import {
   SealCheck,
   type Icon,
 } from 'phosphor-react-native';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -70,26 +70,37 @@ export default function RequestsScreen() {
   const [requests, setRequests] = useState<DBRequestRow[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchRequests = useCallback(() => {
     if (!session) return;
+    return supabase
+      .from('requests')
+      .select('id, customer_id, category, city, event_date, guests, budget, note, status, created_at, offers(id, status, contracts(bookings(id)))')
+      .eq('customer_id', session.user.id)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => { setRequests((data as unknown as DBRequestRow[]) ?? []); setLoading(false); });
+  }, [session]);
 
-    const fetchRequests = () =>
-      supabase
-        .from('requests')
-        .select('id, customer_id, category, city, event_date, guests, budget, note, status, created_at, offers(id, status, contracts(bookings(id)))')
-        .eq('customer_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .then(({ data }) => { setRequests((data as unknown as DBRequestRow[]) ?? []); setLoading(false); });
-
+  useEffect(() => {
     fetchRequests();
+  }, [fetchRequests]);
+
+  const requestIds = requests.map((r) => r.id).sort().join(',');
+
+  useEffect(() => {
+    if (!session || !requestIds) return;
+    const ids = requestIds.split(',').slice(0, 100);
 
     const channel = supabase
-      .channel(`customer-offers-${session.user.id}-${Date.now()}`)
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'offers' }, () => fetchRequests())
+      .channel(`customer-offers-${session.user.id}`)
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'offers', filter: `request_id=in.(${ids.join(',')})` },
+        () => fetchRequests()
+      )
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [session]);
+  }, [session, requestIds, fetchRequests]);
 
   const shown = requests.filter((r) => filter === 'all' || uiStatus(r.status) === filter);
 

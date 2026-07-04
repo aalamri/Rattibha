@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { ChatCircle } from 'phosphor-react-native';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -53,7 +53,7 @@ export default function MessagesScreen() {
 
   const [convos, setConvos] = useState<ConversationRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const [ownRequestIds, setOwnRequestIds] = useState<string[]>([]);
 
   const loadConversations = useCallback(async () => {
     if (!session?.user.id) return;
@@ -63,6 +63,8 @@ export default function MessagesScreen() {
       .from('requests')
       .select('id')
       .eq('customer_id', session.user.id);
+
+    setOwnRequestIds(requests?.map((r) => r.id) ?? []);
 
     if (!requests || requests.length === 0) {
       setLoading(false);
@@ -154,40 +156,25 @@ export default function MessagesScreen() {
     setLoading(false);
   }, [session?.user.id]);
 
+  const ownRequestIdsKey = ownRequestIds.slice().sort().join(',');
+
   // Subscribe to any new messages across all the user's conversations
   useEffect(() => {
-    if (!session?.user.id) return;
+    if (!session?.user.id || !ownRequestIdsKey) return;
 
-    const setupChannel = async () => {
-      const { data: requests } = await supabase
-        .from('requests')
-        .select('id')
-        .eq('customer_id', session.user.id);
+    const ids = ownRequestIdsKey.split(',').slice(0, 100);
 
-      if (!requests || requests.length === 0) return;
+    const channel = supabase
+      .channel(`messages_list:${session.user.id}`)
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'messages', filter: `request_id=in.(${ids.join(',')})` },
+        () => { loadConversations(); }
+      )
+      .subscribe();
 
-      if (channelRef.current) {
-        supabase.removeChannel(channelRef.current);
-      }
-
-      channelRef.current = supabase
-        .channel(`messages_list:${session.user.id}`)
-        .on(
-          'postgres_changes',
-          { event: 'INSERT', schema: 'public', table: 'messages' },
-          () => { loadConversations(); }
-        )
-        .subscribe();
-    };
-
-    setupChannel();
-    return () => {
-      if (channelRef.current) {
-        supabase.removeChannel(channelRef.current);
-        channelRef.current = null;
-      }
-    };
-  }, [session?.user.id, loadConversations]);
+    return () => { supabase.removeChannel(channel); };
+  }, [session?.user.id, ownRequestIdsKey, loadConversations]);
 
   // Refresh on tab focus (picks up reads from other sessions)
   useFocusEffect(

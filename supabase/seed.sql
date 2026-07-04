@@ -108,8 +108,8 @@ insert into payments (contract_id, type, amount, status) values
 -- messages (sample thread on the wedding request — Planner Messages view)
 -- ---------------------------------------------------------------------
 
-insert into messages (request_id, sender_id, body, created_at) values
-  ('33333333-0000-0000-0000-000000000001', '22222222-0000-0000-0000-000000000001', 'مرحبًا! تسلمت عرضكم — يبدو رائعًا 💜', now() - interval '1 day'),
-  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', 'So glad you like it! The Signature package will suit your 220 guests perfectly.', now() - interval '1 day' + interval '15 minutes'),
-  ('33333333-0000-0000-0000-000000000001', '22222222-0000-0000-0000-000000000001', 'هل يمكن أن تكون الزهور بألوان وردي وذهبي فاتح؟', now() - interval '20 hours'),
-  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', 'Absolutely — that''s one of our signature palettes. I''ll send a moodboard today.', now() - interval '19 hours');
+insert into messages (request_id, planner_id, sender_id, body, created_at) values
+  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', '22222222-0000-0000-0000-000000000001', 'مرحبًا! تسلمت عرضكم — يبدو رائعًا 💜', now() - interval '1 day'),
+  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', 'So glad you like it! The Signature package will suit your 220 guests perfectly.', now() - interval '1 day' + interval '15 minutes'),
+  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', '22222222-0000-0000-0000-000000000001', 'هل يمكن أن تكون الزهور بألوان وردي وذهبي فاتح؟', now() - interval '20 hours'),
+  ('33333333-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', '11111111-0000-0000-0000-000000000001', 'Absolutely — that''s one of our signature palettes. I''ll send a moodboard today.', now() - interval '19 hours');
