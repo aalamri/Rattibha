@@ -87,19 +87,24 @@ export default function MessagesScreen() {
       }
     }
 
-    const { data: offers } = await supabase
+    const { data: offersData } = await supabase
       .from('offers')
       .select(`request_id, planner_id, planners(${PLANNER_SELECT})`)
       .in('request_id', latestByRequest.map((m) => m.request_id));
 
+    const offers = (offersData as unknown as {
+      request_id: string;
+      planner_id: string;
+      planners: { business_name: string; profiles: { avatar_seed: number } | null } | null;
+    }[]) ?? [];
+
     const offersByRequest: Record<string, { planner_id: string; plannerName: string; plannerSeed: number }> = {};
-    for (const o of offers ?? []) {
-      const planner = (o as unknown as { planners: { business_name: string; profiles: { avatar_seed: number } | null } | null }).planners;
-      if (planner && !offersByRequest[o.request_id]) {
+    for (const o of offers) {
+      if (o.planners && !offersByRequest[o.request_id]) {
         offersByRequest[o.request_id] = {
           planner_id: o.planner_id,
-          plannerName: planner.business_name,
-          plannerSeed: planner.profiles?.avatar_seed ?? 0,
+          plannerName: o.planners.business_name,
+          plannerSeed: o.planners.profiles?.avatar_seed ?? 0,
         };
       }
     }

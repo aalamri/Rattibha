@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Photo } from '@/components/ui/Photo';
 import { Text } from '@/components/ui/Text';
+import { useToast } from '@/components/ui/Toast';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -29,6 +30,7 @@ export default function ChatScreen() {
   const isRTL = useIsRTL();
   const router = useRouter();
   const { session } = useAuth();
+  const { show: showToast } = useToast();
   const { requestId, plannerName, plannerSeed } = useLocalSearchParams<{
     requestId: string;
     plannerName: string;
@@ -85,12 +87,16 @@ export default function ChatScreen() {
     if (!body || !session?.user.id || !requestId) return;
     setSending(true);
     setDraft('');
-    await supabase.from('messages').insert({
+    const { error } = await supabase.from('messages').insert({
       request_id: requestId,
       sender_id: session.user.id,
       body,
     });
     setSending(false);
+    if (error) {
+      setDraft(body);
+      showToast(t('toast.error'));
+    }
   }
 
   return (

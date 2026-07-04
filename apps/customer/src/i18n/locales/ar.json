@@ -108,7 +108,8 @@
       "orSignUpWith": "أو التسجيل باستخدام",
       "alreadyHaveAccount": "لديك حساب بالفعل؟ ",
       "signIn": "تسجيل الدخول",
-      "createAccount": "إنشاء حساب"
+      "createAccount": "إنشاء حساب",
+      "confirmEmailSent": "تحقق من بريدك الإلكتروني لتأكيد حسابك، ثم سجّل الدخول."
     },
     "forgotPassword": {
       "title": "نسيت كلمة المرور؟",

@@ -108,7 +108,8 @@
       "orSignUpWith": "or sign up with",
       "alreadyHaveAccount": "Already have an account? ",
       "signIn": "Sign in",
-      "createAccount": "Create account"
+      "createAccount": "Create account",
+      "confirmEmailSent": "Check your email to confirm your account, then sign in."
     },
     "forgotPassword": {
       "title": "Forgot password?",
