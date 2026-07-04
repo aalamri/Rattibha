@@ -430,6 +430,14 @@
     "language": "اللغة"
   },
   "notifications": {
+    "types": {
+      "offerReceived": "أرسل لك {{planner}} عرض سعر",
+      "offerAccepted": "وافق {{planner}} على عرضك — يمكنك الآن دفع العربون",
+      "bookingConfirmed": "تم تأكيد حجزك مع {{planner}}",
+      "message": "رسالة جديدة من {{planner}}",
+      "generic": "تحديث جديد",
+      "aPlanner": "أحد المنظّمين"
+    },
     "title": "الإشعارات",
     "empty": "لا توجد إشعارات بعد",
     "emptyNote": "ستظهر هنا العروض الجديدة وتحديثات الحجز.",

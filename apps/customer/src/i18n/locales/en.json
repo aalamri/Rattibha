@@ -433,7 +433,15 @@
     "title": "Notifications",
     "empty": "No notifications yet",
     "emptyNote": "New offers and booking updates will appear here.",
-    "markRead": "Mark all read"
+    "markRead": "Mark all read",
+    "types": {
+      "offerReceived": "{{planner}} sent you a quote",
+      "offerAccepted": "{{planner}} accepted your offer — you can now pay the deposit",
+      "bookingConfirmed": "Your booking with {{planner}} is confirmed",
+      "message": "New message from {{planner}}",
+      "generic": "New update",
+      "aPlanner": "A planner"
+    }
   },
   "toast": {
     "requestPosted": "Request posted! Planners will be in touch soon.",
