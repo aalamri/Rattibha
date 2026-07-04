@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Globe, PaperPlaneRight } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/Button';
 import { setAppLanguage, type AppLanguage } from '@/i18n';
@@ -90,18 +91,55 @@ export default function OnboardingPage() {
     setError(null);
     setSubmitting(true);
 
+    // Every field but the portfolio files goes into user_metadata (not just
+    // the profiles/planners inserts below) because those inserts require an
+    // authenticated session — if the project has email confirmation
+    // enabled, signUp() returns no session yet, and metadata is the only
+    // place this data survives until AuthContext can create the rows after
+    // the planner confirms and logs back in. Portfolio files genuinely
+    // can't be uploaded without a session (Storage RLS needs auth.uid()),
+    // so that piece is unavoidably lost in that path — the planner can add
+    // photos later from the dashboard.
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
-      options: { data: { full_name: form.fullName, role: 'planner' } },
+      options: {
+        data: {
+          role: 'planner',
+          full_name: form.fullName,
+          phone: form.phone,
+          city: form.city,
+          business_name: form.businessName,
+          bio: form.bio || null,
+          categories: form.categories,
+          years_in_business: form.yearsInBusiness,
+          team_size: form.teamSize,
+          budget_tier: form.budgetTier,
+          starting_price: form.startingPrice,
+          cr_number: form.crNumber,
+        },
+      },
     });
 
-    const userId = signUpData.session?.user.id;
-    if (signUpError || !userId) {
+    if (signUpError) {
       setError(t('onboarding.errors.submitFailed'));
       setSubmitting(false);
       return;
     }
+
+    if (!signUpData.session) {
+      // Email confirmation required — there's no session yet, so the
+      // profiles/planners inserts below would just fail RLS, and the
+      // portfolio upload needs auth.uid() too. AuthContext creates both
+      // rows from user_metadata on first authenticated load after the
+      // planner confirms and signs in.
+      setSubmitting(false);
+      toast.success(t('onboarding.confirmEmailSent'));
+      router.replace('/login');
+      return;
+    }
+
+    const userId = signUpData.session.user.id;
 
     const { error: profileError } = await supabase.from('profiles').insert({
       id: userId,
