@@ -50,7 +50,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .select('*')
       .eq('id', session.user.id)
       .single()
-      .then(({ data }) => setProfile(data ?? null));
+      .then(async ({ data }) => {
+        if (data) {
+          setProfile(data);
+          return;
+        }
+        // First authenticated load with no profile row — this happens when
+        // registration required email confirmation, so the profiles insert
+        // in register.tsx couldn't run yet (no session at signup time).
+        // Create it now from the metadata captured at signUp().
+        const meta = session.user.user_metadata as { full_name?: string; phone?: string } | undefined;
+        const { data: created } = await supabase
+          .from('profiles')
+          .insert({
+            id: session.user.id,
+            role: 'customer',
+            full_name: meta?.full_name || session.user.email || '—',
+            phone: meta?.phone || null,
+          })
+          .select('*')
+          .single();
+        setProfile(created ?? null);
+      });
 
     // Register for push notifications and persist the token.
     registerForPushNotifications(session.user.id);

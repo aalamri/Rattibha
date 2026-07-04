@@ -9,6 +9,7 @@ import { AuthHeader, Checkbox, Divider, SocialRow } from '@/components/auth';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
+import { useToast } from '@/components/ui/Toast';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
@@ -20,6 +21,7 @@ export default function RegisterScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const isRTL = useIsRTL();
+  const { show: showToast } = useToast();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
@@ -42,7 +44,16 @@ export default function RegisterScreen() {
 
     setLoading(true);
 
-    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+    // full_name/phone also go into user_metadata (not just the profiles
+    // insert below) because that insert requires an authenticated session —
+    // if the project has email confirmation enabled, signUp() returns no
+    // session yet, and metadata is the only place this data survives until
+    // AuthContext can create the profile row after the user confirms.
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName, phone: mobile || null } },
+    });
     if (signUpError) {
       setLoading(false);
       const message = signUpError.message.toLowerCase();
@@ -65,17 +76,31 @@ export default function RegisterScreen() {
       return;
     }
 
-    const userId = data.user?.id;
-    if (userId) {
-      await supabase.from('profiles').insert({
-        id: userId,
-        role: 'customer',
-        full_name: fullName,
-        phone: mobile || null,
-      });
+    if (!data.session) {
+      // Email confirmation required — there's no authenticated session yet,
+      // so a profiles insert here would just fail RLS. AuthContext creates
+      // the profile from user_metadata on the user's first authenticated
+      // load after they confirm.
+      setLoading(false);
+      showToast(t('auth.register.confirmEmailSent'));
+      router.replace('/(auth)/login');
+      return;
     }
 
+    const { error: profileError } = await supabase.from('profiles').insert({
+      id: data.session.user.id,
+      role: 'customer',
+      full_name: fullName,
+      phone: mobile || null,
+    });
+
     setLoading(false);
+
+    if (profileError) {
+      setError(t('auth.errors.generic'));
+      return;
+    }
+
     router.replace('/(tabs)');
   };
 
