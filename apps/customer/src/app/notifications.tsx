@@ -68,11 +68,12 @@ function notificationRoute(n: Notif): { pathname: string; params?: Record<string
     case 'booking_confirmed':
       return p.booking_id ? { pathname: '/booking/[id]', params: { id: String(p.booking_id) } } : null;
     case 'message':
-      return p.request_id
+      return p.request_id && p.planner_id
         ? {
             pathname: '/chat/[requestId]',
             params: {
               requestId: String(p.request_id),
+              plannerId: String(p.planner_id),
               plannerName: String(p.planner_name ?? ''),
               plannerSeed: String(p.planner_seed ?? 0),
             },

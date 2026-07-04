@@ -166,11 +166,12 @@ export interface Database {
         Row: {
           id: string;
           request_id: string;
+          planner_id: string;
           sender_id: string;
           body: string;
           created_at: string;
         };
-        Insert: Partial<Database['public']['Tables']['messages']['Row']> & { request_id: string; sender_id: string; body: string };
+        Insert: Partial<Database['public']['Tables']['messages']['Row']> & { request_id: string; planner_id: string; sender_id: string; body: string };
         Update: Partial<Database['public']['Tables']['messages']['Row']>;
         Relationships: [];
       };

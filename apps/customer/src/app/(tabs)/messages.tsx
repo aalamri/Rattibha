@@ -18,21 +18,28 @@ import { radii, shadows } from '@/theme/tokens';
 
 interface ConversationRow {
   request_id: string;
+  planner_id: string;
   body: string;
   created_at: string;
   sender_id: string;
-  planner_id: string;
   plannerName: string;
   plannerSeed: number;
   unread: number;
 }
 
-function lastReadKey(requestId: string) {
-  return `rtb_last_read:${requestId}`;
+// A conversation is scoped to a specific (request, planner) pair — a
+// request can have offers from multiple planners, each with their own
+// separate thread with the customer.
+function threadKey(requestId: string, plannerId: string) {
+  return `${requestId}:${plannerId}`;
 }
 
-export async function markConversationRead(requestId: string) {
-  await AsyncStorage.setItem(lastReadKey(requestId), new Date().toISOString());
+function lastReadKey(requestId: string, plannerId: string) {
+  return `rtb_last_read:${threadKey(requestId, plannerId)}`;
+}
+
+export async function markConversationRead(requestId: string, plannerId: string) {
+  await AsyncStorage.setItem(lastReadKey(requestId, plannerId), new Date().toISOString());
 }
 
 export default function MessagesScreen() {
@@ -67,7 +74,7 @@ export default function MessagesScreen() {
 
     const { data: msgs } = await supabase
       .from('messages')
-      .select('id, request_id, sender_id, body, created_at')
+      .select('id, request_id, planner_id, sender_id, body, created_at')
       .in('request_id', requestIds)
       .order('created_at', { ascending: false });
 
@@ -77,20 +84,21 @@ export default function MessagesScreen() {
       return;
     }
 
-    // Latest message per request
+    // Latest message per (request, planner) thread
     const seen = new Set<string>();
-    const latestByRequest: typeof msgs = [];
+    const latestByThread: typeof msgs = [];
     for (const m of msgs) {
-      if (!seen.has(m.request_id)) {
-        seen.add(m.request_id);
-        latestByRequest.push(m);
+      const key = threadKey(m.request_id, m.planner_id);
+      if (!seen.has(key)) {
+        seen.add(key);
+        latestByThread.push(m);
       }
     }
 
     const { data: offersData } = await supabase
       .from('offers')
       .select(`request_id, planner_id, planners(${PLANNER_SELECT})`)
-      .in('request_id', latestByRequest.map((m) => m.request_id));
+      .in('request_id', requestIds);
 
     const offers = (offersData as unknown as {
       request_id: string;
@@ -98,11 +106,10 @@ export default function MessagesScreen() {
       planners: { business_name: string; profiles: { avatar_seed: number } | null } | null;
     }[]) ?? [];
 
-    const offersByRequest: Record<string, { planner_id: string; plannerName: string; plannerSeed: number }> = {};
+    const offersByThread: Record<string, { plannerName: string; plannerSeed: number }> = {};
     for (const o of offers) {
-      if (o.planners && !offersByRequest[o.request_id]) {
-        offersByRequest[o.request_id] = {
-          planner_id: o.planner_id,
+      if (o.planners) {
+        offersByThread[threadKey(o.request_id, o.planner_id)] = {
           plannerName: o.planners.business_name,
           plannerSeed: o.planners.profiles?.avatar_seed ?? 0,
         };
@@ -112,30 +119,33 @@ export default function MessagesScreen() {
     // Load last-read timestamps from AsyncStorage for unread counts
     const lastReadMap: Record<string, Date> = {};
     await Promise.all(
-      requestIds.map(async (id) => {
-        const val = await AsyncStorage.getItem(lastReadKey(id));
-        if (val) lastReadMap[id] = new Date(val);
+      latestByThread.map(async (m) => {
+        const key = threadKey(m.request_id, m.planner_id);
+        const val = await AsyncStorage.getItem(lastReadKey(m.request_id, m.planner_id));
+        if (val) lastReadMap[key] = new Date(val);
       })
     );
 
-    const result: ConversationRow[] = latestByRequest
-      .filter((m) => offersByRequest[m.request_id])
+    const result: ConversationRow[] = latestByThread
+      .filter((m) => offersByThread[threadKey(m.request_id, m.planner_id)])
       .map((m) => {
-        const lastRead = lastReadMap[m.request_id];
+        const key = threadKey(m.request_id, m.planner_id);
+        const lastRead = lastReadMap[key];
         const unread = msgs.filter(
           (msg) =>
             msg.request_id === m.request_id &&
+            msg.planner_id === m.planner_id &&
             msg.sender_id !== session.user.id &&
             (!lastRead || new Date(msg.created_at) > lastRead)
         ).length;
         return {
           request_id: m.request_id,
+          planner_id: m.planner_id,
           body: m.body,
           created_at: m.created_at,
           sender_id: m.sender_id,
-          planner_id: offersByRequest[m.request_id].planner_id,
-          plannerName: offersByRequest[m.request_id].plannerName,
-          plannerSeed: offersByRequest[m.request_id].plannerSeed,
+          plannerName: offersByThread[key].plannerName,
+          plannerSeed: offersByThread[key].plannerSeed,
           unread,
         };
       });
@@ -218,12 +228,17 @@ export default function MessagesScreen() {
 
                 return (
                   <Pressable
-                    key={c.request_id}
+                    key={threadKey(c.request_id, c.planner_id)}
                     onPress={() => {
-                      markConversationRead(c.request_id);
+                      markConversationRead(c.request_id, c.planner_id);
                       router.push({
                         pathname: '/chat/[requestId]',
-                        params: { requestId: c.request_id, plannerName: c.plannerName, plannerSeed: String(c.plannerSeed) },
+                        params: {
+                          requestId: c.request_id,
+                          plannerId: c.planner_id,
+                          plannerName: c.plannerName,
+                          plannerSeed: String(c.plannerSeed),
+                        },
                       });
                     }}>
                     <View

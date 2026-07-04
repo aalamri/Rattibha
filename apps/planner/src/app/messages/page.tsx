@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { CalendarPlus, PaperPlaneRight, Paperclip } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
@@ -79,6 +80,7 @@ export default function MessagesPage() {
           .from('messages')
           .select('id, request_id, sender_id, body, created_at')
           .in('request_id', convos.map((c) => c.requestId))
+          .eq('planner_id', session.user.id)
           .order('created_at', { ascending: true })
           .then(({ data: msgData }) => {
             const msgRows = (msgData ?? []) as unknown as Array<{
@@ -103,7 +105,7 @@ export default function MessagesPage() {
   }, [session]);
 
   useEffect(() => {
-    if (!activeRequestId) return;
+    if (!activeRequestId || !session) return;
 
     const channel = supabase
       .channel(`messages-${activeRequestId}`)
@@ -111,7 +113,11 @@ export default function MessagesPage() {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages', filter: `request_id=eq.${activeRequestId}` },
         (payload) => {
-          const m = payload.new as { id: string; request_id: string; sender_id: string; body: string; created_at: string };
+          // The filter above only matches on request_id — Supabase's
+          // postgres_changes filter doesn't support a compound match, so
+          // drop events for other planners' threads on the same request.
+          const m = payload.new as { id: string; request_id: string; planner_id: string; sender_id: string; body: string; created_at: string };
+          if (m.planner_id !== session.user.id) return;
           setMessages((prev) => (prev.some((p) => p.id === m.id) ? prev : [...prev, {
             id: m.id,
             requestId: m.request_id,
@@ -126,7 +132,7 @@ export default function MessagesPage() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [activeRequestId]);
+  }, [activeRequestId, session]);
 
   const lastMessageByRequest = useMemo(() => {
     const map = new Map<string, ThreadMessage>();
@@ -157,9 +163,15 @@ export default function MessagesPage() {
 
     const { data, error } = await supabase
       .from('messages')
-      .insert({ request_id: activeRequestId, sender_id: session.user.id, body })
+      .insert({ request_id: activeRequestId, planner_id: session.user.id, sender_id: session.user.id, body })
       .select('id, request_id, sender_id, body, created_at')
       .single();
+
+    if (error) {
+      setDraft(body);
+      toast.error(t('toast.error'));
+      return;
+    }
 
     if (!error && data) {
       setMessages((prev) => [
