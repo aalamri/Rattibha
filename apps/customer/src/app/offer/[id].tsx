@@ -176,7 +176,16 @@ export default function OfferScreen() {
           colors={['transparent', `${theme.bgCanvas}F5`]}
           style={[row, { paddingHorizontal: 18, paddingTop: 24, paddingBottom: 12, gap: 12 }]}>
           <View style={{ flex: 1 }}>
-            <Button variant="secondary" full icon={ChatCircle} onPress={() => router.push('/(tabs)/messages')}>
+            <Button
+              variant="secondary"
+              full
+              icon={ChatCircle}
+              onPress={() =>
+                router.push({
+                  pathname: '/chat/[requestId]',
+                  params: { requestId: offer.request_id, plannerName, plannerSeed: String(seed) },
+                })
+              }>
               {t('offer.negotiate')}
             </Button>
           </View>

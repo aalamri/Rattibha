@@ -9,6 +9,13 @@
       "cwd": "apps/customer"
     },
     {
+      "name": "customer-device",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["expo", "start", "--clear"],
+      "port": 8082,
+      "cwd": "apps/customer"
+    },
+    {
       "name": "planner",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
