@@ -183,7 +183,7 @@ export default function OfferScreen() {
               onPress={() =>
                 router.push({
                   pathname: '/chat/[requestId]',
-                  params: { requestId: offer.request_id, plannerName, plannerSeed: String(seed) },
+                  params: { requestId: offer.request_id, plannerId: offer.planner_id, plannerName, plannerSeed: String(seed) },
                 })
               }>
               {t('offer.negotiate')}

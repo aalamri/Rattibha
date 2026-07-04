@@ -305,7 +305,12 @@ function OfferCard({
               onPress={() =>
                 router.push({
                   pathname: '/chat/[requestId]',
-                  params: { requestId: offer.request_id, plannerName: planner?.business_name ?? '', plannerSeed: String(seed) },
+                  params: {
+                    requestId: offer.request_id,
+                    plannerId: offer.planner_id,
+                    plannerName: planner?.business_name ?? '',
+                    plannerSeed: String(seed),
+                  },
                 })
               }>
               {t('proposals.chat')}

@@ -22,6 +22,7 @@ interface MessageRow {
   sender_id: string;
   body: string;
   created_at: string;
+  planner_id: string;
 }
 
 export default function ChatScreen() {
@@ -31,8 +32,9 @@ export default function ChatScreen() {
   const router = useRouter();
   const { session } = useAuth();
   const { show: showToast } = useToast();
-  const { requestId, plannerName, plannerSeed } = useLocalSearchParams<{
+  const { requestId, plannerId, plannerName, plannerSeed } = useLocalSearchParams<{
     requestId: string;
+    plannerId: string;
     plannerName: string;
     plannerSeed: string;
   }>();
@@ -48,33 +50,39 @@ export default function ChatScreen() {
   const listRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    if (!requestId) return;
-    markConversationRead(requestId);
+    if (!requestId || !plannerId) return;
+    markConversationRead(requestId, plannerId);
     loadMessages();
 
-    // Realtime subscription
+    // Realtime subscription — Supabase's postgres_changes filter only
+    // supports a single column match, so we subscribe by request_id and
+    // drop events for other planners' conversations on the same request
+    // client-side.
     const channel = supabase
-      .channel(`chat:${requestId}`)
+      .channel(`chat:${requestId}:${plannerId}`)
       .on('postgres_changes', {
         event: 'INSERT',
         schema: 'public',
         table: 'messages',
         filter: `request_id=eq.${requestId}`,
       }, (payload) => {
-        setMessages((prev) => [...prev, payload.new as MessageRow]);
+        const m = payload.new as MessageRow;
+        if (m.planner_id !== plannerId) return;
+        setMessages((prev) => [...prev, m]);
         setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 100);
-        markConversationRead(requestId);
+        markConversationRead(requestId, plannerId);
       })
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [requestId]);
+  }, [requestId, plannerId]);
 
   async function loadMessages() {
     const { data } = await supabase
       .from('messages')
-      .select('id, sender_id, body, created_at')
+      .select('id, sender_id, body, created_at, planner_id')
       .eq('request_id', requestId)
+      .eq('planner_id', plannerId)
       .order('created_at', { ascending: true });
     if (data) {
       setMessages(data as MessageRow[]);
@@ -84,11 +92,12 @@ export default function ChatScreen() {
 
   async function sendMessage() {
     const body = draft.trim();
-    if (!body || !session?.user.id || !requestId) return;
+    if (!body || !session?.user.id || !requestId || !plannerId) return;
     setSending(true);
     setDraft('');
     const { error } = await supabase.from('messages').insert({
       request_id: requestId,
+      planner_id: plannerId,
       sender_id: session.user.id,
       body,
     });

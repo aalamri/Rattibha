@@ -54,6 +54,7 @@ export function Sidebar() {
           .from('messages')
           .select('request_id, sender_id, created_at')
           .in('request_id', requestIds)
+          .eq('planner_id', session.user.id)
           .order('created_at', { ascending: false })
           .then(({ data: msgRows }) => {
             const rows = (msgRows ?? []) as Array<{ request_id: string; sender_id: string; created_at: string }>;
