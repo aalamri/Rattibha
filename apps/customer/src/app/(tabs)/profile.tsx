@@ -167,7 +167,7 @@ export default function ProfileScreen() {
               </Text>
             </View>
             <Pressable
-              onPress={() => {}}
+              onPress={() => router.push('/edit-profile')}
               style={{
                 width: 36,
                 height: 36,

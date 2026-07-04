@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
-import { AuthHeader, Divider, SocialRow } from '@/components/auth';
+import { AuthHeader } from '@/components/auth';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
@@ -103,10 +103,6 @@ export default function LoginScreen() {
             {t('auth.login.signIn')}
           </Button>
         </View>
-
-        <Divider label={t('auth.login.orContinueWith')} />
-
-        <SocialRow onPressApple={() => {}} onPressGoogle={() => {}} />
 
         <Text variant="small" color={theme.fg2} style={{ textAlign: 'center', marginTop: 20 }}>
           {t('auth.login.newHere')}

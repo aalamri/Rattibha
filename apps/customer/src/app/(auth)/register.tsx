@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 
-import { AuthHeader, Checkbox, Divider, SocialRow } from '@/components/auth';
+import { AuthHeader, Checkbox } from '@/components/auth';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Text } from '@/components/ui/Text';
@@ -180,10 +180,6 @@ export default function RegisterScreen() {
             {t('auth.register.createAccount')}
           </Button>
         </View>
-
-        <Divider label={t('auth.register.orSignUpWith')} />
-
-        <SocialRow onPressApple={() => {}} onPressGoogle={() => {}} />
 
         <Text variant="small" color={theme.fg2} style={{ textAlign: 'center', marginTop: 20 }}>
           {t('auth.register.alreadyHaveAccount')}
