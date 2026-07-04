@@ -57,7 +57,7 @@ export default function BookingDetailScreen() {
           id, ref,
           payments(type, amount, status),
           offers:offer_id(
-            price, package,
+            id, price, package,
             requests:request_id(category, city, guests),
             planners:planner_id(business_name, city, profiles(avatar_seed))
           )
@@ -77,7 +77,9 @@ export default function BookingDetailScreen() {
   const seed = plannerData?.profiles?.avatar_seed ?? 0;
   const pkgName = offer?.package ?? '—';
   const price = offer?.price ?? 0;
-  const confirmed = booking.stage === 'deposit_paid' || booking.stage === 'completed';
+  const depositPaid = booking.contracts?.payments?.some((p) => p.type === 'deposit' && p.status === 'paid');
+  const balancePaid = booking.contracts?.payments?.some((p) => p.type === 'balance' && p.status === 'paid');
+  const confirmed = depositPaid || booking.stage === 'completed';
   const cityLabel = plannerCity ? t(`cities.${plannerCity}`) : '';
   const dateLabel = formatDate(new Date(booking.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
   const deposit = Math.round(price * 0.2);
@@ -243,8 +245,17 @@ export default function BookingDetailScreen() {
                 </Button>
               </View>
               <View style={{ flex: 1 }}>
-                <Button icon={CreditCard} onPress={() => router.push('/(tabs)/messages')} full>
-                  {t('bookingDetail.payBalance')}
+                <Button
+                  icon={CreditCard}
+                  disabled={!depositPaid || balancePaid}
+                  onPress={() =>
+                    router.push({
+                      pathname: '/checkout',
+                      params: { offerId: offer?.id ?? '', type: 'balance' },
+                    })
+                  }
+                  full>
+                  {balancePaid ? t('bookingDetail.balancePaid') : t('bookingDetail.payBalance')}
                 </Button>
               </View>
             </View>

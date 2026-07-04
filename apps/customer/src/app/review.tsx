@@ -30,6 +30,7 @@ export default function ReviewScreen() {
   const fontFamily = isRTL ? fonts.arSans.bold : fonts.sans.bold;
   const labelFontFamily = isRTL ? fonts.arSans.bold : fonts.sans.bold;
 
+  const [submitting, setSubmitting] = useState(false);
   const [rating, setRating] = useState(5);
   const [tags, setTags] = useState<string[]>(['professional', 'onTime']);
   const [comment, setComment] = useState('');
@@ -70,25 +71,45 @@ export default function ReviewScreen() {
   const ratingLabels = t('review.ratingLabels', { returnObjects: true }) as string[];
 
   async function handleSubmit() {
+    if (submitting) return;
+    setSubmitting(true);
+
     if (bookingId && session) {
       // Advance deal to 'completed' first (required by state machine before 'reviewed')
-      const { data: booking } = await supabase
+      const { data: booking, error: bookingError } = await supabase
         .from('bookings')
         .select('contracts(offer_id)')
         .eq('id', bookingId)
         .single();
+
+      if (bookingError) {
+        setSubmitting(false);
+        showToast(t('toast.error'));
+        return;
+      }
+
       const offerId = (booking as unknown as { contracts: { offer_id: string } | null } | null)?.contracts?.offer_id;
       if (offerId) {
         await supabase.from('offers').update({ deal_status: 'completed' }).eq('id', offerId).eq('deal_status', 'deposit_paid');
       }
 
-      await supabase.from('reviews').insert({
+      const { error: reviewError } = await supabase.from('reviews').insert({
         booking_id: bookingId,
         customer_id: session.user.id,
         rating,
         comment: comment.trim() || tags.map((k) => t(`review.tags.${k}`)).join(', '),
       });
+
+      setSubmitting(false);
+
+      if (reviewError) {
+        showToast(t('toast.error'));
+        return;
+      }
+    } else {
+      setSubmitting(false);
     }
+
     showToast(t('toast.reviewSubmitted'));
     router.replace('/(tabs)/bookings');
   }
@@ -231,7 +252,7 @@ export default function ReviewScreen() {
       {/* footer */}
       <SafeAreaView edges={['bottom']} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: theme.bgCanvas, borderTopWidth: 1, borderTopColor: theme.border }}>
         <View style={{ paddingHorizontal: 18, paddingTop: 12, paddingBottom: 10 }}>
-          <Button icon={PaperPlaneTilt} onPress={handleSubmit} full>
+          <Button icon={PaperPlaneTilt} onPress={handleSubmit} loading={submitting} full>
             {t('review.submitReview')}
           </Button>
         </View>

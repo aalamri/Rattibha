@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ArrowLeft, ChatCircle, Crown, Heart, HeartStraight, MapPin, PaperPlaneTilt, SealCheck, Storefront } from 'phosphor-react-native';
+import { ArrowLeft, Crown, Heart, HeartStraight, MapPin, PaperPlaneTilt, SealCheck, Star, Storefront } from 'phosphor-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
@@ -13,11 +13,12 @@ import { Photo } from '@/components/ui/Photo';
 import { Text } from '@/components/ui/Text';
 import { type Planner } from '@/data/planners';
 import { useIsRTL } from '@/i18n/useIsRTL';
-import { type DBPlannerRow, PLANNER_SELECT, toPlanner } from '@/lib/db';
+import { type DBPlannerRow, type DBReview, PLANNER_SELECT, toPlanner } from '@/lib/db';
+import { formatDate } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
-import { radii } from '@/theme/tokens';
+import { radii, shadows } from '@/theme/tokens';
 
 export default function PlannerScreen() {
   const theme = useTheme();
@@ -29,6 +30,7 @@ export default function PlannerScreen() {
 
   const [planner, setPlanner] = useState<Planner | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState<DBReview[]>([]);
   const [fav, setFav] = useState(false);
   const [pkg, setPkg] = useState(0);
   const galleryScrollRef = useRef<ScrollView>(null);
@@ -46,6 +48,13 @@ export default function PlannerScreen() {
         setLoading(false);
       });
 
+    supabase
+      .from('reviews')
+      .select('id, rating, comment, created_at, profiles(full_name), bookings!inner(contracts!inner(offers!inner(planner_id)))')
+      .eq('bookings.contracts.offers.planner_id', id)
+      .order('created_at', { ascending: false })
+      .limit(10)
+      .then(({ data }) => { if (data) setReviews(data as unknown as DBReview[]); });
   }, [id]);
 
   // Horizontal ScrollViews always anchor scroll position 0 at their physical
@@ -197,7 +206,46 @@ export default function PlannerScreen() {
             </Text>
           </View>
           <View style={{ gap: 10, marginTop: 10 }}>
-            {/* Reviews are populated by the trigger after bookings complete */}
+            {reviews.length === 0 ? (
+              <Text variant="small" color={theme.fg3}>
+                {t('planner.noReviews')}
+              </Text>
+            ) : (
+              reviews.map((r) => (
+                <View
+                  key={r.id}
+                  style={[
+                    shadows.sm,
+                    {
+                      backgroundColor: theme.bgSurface,
+                      borderWidth: 1,
+                      borderColor: theme.border,
+                      borderRadius: radii.md,
+                      padding: 14,
+                      gap: 6,
+                    },
+                  ]}>
+                  <View style={[row, { justifyContent: 'space-between', alignItems: 'center' }]}>
+                    <Text style={{ fontFamily: isRTL ? fonts.arSans.bold : fonts.sans.bold, fontSize: 13.5, color: theme.fg1 }}>
+                      {r.profiles?.full_name ?? t('planner.anonymous')}
+                    </Text>
+                    <View style={[row, { gap: 2 }]}>
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <Star key={n} size={13} color={n <= r.rating ? theme.accent : theme.bgSunken} weight="fill" />
+                      ))}
+                    </View>
+                  </View>
+                  {r.comment ? (
+                    <Text variant="small" color={theme.fg2} style={{ lineHeight: 19 }}>
+                      {r.comment}
+                    </Text>
+                  ) : null}
+                  <Text variant="caption" color={theme.fg3}>
+                    {formatDate(new Date(r.created_at), isRTL, { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </Text>
+                </View>
+              ))
+            )}
           </View>
         </View>
       </ScrollView>
@@ -205,19 +253,6 @@ export default function PlannerScreen() {
       {/* footer */}
       <SafeAreaView edges={['bottom']} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: theme.bgCanvas, borderTopWidth: 1, borderTopColor: theme.border }}>
         <View style={[row, { paddingHorizontal: 18, paddingTop: 12, paddingBottom: 10, gap: 12, alignItems: 'center' }]}>
-          <Pressable
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: radii.md,
-              borderWidth: 1.5,
-              borderColor: theme.borderStrong,
-              backgroundColor: theme.bgSurface,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <ChatCircle size={21} color={theme.fg1} />
-          </Pressable>
           <Pressable
             onPress={() => router.push('/post-request')}
             style={[

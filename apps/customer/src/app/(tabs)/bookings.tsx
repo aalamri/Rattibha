@@ -88,7 +88,8 @@ export default function BookingsScreen() {
           const plannerName = plannerData?.business_name ?? '—';
           const seed = plannerData?.profiles?.avatar_seed ?? 0;
           const pkgName = offer?.package ?? '—';
-          const confirmed = booking.stage === 'deposit_paid' || booking.stage === 'completed';
+          const depositPaid = booking.contracts?.payments?.some((p) => p.type === 'deposit' && p.status === 'paid');
+          const confirmed = depositPaid || booking.stage === 'completed';
           const dateLabel = formatDate(new Date(booking.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
 
           return (
