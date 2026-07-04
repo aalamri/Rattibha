@@ -1,5 +1,5 @@
 {
-  "name": "customer",
+  "name": "ratibha-customer",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
