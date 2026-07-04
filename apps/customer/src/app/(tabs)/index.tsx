@@ -43,7 +43,7 @@ const CATEGORY_ICONS: Record<CategoryKey, Icon> = {
   galas: Champagne,
 };
 
-/** English tag labels used to filter PLANNERS.tags by category — listing data isn't translated. */
+/** English tag labels used to filter a planner's tags by category — listing data isn't translated. */
 const CATEGORY_LABELS: Record<CategoryKey, string[]> = {
   weddings: ['Weddings'],
   birthdays: ['Birthdays'],
