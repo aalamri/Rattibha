@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Avatar } from '@/components/ui/Avatar';
 import { Text } from '@/components/ui/Text';
+import { setAppLanguage, type AppLanguage } from '@/i18n';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useAuth } from '@/lib/AuthContext';
 import { useTheme, useThemeMode } from '@/theme/ThemeContext';
@@ -107,7 +108,12 @@ export default function ProfileScreen() {
     { icon: Heart, label: t('profile.rows.savedPlanners'), note: '—', onPress: () => {}, isRTL },
     { icon: CreditCard, label: t('profile.rows.paymentMethods'), onPress: () => {}, isRTL },
     { icon: Bell, label: t('profile.rows.notifications'), onPress: () => router.push('/notifications'), isRTL },
-    { icon: Globe, label: t('profile.rows.language') + ` · ${lang === 'ar' ? 'العربية' : 'English'}`, onPress: () => {}, isRTL },
+    {
+      icon: Globe,
+      label: t('profile.rows.language') + ` · ${lang === 'ar' ? 'العربية' : 'English'}`,
+      onPress: () => setAppLanguage((lang === 'ar' ? 'en' : 'ar') as AppLanguage),
+      isRTL,
+    },
     {
       icon: CircleHalfTilt,
       label: t('profile.rows.appearance'),

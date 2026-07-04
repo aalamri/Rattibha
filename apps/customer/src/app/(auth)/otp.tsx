@@ -25,6 +25,7 @@ export default function OTPScreen() {
   const [secs, setSecs] = useState(RESEND_SECONDS);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
   const emphasisFont = isRTL ? fonts.arSans.bold : fonts.sans.bold;
   const linkFontFamily = isRTL ? fonts.arSans.bold : fonts.sans.bold;
 
@@ -44,6 +45,19 @@ export default function OTPScreen() {
       return;
     }
     router.replace('/(auth)/reset-password');
+  };
+
+  const handleResend = async () => {
+    if (!email || resending) return;
+    setError('');
+    setResending(true);
+    const { error: resendError } = await supabase.auth.resetPasswordForEmail(email);
+    setResending(false);
+    if (resendError) {
+      setError(t('auth.errors.generic'));
+      return;
+    }
+    setSecs(RESEND_SECONDS);
   };
 
   return (
@@ -92,7 +106,7 @@ export default function OTPScreen() {
               components={{ time: <Text style={{ fontFamily: emphasisFont, color: theme.fg1 }} /> }}
             />
           ) : (
-            <Text onPress={() => setSecs(RESEND_SECONDS)} style={{ fontFamily: linkFontFamily, fontSize: 13, color: theme.brand }}>
+            <Text onPress={handleResend} style={{ fontFamily: linkFontFamily, fontSize: 13, color: resending ? theme.fg3 : theme.brand }}>
               {t('auth.otp.resendCode')}
             </Text>
           )}

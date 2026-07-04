@@ -64,29 +64,50 @@ export default function ContractScreen() {
     setSubmitting(true);
     // Upsert contract (planner may have created one already via their dashboard)
     const ref = `RTB-${Date.now()}`;
-    const { data: existingContracts } = await supabase
+    const { data: existingContracts, error: existingError } = await supabase
       .from('contracts')
       .select('id')
       .eq('offer_id', offerId)
       .limit(1);
 
+    if (existingError) {
+      setSubmitting(false);
+      showToast(t('toast.error'));
+      return;
+    }
+
     let contractId: string | null = existingContracts?.[0]?.id ?? null;
     if (!contractId) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('contracts')
         .insert({ offer_id: offerId, ref })
         .select('id')
         .single();
-      contractId = data?.id ?? null;
+      if (error || !data) {
+        setSubmitting(false);
+        showToast(t('toast.error'));
+        return;
+      }
+      contractId = data.id;
     }
 
     // Mark customer signature
-    if (contractId) {
-      await supabase.from('contracts').update({ signed_by_customer_at: new Date().toISOString() }).eq('id', contractId);
-    }
-    await supabase.from('offers').update({ status: 'accepted', deal_status: 'accepted' }).eq('id', offerId);
+    const { error: signError } = await supabase
+      .from('contracts')
+      .update({ signed_by_customer_at: new Date().toISOString() })
+      .eq('id', contractId);
+    const { error: offerError } = await supabase
+      .from('offers')
+      .update({ status: 'accepted', deal_status: 'accepted' })
+      .eq('id', offerId);
 
     setSubmitting(false);
+
+    if (signError || offerError) {
+      showToast(t('toast.error'));
+      return;
+    }
+
     showToast(t('toast.contractSigned'));
     router.push({ pathname: '/checkout', params: { offerId } });
   }

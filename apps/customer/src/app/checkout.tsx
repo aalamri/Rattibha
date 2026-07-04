@@ -25,7 +25,8 @@ export default function CheckoutScreen() {
   const isRTL = useIsRTL();
   const theme = useTheme();
   const router = useRouter();
-  const { offerId } = useLocalSearchParams<{ offerId: string }>();
+  const { offerId, type } = useLocalSearchParams<{ offerId: string; type?: string }>();
+  const isBalancePayment = type === 'balance';
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
   const fontFamily = isRTL ? fonts.arSans.bold : fonts.sans.bold;
   const [method, setMethod] = useState<MethodKey>('card');
@@ -92,55 +93,98 @@ export default function CheckoutScreen() {
     setPaying(true);
 
     // Find the contract for this offer
-    const { data: contracts } = await supabase
+    const { data: contracts, error: contractError } = await supabase
       .from('contracts')
       .select('id')
       .eq('offer_id', offerId)
       .limit(1);
     const contractId = contracts?.[0]?.id;
 
-    if (contractId) {
-      // The planner's countersign step pre-creates pending deposit/balance rows
-      // (estimated off the raw price, before this 5% customer fee). Update those
-      // rather than inserting a second deposit row with a different amount.
-      const { data: existingPayments } = await supabase
-        .from('payments')
-        .select('id, type')
-        .eq('contract_id', contractId);
-      const depositRow = existingPayments?.find((p) => p.type === 'deposit');
-      const balanceRow = existingPayments?.find((p) => p.type === 'balance');
+    if (contractError || !contractId) {
+      setPaying(false);
+      showToast(t('toast.error'));
+      return;
+    }
 
-      if (depositRow) {
-        await supabase
+    // The planner's countersign step pre-creates pending deposit/balance rows
+    // (estimated off the raw price, before this 5% customer fee). Update those
+    // rather than inserting a second deposit row with a different amount.
+    const { data: existingPayments, error: existingPaymentsError } = await supabase
+      .from('payments')
+      .select('id, type')
+      .eq('contract_id', contractId);
+
+    if (existingPaymentsError) {
+      setPaying(false);
+      showToast(t('toast.error'));
+      return;
+    }
+
+    const depositRow = existingPayments?.find((p) => p.type === 'deposit');
+    const balanceRow = existingPayments?.find((p) => p.type === 'balance');
+
+    if (isBalancePayment) {
+      const { error } = balanceRow
+        ? await supabase
+            .from('payments')
+            .update({ amount: balance, status: 'paid', paid_at: new Date().toISOString() })
+            .eq('id', balanceRow.id)
+        : await supabase.from('payments').insert({
+            contract_id: contractId,
+            type: 'balance',
+            amount: balance,
+            status: 'paid',
+            paid_at: new Date().toISOString(),
+          });
+
+      setPaying(false);
+      if (error) {
+        showToast(t('toast.error'));
+        return;
+      }
+      showToast(t('toast.balancePaid'));
+      router.back();
+      return;
+    }
+
+    const { error: depositError } = depositRow
+      ? await supabase
           .from('payments')
           .update({ amount: deposit, status: 'paid', paid_at: new Date().toISOString() })
-          .eq('id', depositRow.id);
-      } else {
-        await supabase.from('payments').insert({
+          .eq('id', depositRow.id)
+      : await supabase.from('payments').insert({
           contract_id: contractId,
           type: 'deposit',
           amount: deposit,
           status: 'paid',
           paid_at: new Date().toISOString(),
         });
-      }
 
-      if (balanceRow) {
-        await supabase.from('payments').update({ amount: balance }).eq('id', balanceRow.id);
-      } else {
-        await supabase.from('payments').insert({ contract_id: contractId, type: 'balance', amount: balance });
-      }
+    const { error: balanceError } = balanceRow
+      ? await supabase.from('payments').update({ amount: balance }).eq('id', balanceRow.id)
+      : await supabase.from('payments').insert({ contract_id: contractId, type: 'balance', amount: balance });
 
-      // Upsert booking — store total platform fee (5% customer + 5% planner = 10%)
-      await supabase.from('bookings').upsert({
-        contract_id: contractId,
-        stage: 'planning' as const,
-        event_date: eventDate ?? new Date().toISOString().split('T')[0],
-        platform_fee: Math.round(price * 0.10 * 100) / 100,
-      }, { onConflict: 'contract_id' });
+    // Upsert booking — store total platform fee (5% customer + 5% planner = 10%)
+    const { error: bookingError } = await supabase.from('bookings').upsert({
+      contract_id: contractId,
+      stage: 'planning' as const,
+      event_date: eventDate ?? new Date().toISOString().split('T')[0],
+      platform_fee: Math.round(price * 0.10 * 100) / 100,
+    }, { onConflict: 'contract_id' });
+
+    // Best-effort: close the request now that it has a paid booking, so it
+    // drops out of the open-requests list and shows up under "Booked".
+    if (offer?.request_id) {
+      await supabase.from('requests').update({ status: 'closed' }).eq('id', offer.request_id);
     }
 
     setPaying(false);
+
+    if (depositError || balanceError || bookingError) {
+      showToast(t('toast.error'));
+      return;
+    }
+
     showToast(t('toast.bookingConfirmed'));
     router.replace('/confirm');
   }
@@ -195,8 +239,17 @@ export default function CheckoutScreen() {
               <PriceLine label={t('checkout.packageTotal')} value={`${t('common.sar')} ${formatNumber(price, isRTL)}`} row={row} isRTL={isRTL} />
               <PriceLine label={t('checkout.serviceFee')} value={`+ ${t('common.sar')} ${formatNumber(serviceFee, isRTL)}`} row={row} isRTL={isRTL} muted />
               <PriceLine label={t('checkout.customerTotal')} value={`${t('common.sar')} ${formatNumber(customerTotal, isRTL)}`} row={row} isRTL={isRTL} />
-              <PriceLine label={t('checkout.depositDueToday')} value={`${t('common.sar')} ${formatNumber(deposit, isRTL)}`} row={row} isRTL={isRTL} strong />
-              <PriceLine label={t('checkout.balanceBeforeEvent')} value={`${t('common.sar')} ${formatNumber(balance, isRTL)}`} row={row} isRTL={isRTL} muted />
+              {isBalancePayment ? (
+                <>
+                  <PriceLine label={t('checkout.depositPaid')} value={`${t('common.sar')} ${formatNumber(deposit, isRTL)}`} row={row} isRTL={isRTL} muted />
+                  <PriceLine label={t('checkout.balanceDueToday')} value={`${t('common.sar')} ${formatNumber(balance, isRTL)}`} row={row} isRTL={isRTL} strong />
+                </>
+              ) : (
+                <>
+                  <PriceLine label={t('checkout.depositDueToday')} value={`${t('common.sar')} ${formatNumber(deposit, isRTL)}`} row={row} isRTL={isRTL} strong />
+                  <PriceLine label={t('checkout.balanceBeforeEvent')} value={`${t('common.sar')} ${formatNumber(balance, isRTL)}`} row={row} isRTL={isRTL} muted />
+                </>
+              )}
             </View>
 
             {awaitingCountersign ? (
@@ -313,7 +366,7 @@ export default function CheckoutScreen() {
               <ActivityIndicator color={theme.brand} />
             ) : (
               <Button icon={Lock} onPress={handlePay} full>
-                {t('checkout.payNow', { sar: t('common.sar'), amount: formatNumber(deposit, isRTL) })}
+                {t('checkout.payNow', { sar: t('common.sar'), amount: formatNumber(isBalancePayment ? balance : deposit, isRTL) })}
               </Button>
             )}
           </LinearGradient>

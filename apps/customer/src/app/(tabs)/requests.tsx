@@ -76,7 +76,7 @@ export default function RequestsScreen() {
     const fetchRequests = () =>
       supabase
         .from('requests')
-        .select('id, customer_id, category, city, event_date, guests, budget, note, status, created_at, offers(id, status)')
+        .select('id, customer_id, category, city, event_date, guests, budget, note, status, created_at, offers(id, status, contracts(bookings(id)))')
         .eq('customer_id', session.user.id)
         .order('created_at', { ascending: false })
         .then(({ data }) => { setRequests((data as unknown as DBRequestRow[]) ?? []); setLoading(false); });
@@ -180,12 +180,19 @@ export default function RequestsScreen() {
             const tint = categoryColors[request.category as CategoryKey] ?? categoryColors.weddings;
             const cityLabel = t(`cities.${request.city}`);
             const dateLabel = formatDate(new Date(request.event_date), isRTL, { day: 'numeric', month: 'short', year: 'numeric' });
-            const offerList = request.offers as unknown as { id: string; status: string }[];
+            const offerList = request.offers;
             const offerCount = offerList?.length ?? 0;
             const newOffers = offerList?.filter((o) => o.status === 'pending').length ?? 0;
+            const bookingId = offerList?.flatMap((o) => o.contracts ?? []).flatMap((c) => c.bookings ?? [])[0]?.id;
 
             return (
-              <Pressable key={request.id} onPress={() => router.push({ pathname: '/proposals', params: { id: request.id } })}>
+              <Pressable
+                key={request.id}
+                onPress={() =>
+                  booked && bookingId
+                    ? router.push({ pathname: '/booking/[id]', params: { id: bookingId } })
+                    : router.push({ pathname: '/proposals', params: { id: request.id } })
+                }>
                 <View
                   style={[
                     shadows.sm,

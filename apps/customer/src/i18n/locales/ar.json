@@ -163,7 +163,9 @@
     "packages": "الباقات",
     "reviews": "التقييمات",
     "allReviews": "الكل {{count, number}}",
-    "requestToBook": "طلب حجز"
+    "requestToBook": "طلب حجز",
+    "noReviews": "لا توجد تقييمات بعد.",
+    "anonymous": "مستخدم مجهول"
   },
   "postRequest": {
     "title": "انشر طلباً",
@@ -260,6 +262,8 @@
     "customerTotal": "إجمالي ما تدفع",
     "depositDueToday": "العربون (٢٠٪) مستحق اليوم",
     "balanceBeforeEvent": "المتبقّي قبل المناسبة",
+    "depositPaid": "العربون (٢٠٪) — مدفوع",
+    "balanceDueToday": "المتبقّي مستحق اليوم",
     "paymentMethod": "طريقة الدفع",
     "methods": {
       "card": "بطاقة",
@@ -357,7 +361,8 @@
     "depositDue": "العربون مستحق",
     "dueBeforeEvent": "مستحق قبل المناسبة",
     "review": "تقييم",
-    "payBalance": "دفع المتبقّي"
+    "payBalance": "دفع المتبقّي",
+    "balancePaid": "تم دفع المتبقّي"
   },
   "myRequests": {
     "title": "طلباتي",
@@ -425,6 +430,14 @@
     "language": "اللغة"
   },
   "notifications": {
+    "types": {
+      "offerReceived": "أرسل لك {{planner}} عرض سعر",
+      "offerAccepted": "وافق {{planner}} على عرضك — يمكنك الآن دفع العربون",
+      "bookingConfirmed": "تم تأكيد حجزك مع {{planner}}",
+      "message": "رسالة جديدة من {{planner}}",
+      "generic": "تحديث جديد",
+      "aPlanner": "أحد المنظّمين"
+    },
     "title": "الإشعارات",
     "empty": "لا توجد إشعارات بعد",
     "emptyNote": "ستظهر هنا العروض الجديدة وتحديثات الحجز.",
@@ -435,6 +448,7 @@
     "contractSigned": "تم توقيع الاتفاقية — تابع إلى الدفع.",
     "bookingConfirmed": "تم تأكيد الحجز! وديعتك محفوظة.",
     "reviewSubmitted": "تم إرسال التقييم. شكرًا لك!",
+    "balancePaid": "تم دفع المتبقّي! تم تسوية حجزك بالكامل.",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
   },
   "search": {

@@ -74,7 +74,7 @@ export interface DBRequestRow {
   note: string | null;
   status: string;
   created_at: string;
-  offers: { id: string; status: string }[];
+  offers: { id: string; status: string; contracts: { bookings: { id: string }[] }[] }[];
 }
 
 export interface DBBookingRow {
@@ -87,6 +87,7 @@ export interface DBBookingRow {
     ref: string;
     payments: { type: string; amount: number; status: string }[];
     offers: {
+      id: string;
       price: number;
       package: string;
       requests: {

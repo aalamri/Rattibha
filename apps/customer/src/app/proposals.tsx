@@ -298,7 +298,16 @@ function OfferCard({
             <Text style={{ fontFamily, fontSize: 18, fontWeight: '800', color: theme.fg1 }}>{t('common.sar')} {formatNumber(offer.price, isRTL)}</Text>
           </View>
           <View style={[row, { gap: 8, flexShrink: 0 }]}>
-            <Button variant="secondary" size="sm" icon={ChatCircle} onPress={() => router.push('/(tabs)/messages')}>
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={ChatCircle}
+              onPress={() =>
+                router.push({
+                  pathname: '/chat/[requestId]',
+                  params: { requestId: offer.request_id, plannerName: planner?.business_name ?? '', plannerSeed: String(seed) },
+                })
+              }>
               {t('proposals.chat')}
             </Button>
             <Button size="sm" icon={ArrowRight} onPress={() => router.push({ pathname: '/offer/[id]', params: { id: offer.id } })}>

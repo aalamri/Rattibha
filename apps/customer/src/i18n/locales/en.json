@@ -163,7 +163,9 @@
     "packages": "Packages",
     "reviews": "Reviews",
     "allReviews": "All {{count, number}}",
-    "requestToBook": "Request to book"
+    "requestToBook": "Request to book",
+    "noReviews": "No reviews yet.",
+    "anonymous": "Anonymous"
   },
   "postRequest": {
     "title": "Post a request",
@@ -260,6 +262,8 @@
     "customerTotal": "Your total",
     "depositDueToday": "Deposit (20%) due today",
     "balanceBeforeEvent": "Balance before event",
+    "depositPaid": "Deposit (20%) — paid",
+    "balanceDueToday": "Balance due today",
     "paymentMethod": "Payment method",
     "methods": {
       "card": "Card",
@@ -357,7 +361,8 @@
     "depositDue": "Deposit due",
     "dueBeforeEvent": "Due before event",
     "review": "Review",
-    "payBalance": "Pay balance"
+    "payBalance": "Pay balance",
+    "balancePaid": "Balance paid"
   },
   "myRequests": {
     "title": "My requests",
@@ -428,13 +433,22 @@
     "title": "Notifications",
     "empty": "No notifications yet",
     "emptyNote": "New offers and booking updates will appear here.",
-    "markRead": "Mark all read"
+    "markRead": "Mark all read",
+    "types": {
+      "offerReceived": "{{planner}} sent you a quote",
+      "offerAccepted": "{{planner}} accepted your offer — you can now pay the deposit",
+      "bookingConfirmed": "Your booking with {{planner}} is confirmed",
+      "message": "New message from {{planner}}",
+      "generic": "New update",
+      "aPlanner": "A planner"
+    }
   },
   "toast": {
     "requestPosted": "Request posted! Planners will be in touch soon.",
     "contractSigned": "Agreement signed — proceed to checkout.",
     "bookingConfirmed": "Booking confirmed! Your deposit is secured.",
     "reviewSubmitted": "Review submitted. Thank you!",
+    "balancePaid": "Balance paid! Your booking is fully settled.",
     "error": "Something went wrong. Please try again."
   },
   "search": {
