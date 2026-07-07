@@ -12,6 +12,7 @@ import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Text } from '@/components/ui/Text';
+import { useToast } from '@/components/ui/Toast';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { type DBOfferRow, PLANNER_SELECT } from '@/lib/db';
 import { formatNumber } from '@/lib/format';
@@ -29,6 +30,7 @@ export default function OfferScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
   const displayFamily = isRTL ? fonts.arDisplay.semibold : fonts.display.semibold;
+  const { show: showToast } = useToast();
 
   const [offer, setOffer] = useState<DBOfferRow | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,11 +42,16 @@ export default function OfferScreen() {
       .select(`id, request_id, planner_id, package, price, message, status, deal_status, created_at, planners(${PLANNER_SELECT})`)
       .eq('id', id)
       .single()
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (data) setOffer(data as unknown as DBOfferRow);
+        // A failed fetch (network/DB error) falls through to the same
+        // "not found" placeholder below — that's fine for a truly
+        // missing offer, but silently doing the same for a transient
+        // failure hides the real cause, so surface it distinctly.
+        if (error) showToast(t('toast.error'));
         setLoading(false);
       });
-  }, [id]);
+  }, [id, t, showToast]);
 
   if (loading) return null;
   if (!offer) return <PlaceholderScreen icon={FileText} title={t('placeholders.offer')} />;

@@ -66,12 +66,14 @@ export default function RegisterScreen() {
         // configured to require more than 6, or additional complexity).
         setError(t('auth.errors.weakPassword'));
       } else {
-        // Surface the real reason rather than defaulting to "weak
-        // password" for errors that have nothing to do with the password
-        // (rate limiting, disabled email signups, network issues, etc.) —
-        // that mismatch was the bug: every non-"already registered" error
-        // was shown as a password complaint regardless of the actual cause.
-        setError(signUpError.message);
+        // Surface a translated generic error rather than defaulting to
+        // "weak password" for errors that have nothing to do with the
+        // password (rate limiting, disabled email signups, network
+        // issues, etc.) — that mismatch was the original bug. Supabase's
+        // own message is English-only and would break the bilingual
+        // requirement, so fall back to a translated generic string
+        // instead of surfacing it directly.
+        setError(t('auth.errors.generic'));
       }
       return;
     }

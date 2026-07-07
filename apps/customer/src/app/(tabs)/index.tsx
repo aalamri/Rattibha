@@ -26,6 +26,7 @@ import { LanguageToggle } from '@/components/LanguageToggle';
 import { Photo } from '@/components/ui/Photo';
 import { Skeleton, SkeletonCard, SkeletonRow } from '@/components/ui/Skeleton';
 import { Text } from '@/components/ui/Text';
+import { useToast } from '@/components/ui/Toast';
 import { CATEGORY_KEYS, type CategoryKey, type CityKey, type Planner } from '@/data/planners';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { PLANNER_SELECT, type DBPlannerRow, toPlanner } from '@/lib/db';
@@ -57,6 +58,7 @@ export default function DiscoverScreen() {
   const { t } = useTranslation();
   const isRTL = useIsRTL();
   const router = useRouter();
+  const { show: showToast } = useToast();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
   const categoriesScrollRef = useRef<ScrollView>(null);
   const featuredScrollRef = useRef<ScrollView>(null);
@@ -88,7 +90,17 @@ export default function DiscoverScreen() {
       .from('planners')
       .select(PLANNER_SELECT)
       .range(from, to)
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) {
+          // Leave existing planners/hasMore untouched on failure — an empty
+          // `data` here previously read as "no more results" and silently
+          // capped pagination (or, on the very first page, made the whole
+          // marketplace look empty) instead of surfacing the real failure.
+          showToast(t('toast.error'));
+          setLoading(false);
+          setLoadingMore(false);
+          return;
+        }
         const rows = ((data as unknown as DBPlannerRow[]) ?? []).map(toPlanner);
         setPlanners((prev) => (append ? [...prev, ...rows] : rows));
         setHasMore(rows.length === PAGE_SIZE);
