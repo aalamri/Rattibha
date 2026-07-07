@@ -11,6 +11,7 @@ import { ServiceCard } from '@/components/planner/ServiceCard';
 import { Badge, Stars } from '@/components/ui/Badge';
 import { Photo } from '@/components/ui/Photo';
 import { Text } from '@/components/ui/Text';
+import { useToast } from '@/components/ui/Toast';
 import { type Planner } from '@/data/planners';
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { type DBPlannerRow, type DBReview, PLANNER_SELECT, toPlanner } from '@/lib/db';
@@ -27,6 +28,7 @@ export default function PlannerScreen() {
   const router = useRouter();
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { show: showToast } = useToast();
 
   const [planner, setPlanner] = useState<Planner | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,8 +45,12 @@ export default function PlannerScreen() {
       .select(PLANNER_SELECT)
       .eq('user_id', id)
       .single()
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (data) setPlanner(toPlanner(data as unknown as DBPlannerRow));
+        // A failed fetch falls through to the same "not found" placeholder
+        // as a genuinely missing planner — surface the distinction so a
+        // transient failure doesn't look like a permanently gone profile.
+        if (error) showToast(t('toast.error'));
         setLoading(false);
       });
 
@@ -54,8 +60,11 @@ export default function PlannerScreen() {
       .eq('bookings.contracts.offers.planner_id', id)
       .order('created_at', { ascending: false })
       .limit(10)
-      .then(({ data }) => { if (data) setReviews(data as unknown as DBReview[]); });
-  }, [id]);
+      .then(({ data, error }) => {
+        if (data) setReviews(data as unknown as DBReview[]);
+        if (error) console.warn('[planner] failed to load reviews:', error);
+      });
+  }, [id, t, showToast]);
 
   // Horizontal ScrollViews always anchor scroll position 0 at their physical
   // left edge — row-reverse only mirrors item order, so in RTL the first
