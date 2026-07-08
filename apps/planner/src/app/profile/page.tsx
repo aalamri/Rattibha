@@ -109,24 +109,39 @@ function SeedSwatchPicker({ value, onChange, label }: { value: number; onChange:
 function NotificationsSection() {
   const { t } = useTranslation();
   const { session, profile } = useAuth();
+  const subscriptionFromProfile = !!profile?.web_push_subscription;
+  const [trackedSubscription, setTrackedSubscription] = useState(subscriptionFromProfile);
+  const [enabled, setEnabled] = useState(subscriptionFromProfile);
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<'denied' | 'unsupported' | null>(null);
 
-  const enabled = !!profile?.web_push_subscription;
+  // Adjust local state during render (instead of an effect) whenever the
+  // profile's subscription flag changes underneath us.
+  if (subscriptionFromProfile !== trackedSubscription) {
+    setTrackedSubscription(subscriptionFromProfile);
+    setEnabled(subscriptionFromProfile);
+  }
 
   async function handleToggle() {
     if (!session) return;
     setWorking(true);
     setError(null);
 
-    if (enabled) {
-      await unsubscribeFromWebPush(session.user.id);
-    } else {
-      const result = await subscribeToWebPush(session.user.id);
-      if (result !== 'subscribed') setError(result);
+    try {
+      if (enabled) {
+        await unsubscribeFromWebPush(session.user.id);
+        setEnabled(false);
+      } else {
+        const result = await subscribeToWebPush(session.user.id);
+        if (result === 'subscribed') {
+          setEnabled(true);
+        } else {
+          setError(result);
+        }
+      }
+    } finally {
+      setWorking(false);
     }
-
-    setWorking(false);
   }
 
   return (
