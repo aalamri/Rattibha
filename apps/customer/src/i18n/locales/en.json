@@ -8,6 +8,7 @@
     "back": "Go back",
     "notifications": "Notifications",
     "toggleLanguage": "Switch language",
+    "togglePasswordVisibility": "Show or hide password",
     "comingSoon": "Coming soon",
     "hoursAgo": "{{count, number}}h ago",
     "daysAgo": "{{count, number}}d ago",

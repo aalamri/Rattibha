@@ -8,6 +8,7 @@
     "back": "رجوع",
     "notifications": "الإشعارات",
     "toggleLanguage": "تغيير اللغة",
+    "togglePasswordVisibility": "إظهار أو إخفاء كلمة المرور",
     "comingSoon": "قريبًا",
     "hoursAgo": "منذ {{count, number}} س",
     "daysAgo": "منذ {{count, number}} يوم",

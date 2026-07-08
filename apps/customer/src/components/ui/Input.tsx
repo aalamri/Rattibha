@@ -1,6 +1,7 @@
 import type { Icon } from 'phosphor-react-native';
 import { useState } from 'react';
 import { Pressable, TextInput, View, type TextInputProps } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { useIsRTL } from '@/i18n/useIsRTL';
 import { useTheme } from '@/theme/ThemeContext';
@@ -32,6 +33,7 @@ export function Input({
 }: InputProps) {
   const theme = useTheme();
   const isRTL = useIsRTL();
+  const { t } = useTranslation();
   const [focused, setFocused] = useState(false);
   const fontFamily = isRTL ? fonts.arSans.regular : fonts.sans.regular;
   const labelFontFamily = isRTL ? fonts.arSans.bold : fonts.sans.bold;
@@ -74,7 +76,7 @@ export function Input({
           style={[{ flex: 1, fontFamily, fontSize: 14, color: theme.fg1, padding: 0 }, style]}
         />
         {TrailingIcon && (
-          <Pressable onPress={onTrailingIconPress} hitSlop={8} accessibilityRole="button" accessibilityLabel="Toggle">
+          <Pressable onPress={onTrailingIconPress} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('common.togglePasswordVisibility')}>
             <TrailingIcon size={18} color={theme.fg3} />
           </Pressable>
         )}
