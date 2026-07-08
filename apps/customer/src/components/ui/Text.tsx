@@ -28,7 +28,8 @@ function dropLineHeightOverride(style: TextProps['style'], isRTL: boolean) {
 
 export function Text({ variant = 'body', color, style, ...rest }: AppTextProps) {
   const isRTL = useIsRTL();
-  const base = getTextStyle(variant, isRTL);
+  const theme = useTheme();
+  const base = getTextStyle(variant, isRTL, theme);
   return <RNText {...rest} style={[base, color ? { color } : null, dropLineHeightOverride(style, isRTL)]} />;
 }
 
@@ -39,7 +40,7 @@ export function Text({ variant = 'body', color, style, ...rest }: AppTextProps) 
 export function AccentText({ variant = 'display', style, ...rest }: AppTextProps) {
   const isRTL = useIsRTL();
   const theme = useTheme();
-  const base = getTextStyle(variant, isRTL);
+  const base = getTextStyle(variant, isRTL, theme);
   return (
     <RNText
       {...rest}

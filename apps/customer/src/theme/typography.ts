@@ -4,7 +4,7 @@
  * Tajawal has no semibold, so semibold falls back to medium.
  */
 import type { TextStyle } from 'react-native';
-import { theme } from './colors';
+import type { Theme } from './colors';
 import { fonts } from './fonts';
 
 export type TypographyVariant =
@@ -30,7 +30,7 @@ interface VariantSpec {
   arLetterSpacingEm?: number;
   family: FamilyGroup;
   weight: Weight;
-  color: keyof typeof theme;
+  color: keyof Theme;
   uppercase?: boolean;
 }
 
@@ -62,7 +62,7 @@ export function getDisplayItalicFont(weight: 'medium' | 'semibold' = 'semibold',
   return weight === 'medium' ? fonts.display.mediumItalic : fonts.display.semiboldItalic;
 }
 
-export function getTextStyle(variant: TypographyVariant, isArabic: boolean): TextStyle {
+export function getTextStyle(variant: TypographyVariant, isArabic: boolean, theme: Theme): TextStyle {
   const spec = VARIANTS[variant];
   const fontSize = (isArabic && spec.arSize) || spec.size;
   const letterSpacingEm = (isArabic && spec.arLetterSpacingEm !== undefined)
