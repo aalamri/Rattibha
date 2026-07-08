@@ -3,11 +3,26 @@ import webpush from 'npm:web-push@3';
 
 const EXPO_PUSH_URL = 'https://exp.host/--/api/v2/push/send';
 
-webpush.setVapidDetails(
-  Deno.env.get('VAPID_SUBJECT') ?? 'mailto:support@ratibha.com',
-  Deno.env.get('VAPID_PUBLIC_KEY')!,
-  Deno.env.get('VAPID_PRIVATE_KEY')!,
-);
+// VAPID config is optional at the module level: Web Push is a secondary
+// delivery path layered on top of Expo, and its secrets are deployed on a
+// separate schedule. If they're absent or malformed, Web Push sends are
+// skipped at request time (see `vapidConfigured` below) — the module must
+// still load and Expo delivery must keep working regardless.
+let vapidConfigured = false;
+const vapidPublicKey = Deno.env.get('VAPID_PUBLIC_KEY');
+const vapidPrivateKey = Deno.env.get('VAPID_PRIVATE_KEY');
+if (vapidPublicKey && vapidPrivateKey) {
+  try {
+    webpush.setVapidDetails(
+      Deno.env.get('VAPID_SUBJECT') ?? 'mailto:support@ratibha.com',
+      vapidPublicKey,
+      vapidPrivateKey,
+    );
+    vapidConfigured = true;
+  } catch (_err) {
+    vapidConfigured = false;
+  }
+}
 
 interface PushPayload {
   event: 'new_offer' | 'new_message' | 'countersigned' | 'booking_confirmed';
@@ -43,7 +58,7 @@ Deno.serve(async (req: Request) => {
       results.expo = await res.json();
     }
 
-    if (web.length > 0) {
+    if (web.length > 0 && vapidConfigured) {
       results.web = await Promise.allSettled(
         web.map((target) => webpush.sendNotification(target.subscription, JSON.stringify(target.payload))),
       );
