@@ -137,7 +137,12 @@ export function toPlanner(row: DBPlannerRow): Planner {
     type: typeLabel,
     rating: row.rating,
     events: row.reviews_count,
-    premium: row.tier.toLowerCase() !== 'essentials',
+    // planners.tier is a free-text column (default 'standard', set to
+    // 'Premium' manually to feature a planner) — not the same as the
+    // 'essentials'/'signature'/'luxury' package_tier enum used for offer
+    // packages. Comparing against 'essentials' here always evaluated true
+    // (tier is never that value), so every planner was marked premium.
+    premium: row.tier.toLowerCase() === 'premium',
     verified: row.verified,
     from: minPrice,
     seed,
