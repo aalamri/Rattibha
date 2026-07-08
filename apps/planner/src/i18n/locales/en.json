@@ -316,6 +316,13 @@
     "save": "Save changes",
     "cancel": "Cancel",
     "saved": "Changes saved",
+    "notifications": {
+      "title": "Notifications",
+      "toggleLabel": "Message notifications",
+      "toggleDescription": "Get notified in your browser when a customer sends you a message.",
+      "permissionDenied": "Notifications are blocked in your browser settings. Enable them for this site to turn this on.",
+      "unsupported": "Your browser doesn't support push notifications."
+    },
     "fields": {
       "businessName": "Business name",
       "bio": "Bio",
