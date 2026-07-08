@@ -8,6 +8,10 @@ import { I18nextProvider } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import * as Notifications from 'expo-notifications';
+
+import { notificationRoute } from '@/lib/notificationRoute';
+
 import i18n, { initI18n } from '@/i18n';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { ToastProvider } from '@/components/ui/Toast';
@@ -103,6 +107,30 @@ function RouteGuard({ children }: { children: ReactNode }) {
 function AppShell({ children }: { children: ReactNode }) {
   const theme = useTheme();
   const { resolvedScheme } = useThemeMode();
+  const router = useRouter();
+
+  useEffect(() => {
+    function handleResponse(response: Notifications.NotificationResponse) {
+      const data = response.notification.request.content.data as
+        | { type?: string; payload?: Record<string, unknown> }
+        | undefined;
+      if (!data?.type) return;
+      const route = notificationRoute({ type: data.type, payload: data.payload ?? {} });
+      if (route) router.push(route as never);
+    }
+
+    // Cold start: app was fully closed and launched by tapping a notification.
+    // Note: as of expo-notifications SDK 56, getLastNotificationResponse() is
+    // synchronous (the Promise-returning getLastNotificationResponseAsync()
+    // is deprecated) — see apps/customer/AGENTS.md re: Expo API drift.
+    const lastResponse = Notifications.getLastNotificationResponse();
+    if (lastResponse) handleResponse(lastResponse);
+
+    // Warm/background: app was already running (foreground or backgrounded).
+    const subscription = Notifications.addNotificationResponseReceivedListener(handleResponse);
+    return () => subscription.remove();
+  }, [router]);
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.bgCanvas }}>
       <StatusBar style={resolvedScheme === 'dark' ? 'light' : 'dark'} />
