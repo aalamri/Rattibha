@@ -32,10 +32,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setSession(data.session);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // getSession() is documented to resolve with { data, error } rather
+        // than reject, but a lower-level failure can still throw — without
+        // this, `loading` would never flip to false and DashboardShell would
+        // hold the app on the loading screen forever.
+        console.warn('[auth] getSession() failed:', error);
+        setLoading(false);
+      });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
@@ -58,17 +68,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .select('*')
       .eq('id', userId)
       .single()
-      .then(async ({ data }) => {
+      .then(async ({ data, error }) => {
         if (data) {
           setProfile(data);
           return;
         }
-        // First authenticated load with no profile row — onboarding
-        // couldn't create it at signup time because email confirmation was
-        // required (no session yet). Create it now from the metadata
-        // captured at signUp().
+        // PGRST116 = "0 rows" from .single() — the only case where creating
+        // a profile is actually correct (first authenticated load after an
+        // email-confirmation signup, where onboarding couldn't insert one
+        // yet). Any other error means the row's existence is unknown, not
+        // confirmed absent — inserting anyway would hit the profiles.id
+        // primary key and fail, silently leaving profile stuck at null.
+        if (error && error.code !== 'PGRST116') {
+          console.warn('[auth] profile fetch failed:', error);
+          return;
+        }
         const meta = session.user.user_metadata as Record<string, unknown> | undefined;
-        const { data: created } = await supabase
+        const { data: created, error: createError } = await supabase
           .from('profiles')
           .insert({
             id: userId,
@@ -79,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           })
           .select('*')
           .single();
+        if (createError) console.warn('[auth] profile creation failed:', createError);
         setProfile(created ?? null);
       });
 
@@ -87,9 +104,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .select('*')
       .eq('user_id', userId)
       .single()
-      .then(async ({ data }) => {
+      .then(async ({ data, error }) => {
         if (data) {
           setPlanner(data);
+          return;
+        }
+        if (error && error.code !== 'PGRST116') {
+          console.warn('[auth] planner fetch failed:', error);
           return;
         }
         const meta = session.user.user_metadata as Record<string, unknown> | undefined;
@@ -98,7 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setPlanner(null);
           return;
         }
-        const { data: created } = await supabase
+        const { data: created, error: createError } = await supabase
           .from('planners')
           .insert({
             user_id: userId,
@@ -114,6 +135,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           })
           .select('*')
           .single();
+        if (createError) console.warn('[auth] planner creation failed:', createError);
         setPlanner(created ?? null);
       });
   }, [session]);
