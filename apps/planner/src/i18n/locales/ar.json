@@ -3,6 +3,7 @@
     "appName": "رتّبها",
     "sar": "ر.س",
     "pro": "احترافي",
+    "loading": "جارٍ التحميل…",
     "searchPlaceholder": "بحث…",
     "guests": "ضيف",
     "offers": "عروض",
@@ -259,6 +260,7 @@
     "payment": "الدفع",
     "totalFee": "الإجمالي",
     "depositOnSigning": "العربون (عند التوقيع)",
+    "platformFee": "رسوم المنصة (٥٪)",
     "earningsAfterFee": "صافي ربحك (بعد الرسوم)",
     "oneStepAway": "خطوة واحدة تفصلك",
     "countersignCta": "وقّع لتأكيد الحجز",
@@ -276,7 +278,8 @@
       "planning": "التخطيط",
       "design": "التصميم",
       "awaitingDeposit": "في انتظار العربون",
-      "finalWalkthrough": "المراجعة النهائية"
+      "finalWalkthrough": "المراجعة النهائية",
+      "completed": "مكتمل"
     },
     "value": "القيمة",
     "paid": "المدفوع",

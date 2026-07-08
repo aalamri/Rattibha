@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CaretLeft, CaretRight, Plus, Prohibit, X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -140,15 +141,21 @@ export default function CalendarPage() {
       .from('planner_blocked_dates')
       .insert({ planner_id: session.user.id, date: modalDate, label: modalLabel.trim() || null });
     setSaving(false);
-    if (!error) {
-      setModalOpen(false);
-      setModalLabel('');
-      loadBlockedDates();
+    if (error) {
+      toast.error(t('toast.error'));
+      return;
     }
+    setModalOpen(false);
+    setModalLabel('');
+    loadBlockedDates();
   }
 
   async function handleRemoveBlockedDate(id: string) {
-    await supabase.from('planner_blocked_dates').delete().eq('id', id);
+    const { error } = await supabase.from('planner_blocked_dates').delete().eq('id', id);
+    if (error) {
+      toast.error(t('toast.error'));
+      return;
+    }
     loadBlockedDates();
   }
 

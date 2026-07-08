@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle, CrownSimple, MapPin, NotePencil, Plus, Star, Storefront as StorefrontIcon, Trash, X } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Avatar, GRADIENTS } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
@@ -231,7 +232,7 @@ export default function ProfilePage() {
     if (!session || !planner) return;
     setSaving(true);
 
-    await supabase
+    const { error: plannerError } = await supabase
       .from('planners')
       .update({
         business_name: businessName.trim() || planner.business_name,
@@ -243,8 +244,19 @@ export default function ProfilePage() {
       })
       .eq('user_id', session.user.id);
 
+    if (plannerError) {
+      setSaving(false);
+      toast.error(t('toast.error'));
+      return;
+    }
+
     if (deletedServiceIds.length > 0) {
-      await supabase.from('planner_services').delete().in('id', deletedServiceIds);
+      const { error } = await supabase.from('planner_services').delete().in('id', deletedServiceIds);
+      if (error) {
+        setSaving(false);
+        toast.error(t('toast.error'));
+        return;
+      }
     }
 
     for (const s of editableServices) {
@@ -257,10 +269,13 @@ export default function ProfilePage() {
         image_url: s.imageUrl,
       };
       if (!s.name.trim()) continue;
-      if (s.id) {
-        await supabase.from('planner_services').update(payload).eq('id', s.id);
-      } else {
-        await supabase.from('planner_services').insert(payload);
+      const { error } = s.id
+        ? await supabase.from('planner_services').update(payload).eq('id', s.id)
+        : await supabase.from('planner_services').insert(payload);
+      if (error) {
+        setSaving(false);
+        toast.error(t('toast.error'));
+        return;
       }
     }
 
@@ -295,7 +310,7 @@ export default function ProfilePage() {
                 <Avatar
                   seed={profile.avatar_seed}
                   size={88}
-                  initials={planner.business_name.charAt(0)}
+                  initials={(businessName || planner.business_name).charAt(0)}
                   className="border-4 border-bg-surface !rounded-[22px] text-3xl"
                 />
                 <div className="flex-1 pb-1.5">
@@ -359,11 +374,17 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="mt-4.5">
-                  <h2 className="font-display text-2xl font-semibold text-fg1">{planner.business_name}</h2>
+                  {/* Editable fields read from local form state rather than
+                      `planner` directly — AuthContext's copy doesn't refresh
+                      after a save, so reading it here would show stale data
+                      until the next full reload. Form state is already kept
+                      in sync with `planner` on load/cancel, and now also
+                      holds the just-saved values after a successful save. */}
+                  <h2 className="font-display text-2xl font-semibold text-fg1">{businessName}</h2>
                   <div className="mt-1 flex items-center gap-3 text-[13px] text-fg3">
                     <span className="inline-flex items-center gap-1">
                       <MapPin size={15} />
-                      {t(`cities.${planner.city}`)}
+                      {t(`cities.${city}`)}
                     </span>
                     <span className="inline-flex items-center gap-1">
                       <Star size={15} weight="fill" className="text-gold-500" />
@@ -379,14 +400,14 @@ export default function ProfilePage() {
                     ))}
                   </div>
 
-                  {planner.bio && (
-                    <p className="mt-3.5 text-[13.5px] leading-relaxed text-fg2">{planner.bio}</p>
+                  {bio && (
+                    <p className="mt-3.5 text-[13.5px] leading-relaxed text-fg2">{bio}</p>
                   )}
 
-                  {(planner.instagram || planner.website) && (
+                  {(instagram || website) && (
                     <div className="mt-3 flex gap-4 text-[12.5px] text-fg3">
-                      {planner.instagram && <span>{planner.instagram}</span>}
-                      {planner.website && <span>{planner.website}</span>}
+                      {instagram && <span>{instagram}</span>}
+                      {website && <span>{website}</span>}
                     </div>
                   )}
                 </div>
@@ -566,9 +587,9 @@ export default function ProfilePage() {
                   {t('profile.portfolioManager.count', { current: portfolioUrls.length, max: MAX_PORTFOLIO_PHOTOS })}
                 </div>
               </>
-            ) : planner.portfolio_urls.length > 0 ? (
+            ) : portfolioUrls.length > 0 ? (
               <div className="grid grid-cols-3 gap-2">
-                {planner.portfolio_urls.map((url) => (
+                {portfolioUrls.map((url) => (
                   <div key={url} className="aspect-square overflow-hidden rounded-sm">
                     {/* eslint-disable-next-line @next/next/no-img-element -- small gallery thumbnail, not worth next/image's overhead here */}
                     <img src={url} alt="" className="h-full w-full object-cover" />

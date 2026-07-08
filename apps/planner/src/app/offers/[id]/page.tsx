@@ -174,10 +174,18 @@ export default function DealPage() {
 
     if (existing) {
       contractId = existing.id;
-      await supabase.from('contracts').update({ signed_by_planner_at: new Date().toISOString() }).eq('id', existing.id);
+      const { error } = await supabase
+        .from('contracts')
+        .update({ signed_by_planner_at: new Date().toISOString() })
+        .eq('id', existing.id);
+      if (error) {
+        setSigning(false);
+        toast.error(t('toast.error'));
+        return;
+      }
     } else {
       const ref = `RTB-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-      const { data: created } = await supabase
+      const { data: created, error } = await supabase
         .from('contracts')
         .insert({
           offer_id: deal.id,
@@ -187,29 +195,43 @@ export default function DealPage() {
         })
         .select('id')
         .single();
-      contractId = created?.id ?? null;
+      // Bail out before touching deal_status if the contract itself never
+      // got created — otherwise the deal reads as "countersigned" with no
+      // contract behind it, and the customer's checkout can't find one to
+      // pay against (silent dead end downstream).
+      if (error || !created) {
+        setSigning(false);
+        toast.error(t('toast.error'));
+        return;
+      }
+      contractId = created.id;
     }
 
-    await supabase.from('offers').update({ deal_status: 'countersigned' }).eq('id', deal.id);
+    const { error: statusError } = await supabase.from('offers').update({ deal_status: 'countersigned' }).eq('id', deal.id);
+    if (statusError) {
+      setSigning(false);
+      toast.error(t('toast.error'));
+      return;
+    }
 
-    if (contractId) {
-      const { data: existingPayments } = await supabase.from('payments').select('id').eq('contract_id', contractId);
-      if (!existingPayments || existingPayments.length === 0) {
-        await supabase.from('payments').insert([
-          { contract_id: contractId, type: 'deposit', amount: DEPOSIT },
-          { contract_id: contractId, type: 'balance', amount: PRICE - DEPOSIT },
-        ]);
-      }
+    const { data: existingPayments } = await supabase.from('payments').select('id').eq('contract_id', contractId);
+    if (!existingPayments || existingPayments.length === 0) {
+      const { error } = await supabase.from('payments').insert([
+        { contract_id: contractId, type: 'deposit', amount: DEPOSIT },
+        { contract_id: contractId, type: 'balance', amount: PRICE - DEPOSIT },
+      ]);
+      if (error) console.warn('[deal] failed to create payment rows:', error);
+    }
 
-      const { data: existingBooking } = await supabase.from('bookings').select('id').eq('contract_id', contractId).maybeSingle();
-      if (!existingBooking) {
-        await supabase.from('bookings').insert({
-          contract_id: contractId,
-          stage: 'planning',
-          event_date: deal.eventDate.toISOString().slice(0, 10),
-          platform_fee: Math.round(PRICE * 0.10 * 100) / 100,
-        });
-      }
+    const { data: existingBooking } = await supabase.from('bookings').select('id').eq('contract_id', contractId).maybeSingle();
+    if (!existingBooking) {
+      const { error } = await supabase.from('bookings').insert({
+        contract_id: contractId,
+        stage: 'planning',
+        event_date: deal.eventDate.toISOString().slice(0, 10),
+        platform_fee: Math.round(PRICE * 0.10 * 100) / 100,
+      });
+      if (error) console.warn('[deal] failed to create booking row:', error);
     }
 
     setSigning(false);

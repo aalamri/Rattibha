@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, CheckCircle, GlobeSimple, InstagramLogo, MapPin, XCircle } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
@@ -119,9 +120,13 @@ export default function AdminPlannerDetailPage() {
   async function setVerified(verified: boolean) {
     if (!planner) return;
     setBusy(true);
-    await supabase.from('planners').update({ verified }).eq('user_id', planner.userId);
-    setPlanner((p) => (p ? { ...p, verified } : p));
+    const { error } = await supabase.from('planners').update({ verified }).eq('user_id', planner.userId);
     setBusy(false);
+    if (error) {
+      toast.error(t('toast.error'));
+      return;
+    }
+    setPlanner((p) => (p ? { ...p, verified } : p));
   }
 
   return (
