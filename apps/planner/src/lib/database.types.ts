@@ -32,6 +32,7 @@ export interface Database {
           city: CityKey | null;
           avatar_seed: number;
           expo_push_token: string | null;
+          web_push_subscription: Record<string, unknown> | null;
           is_admin: boolean;
           created_at: string;
         };
