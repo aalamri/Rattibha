@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@/lib/AuthContext';
 
@@ -19,6 +20,7 @@ interface DashboardShellProps {
 export function DashboardShell({ title, subtitle, children, requireAdmin }: DashboardShellProps) {
   const { session, profile, loading } = useAuth();
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!loading && !session) {
@@ -33,7 +35,7 @@ export function DashboardShell({ title, subtitle, children, requireAdmin }: Dash
   if (loading || !session || (requireAdmin && (!profile || !profile.is_admin))) {
     return (
       <div role="status" aria-live="polite" className="grid h-screen place-items-center bg-bg-app text-fg3">
-        Loading…
+        {t('common.loading')}
       </div>
     );
   }

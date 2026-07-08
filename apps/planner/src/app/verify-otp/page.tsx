@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
+import { toast } from 'sonner';
+
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { supabase } from '@/lib/supabase';
@@ -54,7 +56,11 @@ function VerifyOtpForm() {
 
   async function handleResend() {
     if (secs > 0 || !email) return;
-    await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      toast.error(t('toast.error'));
+      return;
+    }
     setSecs(RESEND_SECONDS);
   }
 

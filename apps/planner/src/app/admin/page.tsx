@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CheckCircle, MapPin, ShieldCheck, XCircle } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
@@ -73,7 +74,8 @@ export default function AdminApprovalsPage() {
 
   async function setVerified(userId: string, verified: boolean) {
     setBusyId(userId);
-    await supabase.from('planners').update({ verified }).eq('user_id', userId);
+    const { error } = await supabase.from('planners').update({ verified }).eq('user_id', userId);
+    if (error) toast.error(t('toast.error'));
     refetch();
     setBusyId(null);
   }

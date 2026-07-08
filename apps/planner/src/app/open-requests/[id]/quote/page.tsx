@@ -130,13 +130,20 @@ export default function SubmitQuotePage() {
       package: t(`quote.packages.${pkg}`),
     });
 
-    await supabase.from('offers').insert({
+    const { error } = await supabase.from('offers').insert({
       request_id: request.id,
       planner_id: session.user.id,
       package: pkg as PackageTier,
       price,
       message,
     });
+
+    setSubmitting(false);
+
+    if (error) {
+      toast.error(t('toast.error'));
+      return;
+    }
 
     toast.success(t('toast.quoteSent'));
     router.push('/offers');

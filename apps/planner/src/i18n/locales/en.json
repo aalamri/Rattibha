@@ -3,6 +3,7 @@
     "appName": "Ratibha",
     "sar": "SAR",
     "pro": "Pro",
+    "loading": "Loading…",
     "searchPlaceholder": "Search…",
     "guests": "guests",
     "offers": "offers",
@@ -259,6 +260,7 @@
     "payment": "Payment",
     "totalFee": "Total fee",
     "depositOnSigning": "Deposit (on signing)",
+    "platformFee": "Platform fee (5%)",
     "earningsAfterFee": "Your earnings (after fee)",
     "oneStepAway": "One step away",
     "countersignCta": "Countersign to confirm the booking",
@@ -276,7 +278,8 @@
       "planning": "Planning",
       "design": "Design",
       "awaitingDeposit": "Awaiting deposit",
-      "finalWalkthrough": "Final walkthrough"
+      "finalWalkthrough": "Final walkthrough",
+      "completed": "Completed"
     },
     "value": "Value",
     "paid": "Paid",

@@ -29,7 +29,7 @@ const STAGE_KEY: Record<BookingStage, string> = {
   design: 'design',
   awaiting_deposit: 'awaitingDeposit',
   final_walkthrough: 'finalWalkthrough',
-  completed: 'finalWalkthrough',
+  completed: 'completed',
 };
 
 interface BookingRow {
