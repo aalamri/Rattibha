@@ -35,6 +35,10 @@ export async function subscribeToWebPush(userId: string): Promise<'subscribed' |
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
+    // Uint8Array<ArrayBufferLike> (returned by urlBase64ToUint8Array) doesn't
+    // structurally satisfy BufferSource under TypeScript 5.7+'s stricter
+    // typed-array generics. Cast is required, not decorative (verified:
+    // removing it reproduces TS2322 "not assignable to type 'ArrayBufferView'").
     applicationServerKey: urlBase64ToUint8Array(publicKey) as BufferSource,
   });
 
