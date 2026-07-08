@@ -108,19 +108,27 @@ function SeedSwatchPicker({ value, onChange, label }: { value: number; onChange:
 
 function NotificationsSection() {
   const { t } = useTranslation();
-  const { session, profile } = useAuth();
-  const subscriptionFromProfile = !!profile?.web_push_subscription;
-  const [trackedSubscription, setTrackedSubscription] = useState(subscriptionFromProfile);
-  const [enabled, setEnabled] = useState(subscriptionFromProfile);
+  const { session } = useAuth();
+  const [enabled, setEnabled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<'denied' | 'unsupported' | null>(null);
 
-  // Adjust local state during render (instead of an effect) whenever the
-  // profile's subscription flag changes underneath us.
-  if (subscriptionFromProfile !== trackedSubscription) {
-    setTrackedSubscription(subscriptionFromProfile);
-    setEnabled(subscriptionFromProfile);
-  }
+  // Push credentials live on push_subscriptions (owner-only RLS), not
+  // profiles, so this reads directly rather than deriving from useAuth()'s
+  // profile object.
+  useEffect(() => {
+    if (!session) return;
+    supabase
+      .from('push_subscriptions')
+      .select('web_push_subscription')
+      .eq('user_id', session.user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        setEnabled(!!data?.web_push_subscription);
+        setLoaded(true);
+      });
+  }, [session]);
 
   async function handleToggle() {
     if (!session) return;
@@ -162,7 +170,7 @@ function NotificationsSection() {
           role="switch"
           aria-checked={enabled}
           aria-label={t('profile.notifications.toggleLabel')}
-          disabled={working}
+          disabled={working || !loaded}
           onClick={handleToggle}
           className={`flex h-6 w-11 flex-shrink-0 items-center rounded-full p-0.5 transition-colors ${
             enabled ? 'justify-end bg-brand' : 'justify-start bg-border'

@@ -122,7 +122,7 @@ async function buildMessages(supabase: SupabaseClient, payload: PushPayload): Pr
 async function newOfferMessages(supabase: SupabaseClient, offerId: string): Promise<BuildResult> {
   const { data } = await supabase
     .from('offers')
-    .select('request_id, planner_id, price, planners(business_name), requests(customer_id, profiles(expo_push_token, language))')
+    .select('request_id, planner_id, price, planners(business_name), requests(customer_id, profiles(language, push_subscriptions(expo_push_token)))')
     .eq('id', offerId)
     .single();
 
@@ -135,11 +135,11 @@ async function newOfferMessages(supabase: SupabaseClient, offerId: string): Prom
     planners: { business_name: string } | null;
     requests: {
       customer_id: string;
-      profiles: { expo_push_token: string | null; language: string } | null;
+      profiles: { language: string; push_subscriptions: { expo_push_token: string | null } | null } | null;
     } | null;
   };
 
-  const token = row.requests?.profiles?.expo_push_token;
+  const token = row.requests?.profiles?.push_subscriptions?.expo_push_token;
   if (!token) return EMPTY;
 
   const ar = row.requests?.profiles?.language === 'ar';
@@ -197,11 +197,11 @@ async function newMessageMessages(supabase: SupabaseClient, messageId: string): 
     // Customer sent the message → notify the planner via Web Push.
     const { data: plannerProfile } = await supabase
       .from('profiles')
-      .select('web_push_subscription, language')
+      .select('language, push_subscriptions(web_push_subscription)')
       .eq('id', row.planner_id)
       .single();
 
-    const subscription = plannerProfile?.web_push_subscription as unknown as WebPushSubscription | null;
+    const subscription = plannerProfile?.push_subscriptions?.web_push_subscription as unknown as WebPushSubscription | null;
     if (!subscription) return EMPTY;
 
     const ar = plannerProfile?.language === 'ar';
@@ -221,11 +221,11 @@ async function newMessageMessages(supabase: SupabaseClient, messageId: string): 
   // Planner sent the message → notify the customer via Expo (existing path).
   const { data: profile } = await supabase
     .from('profiles')
-    .select('expo_push_token, language')
+    .select('language, push_subscriptions(expo_push_token)')
     .eq('id', customerId)
     .single();
 
-  const token = profile?.expo_push_token;
+  const token = profile?.push_subscriptions?.expo_push_token;
   if (!token) return EMPTY;
 
   const { data: plannerRow } = await supabase
@@ -267,7 +267,7 @@ async function newMessageMessages(supabase: SupabaseClient, messageId: string): 
 async function countersignedMessages(supabase: SupabaseClient, offerId: string): Promise<BuildResult> {
   const { data } = await supabase
     .from('offers')
-    .select('request_id, planner_id, price, planners(business_name), requests(customer_id, profiles(expo_push_token, language))')
+    .select('request_id, planner_id, price, planners(business_name), requests(customer_id, profiles(language, push_subscriptions(expo_push_token)))')
     .eq('id', offerId)
     .single();
 
@@ -280,11 +280,11 @@ async function countersignedMessages(supabase: SupabaseClient, offerId: string):
     planners: { business_name: string } | null;
     requests: {
       customer_id: string;
-      profiles: { expo_push_token: string | null; language: string } | null;
+      profiles: { language: string; push_subscriptions: { expo_push_token: string | null } | null } | null;
     } | null;
   };
 
-  const token = row.requests?.profiles?.expo_push_token;
+  const token = row.requests?.profiles?.push_subscriptions?.expo_push_token;
   if (!token) return EMPTY;
 
   const ar = row.requests?.profiles?.language === 'ar';
@@ -316,7 +316,7 @@ async function countersignedMessages(supabase: SupabaseClient, offerId: string):
 async function bookingConfirmedMessages(supabase: SupabaseClient, bookingId: string): Promise<BuildResult> {
   const { data } = await supabase
     .from('bookings')
-    .select('event_date, contracts(offers(request_id, planner_id, planners(business_name), requests(customer_id, profiles(expo_push_token, language))))')
+    .select('event_date, contracts(offers(request_id, planner_id, planners(business_name), requests(customer_id, profiles(language, push_subscriptions(expo_push_token)))))')
     .eq('id', bookingId)
     .single();
 
@@ -331,14 +331,14 @@ async function bookingConfirmedMessages(supabase: SupabaseClient, bookingId: str
         planners: { business_name: string } | null;
         requests: {
           customer_id: string;
-          profiles: { expo_push_token: string | null; language: string } | null;
+          profiles: { language: string; push_subscriptions: { expo_push_token: string | null } | null } | null;
         } | null;
       } | null;
     } | null;
   };
 
   const offer = row.contracts?.offers;
-  const token = offer?.requests?.profiles?.expo_push_token;
+  const token = offer?.requests?.profiles?.push_subscriptions?.expo_push_token;
   if (!token) return EMPTY;
 
   const ar = offer?.requests?.profiles?.language === 'ar';

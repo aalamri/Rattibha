@@ -17,9 +17,10 @@ export function isWebPushSupported(): boolean {
 
 /**
  * Registers the service worker, requests notification permission, subscribes
- * to push, and persists the subscription to profiles.web_push_subscription.
- * Only called from an explicit user action (a toggle) — never on page load,
- * since browsers penalize auto-prompting for notification permission.
+ * to push, and persists the subscription to
+ * push_subscriptions.web_push_subscription. Only called from an explicit
+ * user action (a toggle) — never on page load, since browsers penalize
+ * auto-prompting for notification permission.
  */
 export async function subscribeToWebPush(userId: string): Promise<'subscribed' | 'denied' | 'unsupported'> {
   if (!isWebPushSupported()) return 'unsupported';
@@ -42,10 +43,14 @@ export async function subscribeToWebPush(userId: string): Promise<'subscribed' |
     applicationServerKey: urlBase64ToUint8Array(publicKey) as BufferSource,
   });
 
+  // upsert (not update) — this may be the planner's first-ever subscription,
+  // in which case no push_subscriptions row exists yet.
   await supabase
-    .from('profiles')
-    .update({ web_push_subscription: subscription.toJSON() as Record<string, unknown> })
-    .eq('id', userId);
+    .from('push_subscriptions')
+    .upsert(
+      { user_id: userId, web_push_subscription: subscription.toJSON() as Record<string, unknown> },
+      { onConflict: 'user_id' },
+    );
 
   return 'subscribed';
 }
@@ -62,5 +67,5 @@ export async function unsubscribeFromWebPush(userId: string): Promise<void> {
     if (subscription) await subscription.unsubscribe();
   }
 
-  await supabase.from('profiles').update({ web_push_subscription: null }).eq('id', userId);
+  await supabase.from('push_subscriptions').update({ web_push_subscription: null }).eq('user_id', userId);
 }

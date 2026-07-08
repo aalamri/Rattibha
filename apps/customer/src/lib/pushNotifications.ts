@@ -17,8 +17,8 @@ Notifications.setNotificationHandler({
 
 /**
  * Request permission, obtain an Expo push token, and persist it to the
- * profiles table so the backend can address notifications to this device.
- * Safe to call multiple times — exits early if already registered.
+ * push_subscriptions table so the backend can address notifications to this
+ * device. Safe to call multiple times — exits early if already registered.
  *
  * Note for local testing: Expo Go on Android hard-blocks the entire app
  * from loading if this module is even imported, starting SDK 53 (remote
@@ -63,11 +63,11 @@ export async function registerForPushNotifications(userId: string): Promise<stri
     return null;
   }
 
-  // Persist — upsert so re-installs or token rotations are handled.
+  // Persist — upsert so re-installs or token rotations are handled, and so
+  // a first-time registration (no row yet) creates one.
   await supabase
-    .from('profiles')
-    .update({ expo_push_token: token })
-    .eq('id', userId);
+    .from('push_subscriptions')
+    .upsert({ user_id: userId, expo_push_token: token }, { onConflict: 'user_id' });
 
   return token;
 }
@@ -78,7 +78,7 @@ export async function registerForPushNotifications(userId: string): Promise<stri
  */
 export async function clearPushToken(userId: string): Promise<void> {
   await supabase
-    .from('profiles')
+    .from('push_subscriptions')
     .update({ expo_push_token: null })
-    .eq('id', userId);
+    .eq('user_id', userId);
 }
