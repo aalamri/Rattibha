@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, type ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Pressable, Text, View } from 'react-native';
+import { Platform, Pressable, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import * as Notifications from 'expo-notifications';
@@ -110,6 +110,15 @@ function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    // expo-notifications' response APIs (getLastNotificationResponse,
+    // addNotificationResponseReceivedListener) aren't implemented on web at
+    // all — getLastNotificationResponse() throws UnavailabilityError there,
+    // not just a no-op, which crashes the whole app (confirmed by running
+    // the web target: every route fell back to the root ErrorBoundary).
+    // This app only ships to iOS/Android, so web is dev-preview only, but
+    // the crash still needs guarding against.
+    if (Platform.OS === 'web') return;
+
     function handleResponse(response: Notifications.NotificationResponse) {
       const data = response.notification.request.content.data as
         | { type?: string; payload?: Record<string, unknown> }
