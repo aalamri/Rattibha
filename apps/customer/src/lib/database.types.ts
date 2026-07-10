@@ -31,11 +31,20 @@ export interface Database {
           language: AppLanguage;
           city: CityKey | null;
           avatar_seed: number;
-          expo_push_token: string | null;
           created_at: string;
         };
         Insert: Partial<Database['public']['Tables']['profiles']['Row']> & { id: string; role: UserRole; full_name: string };
         Update: Partial<Database['public']['Tables']['profiles']['Row']>;
+        Relationships: [];
+      };
+      push_subscriptions: {
+        Row: {
+          user_id: string;
+          expo_push_token: string | null;
+          web_push_subscription: Record<string, unknown> | null;
+        };
+        Insert: Partial<Database['public']['Tables']['push_subscriptions']['Row']> & { user_id: string };
+        Update: Partial<Database['public']['Tables']['push_subscriptions']['Row']>;
         Relationships: [];
       };
       planners: {

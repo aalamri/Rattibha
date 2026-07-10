@@ -16,6 +16,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { formatNumber } from '@/lib/format';
 import { deletePortfolioImage, uploadPortfolioImage } from '@/lib/portfolioStorage';
 import { supabase } from '@/lib/supabase';
+import { subscribeToWebPush, unsubscribeFromWebPush } from '@/lib/webPush';
 import type { Database } from '@/lib/database.types';
 
 type PlannerService = Database['public']['Tables']['planner_services']['Row'];
@@ -102,6 +103,83 @@ function SeedSwatchPicker({ value, onChange, label }: { value: number; onChange:
         ))}
       </div>
     </div>
+  );
+}
+
+function NotificationsSection() {
+  const { t } = useTranslation();
+  const { session } = useAuth();
+  const [enabled, setEnabled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [working, setWorking] = useState(false);
+  const [error, setError] = useState<'denied' | 'unsupported' | null>(null);
+
+  // Push credentials live on push_subscriptions (owner-only RLS), not
+  // profiles, so this reads directly rather than deriving from useAuth()'s
+  // profile object.
+  useEffect(() => {
+    if (!session) return;
+    supabase
+      .from('push_subscriptions')
+      .select('web_push_subscription')
+      .eq('user_id', session.user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        setEnabled(!!data?.web_push_subscription);
+        setLoaded(true);
+      });
+  }, [session]);
+
+  async function handleToggle() {
+    if (!session) return;
+    setWorking(true);
+    setError(null);
+
+    try {
+      if (enabled) {
+        await unsubscribeFromWebPush(session.user.id);
+        setEnabled(false);
+      } else {
+        const result = await subscribeToWebPush(session.user.id);
+        if (result === 'subscribed') {
+          setEnabled(true);
+        } else {
+          setError(result);
+        }
+      }
+    } finally {
+      setWorking(false);
+    }
+  }
+
+  return (
+    <Section title={t('profile.notifications.title')}>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <div className="text-[13.5px] font-semibold text-fg1">{t('profile.notifications.toggleLabel')}</div>
+          <div className="mt-0.5 text-xs text-fg3">{t('profile.notifications.toggleDescription')}</div>
+          {error === 'denied' && (
+            <div className="mt-1.5 text-xs font-semibold text-danger">{t('profile.notifications.permissionDenied')}</div>
+          )}
+          {error === 'unsupported' && (
+            <div className="mt-1.5 text-xs font-semibold text-danger">{t('profile.notifications.unsupported')}</div>
+          )}
+        </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={enabled}
+          aria-label={t('profile.notifications.toggleLabel')}
+          disabled={working || !loaded}
+          onClick={handleToggle}
+          className={`flex h-6 w-11 flex-shrink-0 items-center rounded-full p-0.5 transition-colors ${
+            enabled ? 'justify-end bg-brand' : 'justify-start bg-border'
+          }`}
+        >
+          <span className="h-5 w-5 rounded-full bg-white" />
+        </button>
+      </div>
+    </Section>
   );
 }
 
@@ -608,6 +686,8 @@ export default function ProfilePage() {
               </div>
             )}
           </Section>
+
+          <NotificationsSection />
 
           <Button variant="secondary" icon={StorefrontIcon} className="w-full">
             {t('profile.view')}

@@ -42,6 +42,9 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 
+# Subagent-driven-development scratch (progress ledger, task briefs/reports)
+.superpowers/
+
 # Supabase local
 supabase/.branches
 supabase/.temp
