@@ -7,7 +7,14 @@
     "icon": "./assets/images/icon.png",
     "scheme": "ratibha",
     "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.anonymous.ratibha",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
     "android": {
+      "package": "com.anonymous.ratibha",
       "adaptiveIcon": {
         "backgroundColor": "#5B2C83",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -45,6 +52,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "68d92111-fbb7-40fe-aef9-283db16b977b"
+      }
+    },
+    "owner": "aalamri"
   }
 }
