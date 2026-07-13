@@ -17,6 +17,7 @@ The following was verified empirically against the exact installed versions in t
 - **Never destructure `render` from `@testing-library/react-native` directly in a component test file.** Import `renderWithProviders` from `@/test-utils` (Task 1) instead — it wraps the real `ThemeProvider`/`I18nextProvider` the same way the app root does. The one exception is `Toast.test.tsx` (Task 10), which needs an additional `SafeAreaProvider` layer `renderWithProviders` doesn't provide.
 - **Style assertions must use `StyleSheet.flatten(node.props.style)`** (import `StyleSheet` from `'react-native'`), never a manual `.find()` over a style array. React Native style arrays merge left-to-right with later entries winning on conflicting keys — several of these components (`Text`'s line-height override, `Avatar`, `Button`) intentionally rely on a later array entry overriding an earlier one, and `.find()` returns the *first* match, which is often the wrong one.
 - **For a non-text prop (e.g. a gradient's `colors`) on the outermost element a render returns, read it via `result.root!.props.<propName>`.** This installed version has no `UNSAFE_getByType`/`getByType` query; `result.root` *is* the TestInstance for the top-level rendered element when that element has no wrapping host node above it. **`root` is typed `ReactTestInstance | null`, so every use needs a `!` non-null assertion** (`root!.props...`, `root!.queryAll(...)`) or `tsc --noEmit` fails — confirmed by an actual `tsc` run against this plan's own Avatar task, not assumed; every `root.` usage in the tasks below already has the `!` applied.
+- **`queryAll`'s tree collapses every composite (function/class) component — only host primitives appear as nodes.** Confirmed by walking the tree directly: a Phosphor icon like `Star` never appears as a node itself, only its rendered SVG output does (`RNSVGSvgView` → `RNSVGGroup` → `RNSVGPath`); `node.type === Star` (or `=== Calendar`, `=== ImageIcon`, or any other imported component reference) always returns zero matches, never throws, so this fails silently as an empty result rather than a visible error. **Match host primitives by their string type name instead:** `node.type === 'RNSVGSvgView'` to detect "an icon rendered here" (Phosphor's universal SVG wrapper, regardless of which icon — sufficient when the test only needs to know *that* an icon rendered, not which prop values it received, since those are consumed by the collapsed composite and aren't recoverable from its host output), `node.type === 'Image'` for RN's built-in `Image`, `node.type === 'ActivityIndicator'` for RN's built-in `ActivityIndicator` — both resolve to host nodes carrying their own name, unlike third-party or in-repo composite components. Every task below that needs this already uses the string form.
 - **Color values that reach a native view are converted to platform integers before a test can observe them** (confirmed: `LinearGradient`'s rendered `colors` prop is an array of numbers, not hex strings). Compare with `processColor(hexString)` (import `processColor` from `'react-native'`), never a raw hex string.
 - **`i18n` (default export of `@/i18n`) is a module-level singleton shared across the whole Jest run.** `test-utils.tsx` (Task 1) resets it to `'en'` in a file-scoped `afterEach`, and every test must go through `renderWithProviders({ lang })` to change it — never call `i18n.changeLanguage(...)` directly in a test file, or the reset won't have run before the next file starts and language state will leak across files.
 - No snapshot tests. No assertions on animated/interpolated values or intermediate frames.
@@ -172,16 +173,14 @@ describe('Badge', () => {
     expect(getByText('Featured')).toBeTruthy();
   });
 
-  test('renders the icon when provided', async () => {
+  test('renders an icon (as an SVG) when provided', async () => {
     const { root } = await renderWithProviders(<Badge icon={Star}>Top rated</Badge>);
-    const icon = root!.queryAll((node) => node.type === Star)[0];
-    expect(icon).toBeTruthy();
+    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(1);
   });
 
   test('omits the icon when not provided', async () => {
     const { root } = await renderWithProviders(<Badge>No icon</Badge>);
-    const icons = root!.queryAll((node) => node.type === Star);
-    expect(icons).toHaveLength(0);
+    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(0);
   });
 
   test('LTR container flexDirection is row', async () => {
@@ -198,11 +197,10 @@ describe('Badge', () => {
 });
 
 describe('Stars', () => {
-  test('renders the rating wrapped in a Badge with a filled star icon', async () => {
+  test('renders the rating wrapped in a Badge with a star icon', async () => {
     const { getByText, root } = await renderWithProviders(<Stars rating={4.8} />);
     expect(getByText('4.8')).toBeTruthy();
-    const icon = root!.queryAll((node) => node.type === Star)[0];
-    expect(icon.props.weight).toBe('fill');
+    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(1);
   });
 
   test('coerces a numeric rating to its string form', async () => {
@@ -212,7 +210,9 @@ describe('Stars', () => {
 });
 ```
 
-**Note:** `getByText('Row').parent` gives the immediate parent TestInstance of the text node — for `Badge`, that's the `Text` component instance, not yet the host `View`. If Step 2's test run shows the flexDirection assertion failing because `parent` resolves to an intermediate wrapper rather than the styled `View`, log `root.toJSON()` (via `console.log(JSON.stringify(root.toJSON(), null, 2))` in a scratch run) to see the actual tree shape and adjust to `.parent!.parent!.props.style` or the equivalent — don't guess further levels blind, confirm against the printed tree.
+**Why `'RNSVGSvgView'` instead of matching `Star` by reference:** confirmed empirically (via a task that hit this and correctly reported BLOCKED rather than guessing) that this `TestInstance` tree model collapses composite/function components entirely — only host primitives appear as nodes, identified by string type names. `Star` (like every Phosphor icon, and like any plain function component) never appears as a distinct node; only its rendered SVG output does (`RNSVGSvgView` → `RNSVGGroup` → `RNSVGPath`, confirmed by walking `.children` directly). `RNSVGSvgView` is Phosphor's universal SVG wrapper regardless of which icon, so its presence/absence is a correct, general proxy for "an icon renders here" — which is what `Badge`'s and `Stars`'s own conditional-rendering logic (`{IconComp && <IconComp .../>}`) actually does. The original design intent to also verify `weight === 'fill'` isn't preserved — that prop is consumed by the collapsed composite and isn't recoverable from the host SVG output without coupling the test to Phosphor's internal fill-vs-stroke SVG implementation, which would make it fragile rather than meaningful.
+
+**Note:** `getByText('Row').parent` gives the immediate parent TestInstance of the text node — confirmed empirically that for `Badge` this resolves directly to the styled `View` in a single hop (no intermediate wrapper), so the code above is expected to just work as written.
 
 - [ ] **Step 2: Run the test and confirm it passes**
 
@@ -341,7 +341,12 @@ describe('EmptyState', () => {
   test('always renders the icon and title', async () => {
     const { getByText, root } = await renderWithProviders(<EmptyState icon={Calendar} title="No requests yet" />);
     expect(getByText('No requests yet')).toBeTruthy();
-    expect(root!.queryAll((node) => node.type === Calendar)).toHaveLength(1);
+    // Composite/function components (including every Phosphor icon) don't appear as
+    // distinct nodes in this TestInstance tree — only their rendered host output does.
+    // 'RNSVGSvgView' is Phosphor's universal SVG wrapper regardless of which icon, so its
+    // presence is the correct proxy for "an icon rendered here" (confirmed empirically —
+    // see the equivalent note in Task 2).
+    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(1);
   });
 
   test('renders the subtitle only when provided', async () => {
@@ -501,8 +506,7 @@ git commit -m "Add Text/AccentText unit tests"
 Create `apps/customer/src/components/ui/Photo.test.tsx`:
 
 ```tsx
-import { Image, StyleSheet, Text } from 'react-native';
-import { Image as ImageIcon } from 'phosphor-react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { renderWithProviders } from '@/test-utils';
 import { Photo } from './Photo';
@@ -518,15 +522,21 @@ function findPositionedWrapper(root: any) {
 describe('Photo', () => {
   test('uri set: renders an Image with that source', async () => {
     const { root } = await renderWithProviders(<Photo uri="https://img.example/1.jpg" />);
-    const images = root!.queryAll((node: any) => node.type === Image);
+    // RN's built-in Image resolves to a host node identified by the string 'Image' in this
+    // TestInstance tree (unlike composite/function components, which don't appear as nodes
+    // at all — see the equivalent note in Task 2 for why component-reference matching
+    // wouldn't work here).
+    const images = root!.queryAll((node: any) => node.type === 'Image');
     expect(images).toHaveLength(1);
     expect(images[0].props.source).toEqual({ uri: 'https://img.example/1.jpg' });
   });
 
   test('uri unset: renders the gradient placeholder with the fallback icon, no Image', async () => {
     const { root } = await renderWithProviders(<Photo />);
-    expect(root!.queryAll((node: any) => node.type === Image)).toHaveLength(0);
-    expect(root!.queryAll((node: any) => node.type === ImageIcon)).toHaveLength(1);
+    expect(root!.queryAll((node: any) => node.type === 'Image')).toHaveLength(0);
+    // ImageIcon (a Phosphor icon, a composite component) never appears as a node itself —
+    // only its rendered 'RNSVGSvgView' output does.
+    expect(root!.queryAll((node: any) => node.type === 'RNSVGSvgView')).toHaveLength(1);
   });
 
   test('LTR positions the label badge with a left key, no right key', async () => {
@@ -596,7 +606,7 @@ git commit -m "Add Photo unit tests"
 Create `apps/customer/src/components/ui/Button.test.tsx`:
 
 ```tsx
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { fireEvent } from '@testing-library/react-native';
 
 import { renderWithProviders } from '@/test-utils';
@@ -628,7 +638,10 @@ describe('Button', () => {
   test('loading: renders an ActivityIndicator instead of the label, and reports accessibilityState.busy', async () => {
     const { root, queryByText, getByRole } = await renderWithProviders(<Button loading>Continue</Button>);
     expect(queryByText('Continue')).toBeNull();
-    expect(root!.queryAll((node: any) => node.type === ActivityIndicator)).toHaveLength(1);
+    // RN's built-in ActivityIndicator resolves to a host node identified by the string
+    // 'ActivityIndicator' in this TestInstance tree (see the equivalent note in Task 2/6
+    // for why component-reference matching doesn't work here).
+    expect(root!.queryAll((node: any) => node.type === 'ActivityIndicator')).toHaveLength(1);
     expect(getByRole('button').props.accessibilityState.busy).toBe(true);
   });
 
