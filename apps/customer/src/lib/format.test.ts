@@ -28,20 +28,18 @@ describe('formatDate', () => {
     );
   });
 
-  // This only verifies formatDate builds its Intl.DateTimeFormat call with the
-  // exact locale tag 'ar-SA-u-ca-gregory' (catching e.g. a typo or a revert to
-  // plain 'ar-SA'). It intentionally does NOT assert that the '-u-ca-gregory'
-  // suffix changes the output relative to plain 'ar-SA', because that isn't
-  // testable in this environment: the format.ts comment about 'ar-SA'
-  // defaulting to Hijri is specifically about iOS's ICU. Node's bundled ICU
+  // The output-equality assertion below only proves formatDate produces
+  // correct Gregorian-formatted Arabic-digit output in this environment. It
+  // does NOT by itself catch a revert to plain 'ar-SA': Node's bundled ICU
   // already defaults 'ar-SA' to the Gregorian calendar, so
   // new Intl.DateTimeFormat('ar-SA', options).format(date) and
   // new Intl.DateTimeFormat('ar-SA-u-ca-gregory', options).format(date)
-  // produce identical output here (both "١٣ يوليو ٢٠٢٦" for the test date) -
-  // there is no assertion in Jest/Node that would catch the '-u-ca-gregory'
-  // suffix being dropped. Covering that regression specifically would require
-  // running under iOS's ICU (a real device or simulator test), which is out
-  // of scope here.
+  // produce byte-identical output here (both "١٣ يوليو ٢٠٢٦" for the test
+  // date). The format.ts comment about 'ar-SA' defaulting to Hijri is
+  // specifically about iOS's ICU, which this Jest/Node run doesn't exercise.
+  // What actually guards against that regression is the spy assertion further
+  // below, which inspects the literal locale string formatDate passes to the
+  // Intl.DateTimeFormat constructor.
   test('RTL forces the Gregorian calendar rather than defaulting to Hijri', () => {
     const result = formatDate(date, true, options);
     expect(result).toBe(new Intl.DateTimeFormat('ar-SA-u-ca-gregory', options).format(date));
@@ -51,5 +49,20 @@ describe('formatDate', () => {
     // the formatNumber RTL assertion above).
     expect(result).toMatch(/[٠-٩]/);
     expect(result).not.toMatch(/[0-9]/);
+  });
+
+  // This is what actually catches a revert to plain 'ar-SA' (or any other
+  // drift in the locale tag): it inspects the exact locale argument
+  // formatDate passes to the Intl.DateTimeFormat constructor, rather than
+  // relying on formatted output that happens to be identical for 'ar-SA' and
+  // 'ar-SA-u-ca-gregory' under this environment's ICU.
+  test('RTL constructs Intl.DateTimeFormat with the exact ar-SA-u-ca-gregory locale tag', () => {
+    const spy = jest.spyOn(globalThis.Intl, 'DateTimeFormat');
+    try {
+      formatDate(date, true, options);
+      expect(spy).toHaveBeenCalledWith('ar-SA-u-ca-gregory', options);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
