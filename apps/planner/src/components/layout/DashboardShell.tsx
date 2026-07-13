@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
@@ -21,6 +21,7 @@ export function DashboardShell({ title, subtitle, children, requireAdmin }: Dash
   const { session, profile, loading } = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !session) {
@@ -42,9 +43,9 @@ export function DashboardShell({ title, subtitle, children, requireAdmin }: Dash
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+      <Sidebar open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <div className="flex flex-1 flex-col overflow-y-auto">
-        <Topbar title={title} subtitle={subtitle} />
+        <Topbar title={title} subtitle={subtitle} onMenuClick={() => setMobileNavOpen(true)} />
         <main className="flex-1">{children}</main>
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CrownSimple, RocketLaunch } from 'phosphor-react';
+import { CrownSimple, RocketLaunch, X } from 'phosphor-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,13 @@ import { useAuth } from '@/lib/AuthContext';
 import { formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 
-export function Sidebar() {
+interface SidebarProps {
+  /** Whether the mobile drawer is open. Ignored at the `lg` breakpoint and up, where the sidebar is always visible. */
+  open: boolean;
+  onClose: () => void;
+}
+
+export function Sidebar({ open, onClose }: SidebarProps) {
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
   const { session, profile } = useAuth();
@@ -69,55 +75,76 @@ export function Sidebar() {
   }, [session]);
 
   return (
-    <aside className="flex h-full w-[252px] flex-shrink-0 flex-col border-e border-border bg-bg-surface p-4">
-      <div className="flex items-center gap-2 px-2 pb-5">
-        <span className="font-display text-xl font-semibold text-fg1">{t('common.appName')}</span>
-        <Badge tone="gold" icon={CrownSimple}>
-          {t('common.pro')}
-        </Badge>
-      </div>
+    <>
+      {open && (
+        <button
+          type="button"
+          aria-label={t('sidebar.closeMenu')}
+          onClick={onClose}
+          className="fixed inset-0 z-40 cursor-default bg-fg1/50 lg:hidden"
+        />
+      )}
+      <aside
+        className={`${open ? 'flex' : 'hidden'} fixed inset-y-0 start-0 z-50 w-[252px] flex-shrink-0 flex-col border-e border-border bg-bg-surface p-4 lg:static lg:z-auto lg:flex lg:h-full`}
+      >
+        <div className="flex items-center gap-2 px-2 pb-5">
+          <span className="font-display text-xl font-semibold text-fg1">{t('common.appName')}</span>
+          <Badge tone="gold" icon={CrownSimple}>
+            {t('common.pro')}
+          </Badge>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t('sidebar.closeMenu')}
+            className="ms-auto grid h-8 w-8 place-items-center rounded-sm text-fg3 hover:text-fg1 lg:hidden"
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
 
-      <nav aria-label={t('sidebar.navLabel')} className="flex flex-col gap-0.5">
-        {visibleNav.map((item) => {
-          const active = pathname === item.href;
-          const ItemIcon = item.icon;
-          const badge = badges[item.key];
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              aria-current={active ? 'page' : undefined}
-              className={`flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-medium transition-colors ${
-                active ? 'bg-purple-50 text-brand font-semibold' : 'text-fg2 hover:bg-bg-app'
-              }`}
-            >
-              <ItemIcon size={20} weight={active ? 'fill' : 'regular'} aria-hidden="true" />
-              <span className="flex-1">{t(item.labelKey)}</span>
-              {!!badge && (
-                <span
-                  className={`grid h-[19px] min-w-[19px] place-items-center rounded-full px-1 text-[11px] font-bold ${
-                    active ? 'bg-brand text-white' : 'bg-lavender-100 text-brand'
-                  }`}
-                >
-                  {formatNumber(badge, i18n.language)}
-                </span>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+        <nav aria-label={t('sidebar.navLabel')} className="flex flex-col gap-0.5">
+          {visibleNav.map((item) => {
+            const active = pathname === item.href;
+            const ItemIcon = item.icon;
+            const badge = badges[item.key];
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                onClick={onClose}
+                aria-current={active ? 'page' : undefined}
+                className={`flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-medium transition-colors ${
+                  active ? 'bg-purple-50 text-brand font-semibold' : 'text-fg2 hover:bg-bg-app'
+                }`}
+              >
+                <ItemIcon size={20} weight={active ? 'fill' : 'regular'} aria-hidden="true" />
+                <span className="flex-1">{t(item.labelKey)}</span>
+                {!!badge && (
+                  <span
+                    className={`grid h-[19px] min-w-[19px] place-items-center rounded-full px-1 text-[11px] font-bold ${
+                      active ? 'bg-brand text-white' : 'bg-lavender-100 text-brand'
+                    }`}
+                  >
+                    {formatNumber(badge, i18n.language)}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
 
-      <div className="mt-auto">
-        <div className="relative overflow-hidden rounded-md bg-[linear-gradient(150deg,#5B2C83,#3A1B52)] p-4">
-          <div className="relative">
-            <div className="font-display text-base font-semibold text-white">{t('sidebar.boostTitle')}</div>
-            <p className="my-1 mb-3 text-xs leading-relaxed text-white/80">{t('sidebar.boostBody')}</p>
-            <Button size="sm" variant="gold" icon={RocketLaunch}>
-              {t('sidebar.upgrade')}
-            </Button>
+        <div className="mt-auto">
+          <div className="relative overflow-hidden rounded-md bg-[linear-gradient(150deg,#5B2C83,#3A1B52)] p-4">
+            <div className="relative">
+              <div className="font-display text-base font-semibold text-white">{t('sidebar.boostTitle')}</div>
+              <p className="my-1 mb-3 text-xs leading-relaxed text-white/80">{t('sidebar.boostBody')}</p>
+              <Button size="sm" variant="gold" icon={RocketLaunch}>
+                {t('sidebar.upgrade')}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

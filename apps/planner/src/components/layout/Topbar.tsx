@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleHalfTilt, Globe, MagnifyingGlass, SignOut } from 'phosphor-react';
+import { CircleHalfTilt, Globe, List, MagnifyingGlass, SignOut } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@/components/ui/Avatar';
@@ -13,24 +13,34 @@ import { NotificationsPanel } from './NotificationsPanel';
 interface TopbarProps {
   title: string;
   subtitle?: string;
+  onMenuClick: () => void;
 }
 
 const NEXT_MODE = { system: 'light', light: 'dark', dark: 'system' } as const;
 
-export function Topbar({ title, subtitle }: TopbarProps) {
+export function Topbar({ title, subtitle, onMenuClick }: TopbarProps) {
   const { t, i18n } = useTranslation();
   const { profile, planner, signOut } = useAuth();
   const { mode, setMode } = useThemeMode();
   const lang = i18n.language as AppLanguage;
 
   return (
-    <header className="flex h-[72px] flex-shrink-0 items-center gap-4 border-b border-border bg-bg-surface px-7">
+    <header className="flex h-[72px] flex-shrink-0 items-center gap-4 border-b border-border bg-bg-surface px-4 lg:px-7">
+      <button
+        type="button"
+        onClick={onMenuClick}
+        aria-label={t('sidebar.openMenu')}
+        className="grid h-[42px] w-[42px] flex-shrink-0 place-items-center rounded-md border border-border text-fg3 hover:text-fg1 lg:hidden"
+      >
+        <List size={19} aria-hidden="true" />
+      </button>
+
       <div className="flex-1">
         <h1 className="font-display text-2xl font-semibold leading-tight text-fg1">{title}</h1>
         {subtitle && <p className="mt-0.5 text-[13px] text-fg3">{subtitle}</p>}
       </div>
 
-      <div className="flex w-[200px] items-center gap-2 rounded-sm border border-border bg-bg-app px-3.5 py-2.5">
+      <div className="hidden w-[200px] items-center gap-2 rounded-sm border border-border bg-bg-app px-3.5 py-2.5 lg:flex">
         <MagnifyingGlass size={17} className="text-fg3" />
         <span className="text-[13.5px] text-fg3">{t('common.searchPlaceholder')}</span>
       </div>

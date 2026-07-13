@@ -167,6 +167,8 @@
   },
   "sidebar": {
     "navLabel": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "boostTitle": "Boost your reach",
     "boostBody": "Feature your studio to 3× more clients.",
     "upgrade": "Upgrade"
