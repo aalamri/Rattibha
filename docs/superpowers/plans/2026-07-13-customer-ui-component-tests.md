@@ -16,7 +16,7 @@ The following was verified empirically against the exact installed versions in t
 - **`fireEvent.press(...)`, `fireEvent.changeText(...)`, and other `fireEvent.*` calls must also be awaited** (`await fireEvent.press(...)`) — confirmed: without `await`, the state update from the handler had not committed by the time the following assertion ran, producing a false "element not found" failure even though the handler *did* eventually run.
 - **Never destructure `render` from `@testing-library/react-native` directly in a component test file.** Import `renderWithProviders` from `@/test-utils` (Task 1) instead — it wraps the real `ThemeProvider`/`I18nextProvider` the same way the app root does. The one exception is `Toast.test.tsx` (Task 10), which needs an additional `SafeAreaProvider` layer `renderWithProviders` doesn't provide.
 - **Style assertions must use `StyleSheet.flatten(node.props.style)`** (import `StyleSheet` from `'react-native'`), never a manual `.find()` over a style array. React Native style arrays merge left-to-right with later entries winning on conflicting keys — several of these components (`Text`'s line-height override, `Avatar`, `Button`) intentionally rely on a later array entry overriding an earlier one, and `.find()` returns the *first* match, which is often the wrong one.
-- **For a non-text prop (e.g. a gradient's `colors`) on the outermost element a render returns, read it via `result.root.props.<propName>`.** This installed version has no `UNSAFE_getByType`/`getByType` query; `result.root` *is* the TestInstance for the top-level rendered element when that element has no wrapping host node above it.
+- **For a non-text prop (e.g. a gradient's `colors`) on the outermost element a render returns, read it via `result.root!.props.<propName>`.** This installed version has no `UNSAFE_getByType`/`getByType` query; `result.root` *is* the TestInstance for the top-level rendered element when that element has no wrapping host node above it. **`root` is typed `ReactTestInstance | null`, so every use needs a `!` non-null assertion** (`root!.props...`, `root!.queryAll(...)`) or `tsc --noEmit` fails — confirmed by an actual `tsc` run against this plan's own Avatar task, not assumed; every `root.` usage in the tasks below already has the `!` applied.
 - **Color values that reach a native view are converted to platform integers before a test can observe them** (confirmed: `LinearGradient`'s rendered `colors` prop is an array of numbers, not hex strings). Compare with `processColor(hexString)` (import `processColor` from `'react-native'`), never a raw hex string.
 - **`i18n` (default export of `@/i18n`) is a module-level singleton shared across the whole Jest run.** `test-utils.tsx` (Task 1) resets it to `'en'` in a file-scoped `afterEach`, and every test must go through `renderWithProviders({ lang })` to change it — never call `i18n.changeLanguage(...)` directly in a test file, or the reset won't have run before the next file starts and language state will leak across files.
 - No snapshot tests. No assertions on animated/interpolated values or intermediate frames.
@@ -104,13 +104,13 @@ describe('Avatar', () => {
 
   test('seed selects the matching gradient pair', async () => {
     const { root } = await renderWithProviders(<Avatar initials="GH" seed={3} />);
-    expect(root.props.colors).toEqual([processColor(colors.gold500), processColor(colors.purple500)]);
+    expect(root!.props.colors).toEqual([processColor(colors.gold500), processColor(colors.purple500)]);
   });
 
   test('seed wraps around with modulo when it exceeds the gradient count', async () => {
     // gradients has 6 entries (indices 0-5); seed 8 % 6 === 2 -> [lavender300, purple500].
     const { root } = await renderWithProviders(<Avatar initials="IJ" seed={8} />);
-    expect(root.props.colors).toEqual([processColor(colors.lavender300), processColor(colors.purple500)]);
+    expect(root!.props.colors).toEqual([processColor(colors.lavender300), processColor(colors.purple500)]);
   });
 
   test('LTR renders the initials in the Latin bold font', async () => {
@@ -174,13 +174,13 @@ describe('Badge', () => {
 
   test('renders the icon when provided', async () => {
     const { root } = await renderWithProviders(<Badge icon={Star}>Top rated</Badge>);
-    const icon = root.queryAll((node) => node.type === Star)[0];
+    const icon = root!.queryAll((node) => node.type === Star)[0];
     expect(icon).toBeTruthy();
   });
 
   test('omits the icon when not provided', async () => {
     const { root } = await renderWithProviders(<Badge>No icon</Badge>);
-    const icons = root.queryAll((node) => node.type === Star);
+    const icons = root!.queryAll((node) => node.type === Star);
     expect(icons).toHaveLength(0);
   });
 
@@ -201,7 +201,7 @@ describe('Stars', () => {
   test('renders the rating wrapped in a Badge with a filled star icon', async () => {
     const { getByText, root } = await renderWithProviders(<Stars rating={4.8} />);
     expect(getByText('4.8')).toBeTruthy();
-    const icon = root.queryAll((node) => node.type === Star)[0];
+    const icon = root!.queryAll((node) => node.type === Star)[0];
     expect(icon.props.weight).toBe('fill');
   });
 
@@ -268,7 +268,7 @@ describe('Card', () => {
         <Text>Content</Text>
       </Card>
     );
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     // shadows.sm has shadowOpacity 0.07; shadows.md has 0.16 — distinct enough to assert directly.
     expect(style.shadowOpacity).toBeCloseTo(0.07);
   });
@@ -279,7 +279,7 @@ describe('Card', () => {
         <Text>Content</Text>
       </Card>
     );
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     expect(style.shadowOpacity).toBeCloseTo(0.16);
   });
 
@@ -289,7 +289,7 @@ describe('Card', () => {
         <Text>Content</Text>
       </Card>
     );
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     // Default theme mode is 'system'; RN's useColorScheme() resolves to
     // undefined/light under Jest, so the light theme applies (bgSurface: '#FFFFFF', border: '#E9E1EE').
     expect(style.backgroundColor).toBe('#FFFFFF');
@@ -341,7 +341,7 @@ describe('EmptyState', () => {
   test('always renders the icon and title', async () => {
     const { getByText, root } = await renderWithProviders(<EmptyState icon={Calendar} title="No requests yet" />);
     expect(getByText('No requests yet')).toBeTruthy();
-    expect(root.queryAll((node) => node.type === Calendar)).toHaveLength(1);
+    expect(root!.queryAll((node) => node.type === Calendar)).toHaveLength(1);
   });
 
   test('renders the subtitle only when provided', async () => {
@@ -518,15 +518,15 @@ function findPositionedWrapper(root: any) {
 describe('Photo', () => {
   test('uri set: renders an Image with that source', async () => {
     const { root } = await renderWithProviders(<Photo uri="https://img.example/1.jpg" />);
-    const images = root.queryAll((node: any) => node.type === Image);
+    const images = root!.queryAll((node: any) => node.type === Image);
     expect(images).toHaveLength(1);
     expect(images[0].props.source).toEqual({ uri: 'https://img.example/1.jpg' });
   });
 
   test('uri unset: renders the gradient placeholder with the fallback icon, no Image', async () => {
     const { root } = await renderWithProviders(<Photo />);
-    expect(root.queryAll((node: any) => node.type === Image)).toHaveLength(0);
-    expect(root.queryAll((node: any) => node.type === ImageIcon)).toHaveLength(1);
+    expect(root!.queryAll((node: any) => node.type === Image)).toHaveLength(0);
+    expect(root!.queryAll((node: any) => node.type === ImageIcon)).toHaveLength(1);
   });
 
   test('LTR positions the label badge with a left key, no right key', async () => {
@@ -628,7 +628,7 @@ describe('Button', () => {
   test('loading: renders an ActivityIndicator instead of the label, and reports accessibilityState.busy', async () => {
     const { root, queryByText, getByRole } = await renderWithProviders(<Button loading>Continue</Button>);
     expect(queryByText('Continue')).toBeNull();
-    expect(root.queryAll((node: any) => node.type === ActivityIndicator)).toHaveLength(1);
+    expect(root!.queryAll((node: any) => node.type === ActivityIndicator)).toHaveLength(1);
     expect(getByRole('button').props.accessibilityState.busy).toBe(true);
   });
 
@@ -813,7 +813,7 @@ import { Skeleton, SkeletonCard, SkeletonRow } from './Skeleton';
 describe('Skeleton', () => {
   test('reflects width/height/radius in style, with the themed background color', async () => {
     const { root } = await renderWithProviders(<Skeleton width={120} height={20} radius={8} />);
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     expect(style.width).toBe(120);
     expect(style.height).toBe(20);
     expect(style.borderRadius).toBe(8);
@@ -822,7 +822,7 @@ describe('Skeleton', () => {
 
   test('defaults width to 100% and height to 14 when not provided', async () => {
     const { root } = await renderWithProviders(<Skeleton />);
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     expect(style.width).toBe('100%');
     expect(style.height).toBe(14);
   });
@@ -836,7 +836,7 @@ describe('SkeletonRow', () => {
         <Text>Two</Text>
       </SkeletonRow>
     );
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     expect(style.flexDirection).toBe('row');
     expect(style.gap).toBe(16);
   });
@@ -850,7 +850,7 @@ describe('SkeletonCard', () => {
       </SkeletonCard>
     );
     expect(getByText('Loading placeholder')).toBeTruthy();
-    const style = StyleSheet.flatten(root.props.style);
+    const style = StyleSheet.flatten(root!.props.style);
     expect(style.backgroundColor).toBe('#FFFFFF'); // theme.bgSurface
     expect(style.borderColor).toBe('#E9E1EE'); // theme.border
   });
