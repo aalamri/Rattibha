@@ -8,5 +8,5 @@ export function formatNumber(value: number, lang: string) {
  * (per CLAUDE.md, Saudi market) always shows Gregorian dates regardless of language, just with
  * Arabic month names/numerals in RTL. The `-u-ca-gregory` extension forces that explicitly. */
 export function formatDate(date: Date, lang: string, options: Intl.DateTimeFormatOptions) {
-  return date.toLocaleDateString(lang === 'ar' ? 'ar-SA-u-ca-gregory' : 'en-GB', options);
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-ca-gregory' : 'en-GB', options).format(date);
 }
