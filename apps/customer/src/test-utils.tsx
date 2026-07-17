@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import i18n, { initI18n, type AppLanguage } from '@/i18n';
+import type { Planner } from '@/data/planners';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
 // ThemeProvider and the i18n singleton both touch AsyncStorage on mount.
@@ -11,6 +12,27 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
+
+/** Minimal valid Planner fixture — pass overrides for the fields a test cares about. */
+export function makePlanner(overrides?: Partial<Planner>): Planner {
+  return {
+    id: 'planner-1',
+    name: 'Layla Events',
+    city: 'riyadh',
+    type: 'Wedding Planner',
+    rating: 4.8,
+    events: 42,
+    premium: false,
+    verified: true,
+    from: 5000,
+    seed: 3,
+    blurb: 'Full-service wedding and event planning across Riyadh.',
+    tags: ['weddings'],
+    services: [],
+    packages: [],
+    ...overrides,
+  };
+}
 
 /**
  * Renders through the app's real ThemeProvider/I18nextProvider — the same
