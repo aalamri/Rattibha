@@ -1,7 +1,8 @@
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { Calendar } from 'phosphor-react-native';
 
 import { renderWithProviders } from '@/test-utils';
+import { lightTheme } from '@/theme/colors';
 import { EmptyState } from './EmptyState';
 
 describe('EmptyState', () => {
@@ -12,8 +13,20 @@ describe('EmptyState', () => {
     // distinct nodes in this TestInstance tree — only their rendered host output does.
     // 'RNSVGSvgView' is Phosphor's universal SVG wrapper regardless of which icon, so its
     // presence is the correct proxy for "an icon rendered here" (confirmed empirically —
-    // see the equivalent note in Task 2).
-    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(1);
+    // see the equivalent note in Task 2). Unlike the icon's shape, the `color` prop passed
+    // to it does survive onto this host node, so it's directly assertable here.
+    const icons = root!.queryAll((node) => node.type === 'RNSVGSvgView');
+    expect(icons).toHaveLength(1);
+    expect(icons[0].props.color).toBe(lightTheme.brand);
+  });
+
+  test('the icon sits in a circle tinted with the theme blush color', async () => {
+    const { root } = await renderWithProviders(<EmptyState icon={Calendar} title="No requests yet" />);
+    const circle = root!.queryAll((node) => {
+      const style = node.props?.style;
+      return !!style && typeof style === 'object' && style.width === 64 && style.height === 64;
+    })[0];
+    expect(StyleSheet.flatten(circle.props.style).backgroundColor).toBe(lightTheme.bgBlush);
   });
 
   test('renders the subtitle only when provided', async () => {

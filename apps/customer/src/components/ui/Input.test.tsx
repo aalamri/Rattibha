@@ -5,6 +5,7 @@ import { Eye } from 'phosphor-react-native';
 import { renderWithProviders } from '@/test-utils';
 import en from '@/i18n/locales/en.json';
 import ar from '@/i18n/locales/ar.json';
+import { lightTheme } from '@/theme/colors';
 import { Input } from './Input';
 
 describe('Input', () => {
@@ -29,11 +30,11 @@ describe('Input', () => {
     const { getByLabelText } = await renderWithProviders(<Input label="Email" />);
     const field = getByLabelText('Email');
     const unfocused = StyleSheet.flatten(field.parent!.props.style);
-    expect(unfocused.borderColor).toBe('#D8CDE0'); // theme.borderStrong
+    expect(unfocused.borderColor).toBe(lightTheme.borderStrong);
 
     await fireEvent(field, 'focus');
     const focused = StyleSheet.flatten(field.parent!.props.style);
-    expect(focused.borderColor).toBe('#4B0082'); // theme.brand
+    expect(focused.borderColor).toBe(lightTheme.brand);
   });
 
   test('an error overrides the border color and renders the error message', async () => {
@@ -41,7 +42,7 @@ describe('Input', () => {
       <Input label="Email" error="Required" />
     );
     const style = StyleSheet.flatten(getByLabelText('Email').parent!.props.style);
-    expect(style.borderColor).toBe('#C24436'); // theme.danger
+    expect(style.borderColor).toBe(lightTheme.danger);
     expect(getByText('Required')).toBeTruthy();
   });
 

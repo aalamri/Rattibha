@@ -35,7 +35,9 @@ function Probe({ tone = 'success' as 'success' | 'error' | 'info' }) {
 
 async function renderToast(tone?: 'success' | 'error' | 'info') {
   await initI18n();
-  await i18n.changeLanguage('en');
+  await act(async () => {
+    await i18n.changeLanguage('en');
+  });
   return render(
     <I18nextProvider i18n={i18n}>
       <ThemeProvider>
@@ -64,7 +66,7 @@ describe('ToastProvider', () => {
 
   test('keeps only the last 3 toasts when shown more than 3 times', async () => {
     jest.useFakeTimers();
-    const { getByTestId, queryByText, queryAllByText } = await renderToast();
+    const { getByTestId, queryAllByText } = await renderToast();
     const trigger = getByTestId('trigger');
     await fireEvent.press(trigger); // 1st — will be evicted
     await fireEvent.press(trigger);
