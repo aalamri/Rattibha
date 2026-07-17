@@ -19,7 +19,8 @@ The following was verified empirically against the exact installed versions in t
 - **Inline `style` objects are read back byte-identical via the DOM element's `.style` property in JSDOM** — confirmed by rendering `<Avatar seed={3} />` and reading `div.style.background`, which returned the exact same gradient string `Avatar.tsx`'s own `GRADIENTS[3]` constant holds. No `StyleSheet.flatten`-style indirection is needed anywhere in this plan (that machinery was specific to React Native).
 - **`next/navigation`'s `useRouter` must be mocked per test file** via `jest.mock('next/navigation', () => ({ useRouter: () => ({ back: mockBackFn }) }))` at the top of the file that needs it (Jest's mock hoisting means this cannot live in a shared helper). Confirmed working: clicking `DetailHeader`'s back button called the mocked `back` function exactly once when no `onBack` prop was given, and zero times (with `onBack` itself called once) when `onBack` was provided.
 - **`ensureI18nInitialized(lang)` (from `@/i18n`) is synchronous, and a subsequent `i18n.changeLanguage(lang)` is reflected in the very next `render()` call** — confirmed by rendering `<DetailHeader>` after `i18n.changeLanguage('ar')` and observing the `rotate-180` class appear on the back-arrow icon immediately. The shared `renderWithI18n` helper (Task 10) still `await`s `i18n.changeLanguage(lang)` defensively, matching the pattern already proven safe in `apps/customer/src/test-utils.tsx` — don't assume synchronous resolution of i18next internals just because it happened to work in this one manual check.
-- **`formatDate`'s locale-string regression risk, already hit once in `apps/customer/src/lib/format.test.ts` (commit `823fecd`):** an output-equality assertion alone does NOT catch a regression from `'ar-SA-u-ca-gregory'` back to plain `'ar-SA'` — Node's bundled ICU already defaults `'ar-SA'` to the Gregorian calendar, so both locale tags produce byte-identical formatted output in this environment. Task 2 below includes a `jest.spyOn(globalThis.Intl, 'DateTimeFormat')` assertion for this reason — do not remove it as "redundant" with the output-equality test.
+- **`formatDate`'s locale-string regression risk, already hit once in `apps/customer/src/lib/format.test.ts` (commit `823fecd`):** an output-equality assertion alone does NOT catch a regression from `'ar-SA-u-ca-gregory'` back to plain `'ar-SA'` — Node's bundled ICU already defaults `'ar-SA'` to the Gregorian calendar, so both locale tags produce byte-identical formatted output in this environment. Task 2 below includes a spy assertion for this reason — do not remove it as "redundant" with the output-equality test.
+- **Unlike `apps/customer`'s `formatDate` (which calls `new Intl.DateTimeFormat(locale, options).format(date)` directly), `apps/planner`'s `formatDate` calls `date.toLocaleDateString(locale, options)`.** Confirmed empirically: `jest.spyOn(globalThis.Intl, 'DateTimeFormat')` is **not** invoked when `toLocaleDateString` is called (0 calls recorded) — `toLocaleDateString` does not route through the constructible global in an observable way in this environment. **The regression-guard spy must target `jest.spyOn(Date.prototype, 'toLocaleDateString')` instead** — confirmed this correctly captures the exact `(locale, options)` arguments `formatDate` passes through. This also means `format.ts` needs **no modification** to make the spy test work — do not change `formatDate`'s implementation for any reason in this task.
 - `TONE_CLASSES`/`SOLID_TONE_CLASSES` in `Badge.tsx` are module-private (not exported) — Task 6's class-string assertions are copied from `Badge.tsx`'s source rather than imported. If `Badge.tsx`'s class maps change, that test needs a matching update; this is unavoidable, not an oversight.
 - No snapshot tests. No assertions on resolved/computed CSS values (JSDOM doesn't compute real stylesheet values) — only rendered `className` strings, inline `style` properties actually set via React's `style` prop, DOM structure, and behavior.
 - Every task ends with: the new test file's own suite passing, `npx tsc --noEmit` unchanged from the baseline above, `npm run lint` introducing no new findings on the changed files, and a commit.
@@ -155,7 +156,7 @@ describe('nextExpected', () => {
 - [ ] **Step 6: Run the test and confirm it passes**
 
 Run: `cd apps/planner && npm test -- --watchAll=false dealStateMachine.test`
-Expected: all 8 tests pass, 0 failures.
+Expected: all 9 tests pass, 0 failures.
 
 - [ ] **Step 7: Re-check the tsc and lint baseline**
 
@@ -233,11 +234,16 @@ describe('formatDate', () => {
 
   // This is what actually catches a revert to plain 'ar-SA' (or any other
   // drift in the locale tag): it inspects the exact locale argument
-  // formatDate passes to the Intl.DateTimeFormat constructor, rather than
-  // relying on formatted output that happens to be identical for 'ar-SA'
-  // and 'ar-SA-u-ca-gregory' under this environment's ICU.
-  test('ar constructs Intl.DateTimeFormat with the exact ar-SA-u-ca-gregory locale tag', () => {
-    const spy = jest.spyOn(globalThis.Intl, 'DateTimeFormat');
+  // formatDate passes to toLocaleDateString, rather than relying on
+  // formatted output that happens to be identical for 'ar-SA' and
+  // 'ar-SA-u-ca-gregory' under this environment's ICU. Spying on
+  // globalThis.Intl.DateTimeFormat does NOT work here — formatDate calls
+  // date.toLocaleDateString(...), which does not route through the
+  // constructible Intl.DateTimeFormat global in an observable way in this
+  // environment (confirmed empirically) — so this spies on
+  // Date.prototype.toLocaleDateString directly instead.
+  test('ar calls toLocaleDateString with the exact ar-SA-u-ca-gregory locale tag', () => {
+    const spy = jest.spyOn(Date.prototype, 'toLocaleDateString');
     try {
       formatDate(date, 'ar', options);
       expect(spy).toHaveBeenCalledWith('ar-SA-u-ca-gregory', options);
