@@ -43,11 +43,14 @@ describe('formatDate', () => {
 
   // This is what actually catches a revert to plain 'ar-SA' (or any other
   // drift in the locale tag): it inspects the exact locale argument
-  // formatDate passes to the Intl.DateTimeFormat constructor, rather than
+  // formatDate passes to Date.prototype.toLocaleDateString, rather than
   // relying on formatted output that happens to be identical for 'ar-SA'
-  // and 'ar-SA-u-ca-gregory' under this environment's ICU.
-  test('ar constructs Intl.DateTimeFormat with the exact ar-SA-u-ca-gregory locale tag', () => {
-    const spy = jest.spyOn(globalThis.Intl, 'DateTimeFormat');
+  // and 'ar-SA-u-ca-gregory' under this environment's ICU. Spying on
+  // Date.prototype.toLocaleDateString (rather than globalThis.Intl.DateTimeFormat)
+  // is necessary because toLocaleDateString does not route through
+  // globalThis.Intl.DateTimeFormat in this Jest/Node environment in an observable way.
+  test('ar calls Date.prototype.toLocaleDateString with the exact ar-SA-u-ca-gregory locale tag', () => {
+    const spy = jest.spyOn(Date.prototype, 'toLocaleDateString');
     try {
       formatDate(date, 'ar', options);
       expect(spy).toHaveBeenCalledWith('ar-SA-u-ca-gregory', options);
