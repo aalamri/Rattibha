@@ -155,7 +155,7 @@ describe('nextExpected', () => {
 - [ ] **Step 6: Run the test and confirm it passes**
 
 Run: `cd apps/planner && npm test -- --watchAll=false dealStateMachine.test`
-Expected: all 8 tests pass, 0 failures.
+Expected: all 9 tests pass, 0 failures.
 
 - [ ] **Step 7: Re-check the tsc and lint baseline**
 
