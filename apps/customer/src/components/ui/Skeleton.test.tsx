@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { renderWithProviders } from '@/test-utils';
+import { lightTheme } from '@/theme/colors';
 import { Skeleton, SkeletonCard, SkeletonRow } from './Skeleton';
 
 describe('Skeleton', () => {
@@ -10,7 +11,7 @@ describe('Skeleton', () => {
     expect(style.width).toBe(120);
     expect(style.height).toBe(20);
     expect(style.borderRadius).toBe(8);
-    expect(style.backgroundColor).toBe('#F4F0EA'); // theme.bgSunken
+    expect(style.backgroundColor).toBe(lightTheme.bgSunken);
   });
 
   test('defaults width to 100% and height to 14 when not provided', async () => {
@@ -44,7 +45,7 @@ describe('SkeletonCard', () => {
     );
     expect(getByText('Loading placeholder')).toBeTruthy();
     const style = StyleSheet.flatten(root!.props.style);
-    expect(style.backgroundColor).toBe('#FFFFFF'); // theme.bgSurface
-    expect(style.borderColor).toBe('#E9E1EE'); // theme.border
+    expect(style.backgroundColor).toBe(lightTheme.bgSurface);
+    expect(style.borderColor).toBe(lightTheme.border);
   });
 });

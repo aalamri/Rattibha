@@ -23,17 +23,17 @@ describe('Photo', () => {
     // TestInstance tree (unlike composite/function components, which don't appear as nodes
     // at all — see the equivalent note in Task 2 for why component-reference matching
     // wouldn't work here).
-    const images = root!.queryAll((node: any) => node.type === 'Image');
+    const images = root!.queryAll((node) => node.type === 'Image');
     expect(images).toHaveLength(1);
     expect(images[0].props.source).toEqual({ uri: 'https://img.example/1.jpg' });
   });
 
   test('uri unset: renders the gradient placeholder with the fallback icon, no Image', async () => {
     const { root } = await renderWithProviders(<Photo />);
-    expect(root!.queryAll((node: any) => node.type === 'Image')).toHaveLength(0);
+    expect(root!.queryAll((node) => node.type === 'Image')).toHaveLength(0);
     // ImageIcon (a Phosphor icon, a composite component) never appears as a node itself —
     // only its rendered 'RNSVGSvgView' output does.
-    expect(root!.queryAll((node: any) => node.type === 'RNSVGSvgView')).toHaveLength(1);
+    expect(root!.queryAll((node) => node.type === 'RNSVGSvgView')).toHaveLength(1);
   });
 
   test('LTR positions the label badge with a left key, no right key', async () => {
@@ -46,6 +46,27 @@ describe('Photo', () => {
 
   test('RTL positions the label badge with a right key, no left key', async () => {
     const { root } = await renderWithProviders(<Photo label="Featured" />, { lang: 'ar' });
+    const wrapper = findPositionedWrapper(root);
+    const style = StyleSheet.flatten(wrapper.props.style);
+    expect(style.right).toBe(8);
+    expect(style.left).toBeUndefined();
+  });
+
+  // The uri branch duplicates the placeholder branch's label-badge positioning
+  // style independently (Photo.tsx) — cover it too so the two can't silently drift apart.
+  test('uri branch LTR positions the label badge with a left key, no right key', async () => {
+    const { root } = await renderWithProviders(<Photo uri="https://img.example/1.jpg" label="Featured" />);
+    const wrapper = findPositionedWrapper(root);
+    const style = StyleSheet.flatten(wrapper.props.style);
+    expect(style.left).toBe(8);
+    expect(style.right).toBeUndefined();
+  });
+
+  test('uri branch RTL positions the label badge with a right key, no left key', async () => {
+    const { root } = await renderWithProviders(
+      <Photo uri="https://img.example/1.jpg" label="Featured" />,
+      { lang: 'ar' }
+    );
     const wrapper = findPositionedWrapper(root);
     const style = StyleSheet.flatten(wrapper.props.style);
     expect(style.right).toBe(8);

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { act, render } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
@@ -19,7 +19,13 @@ jest.mock('@react-native-async-storage/async-storage', () =>
  */
 export async function renderWithProviders(ui: ReactElement, { lang = 'en' as AppLanguage } = {}) {
   await initI18n();
-  await i18n.changeLanguage(lang);
+  // A still-mounted tree from a prior test re-renders in response to this
+  // language change (i18n is a shared singleton) — act() flushes that
+  // re-render instead of leaving it to surface as an "not wrapped in act"
+  // warning in an unrelated later test.
+  await act(async () => {
+    await i18n.changeLanguage(lang);
+  });
   return render(
     <I18nextProvider i18n={i18n}>
       <ThemeProvider>{ui}</ThemeProvider>
@@ -31,7 +37,9 @@ export async function renderWithProviders(ui: ReactElement, { lang = 'en' as App
 // run — reset it after each test so a language change in one test/file
 // can't leak into the next and produce order-dependent failures.
 afterEach(async () => {
-  await i18n.changeLanguage('en');
+  await act(async () => {
+    await i18n.changeLanguage('en');
+  });
 });
 
 export { i18n };

@@ -1,6 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 
 import { renderWithProviders } from '@/test-utils';
+import { lightTheme } from '@/theme/colors';
 import { Card } from './Card';
 
 describe('Card', () => {
@@ -42,8 +43,8 @@ describe('Card', () => {
     );
     const style = StyleSheet.flatten(root!.props.style);
     // Default theme mode is 'system'; RN's useColorScheme() resolves to
-    // undefined/light under Jest, so the light theme applies (bgSurface: '#FFFFFF', border: '#E9E1EE').
-    expect(style.backgroundColor).toBe('#FFFFFF');
-    expect(style.borderColor).toBe('#E9E1EE');
+    // undefined/light under Jest, so the light theme applies.
+    expect(style.backgroundColor).toBe(lightTheme.bgSurface);
+    expect(style.borderColor).toBe(lightTheme.border);
   });
 });

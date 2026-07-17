@@ -17,14 +17,15 @@ describe('Button', () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  test('disabled: does not fire onPress and reports accessibilityState.disabled', async () => {
+  test('disabled: does not fire onPress, reports accessibilityState.disabled, and dims to 0.5 opacity', async () => {
     const onPress = jest.fn();
-    const { getByText, getByRole } = await renderWithProviders(
+    const { getByText, getByRole, root } = await renderWithProviders(
       <Button onPress={onPress} disabled>Continue</Button>
     );
     await fireEvent.press(getByText('Continue'));
     expect(onPress).not.toHaveBeenCalled();
     expect(getByRole('button').props.accessibilityState.disabled).toBe(true);
+    expect(StyleSheet.flatten(root!.props.style).opacity).toBe(0.5);
   });
 
   test('loading: renders an ActivityIndicator instead of the label, and reports accessibilityState.busy', async () => {
@@ -33,7 +34,7 @@ describe('Button', () => {
     // RN's built-in ActivityIndicator resolves to a host node identified by the string
     // 'ActivityIndicator' in this TestInstance tree (see the equivalent note in Task 2/6
     // for why component-reference matching doesn't work here).
-    expect(root!.queryAll((node: any) => node.type === 'ActivityIndicator')).toHaveLength(1);
+    expect(root!.queryAll((node) => node.type === 'ActivityIndicator')).toHaveLength(1);
     expect(getByRole('button').props.accessibilityState.busy).toBe(true);
   });
 
