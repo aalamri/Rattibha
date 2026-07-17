@@ -1034,7 +1034,6 @@ describe('DateSheet', () => {
     const { root, queryByText } = await renderWithProviders(
       <DateSheet visible={true} value={value} onSelect={() => {}} onClose={() => {}} />
     );
-    const { StyleSheet } = require('react-native');
     // The two round month-nav buttons are the only Pressables with hitSlop=8
     // sized 34x34 in the tree; JSX/query order is [prev, next] regardless of
     // language (only visual flexDirection flips, not DOM order).
