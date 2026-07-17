@@ -1,10 +1,11 @@
 import { render, fireEvent, act } from '@testing-library/react-native';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { I18nextProvider } from 'react-i18next';
 
 import { i18n } from '@/test-utils';
 import { initI18n } from '@/i18n';
+import { lightTheme } from '@/theme/colors';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { Text } from './Text';
 import { ToastProvider, useToast } from './Toast';
@@ -13,6 +14,15 @@ const TEST_METRICS = {
   frame: { width: 320, height: 640, x: 0, y: 0 },
   insets: { left: 0, right: 0, top: 0, bottom: 0 },
 };
+
+/** The toast item's outer Animated.View is the only node with both a borderWidth and a paddingVertical set. */
+function findToastContainer(root: any) {
+  return root.queryAll((node: any) => {
+    const style = node.props?.style;
+    const flat = style && StyleSheet.flatten(style);
+    return !!flat && flat.borderWidth === 1 && flat.paddingVertical === 12;
+  })[0];
+}
 
 function Probe({ tone = 'success' as 'success' | 'error' | 'info' }) {
   const { show } = useToast();
@@ -74,5 +84,26 @@ describe('ToastProvider', () => {
       jest.advanceTimersByTime(3200 + 200 + 50); // + the 200ms dismiss animation + margin
     });
     expect(queryByText('Hello there')).toBeNull();
+  });
+
+  test.each([
+    ['success', '#F0FDF4', '#86EFAC'],
+    ['error', '#FEF2F2', '#FCA5A5'],
+  ] as const)('%s tone renders with its configured background/border colors', async (tone, bg, border) => {
+    jest.useFakeTimers();
+    const { getByTestId, root } = await renderToast(tone);
+    await fireEvent.press(getByTestId('trigger'));
+    const style = StyleSheet.flatten(findToastContainer(root!).props.style);
+    expect(style.backgroundColor).toBe(bg);
+    expect(style.borderColor).toBe(border);
+  });
+
+  test('info tone renders with the theme surface/border colors', async () => {
+    jest.useFakeTimers();
+    const { getByTestId, root } = await renderToast('info');
+    await fireEvent.press(getByTestId('trigger'));
+    const style = StyleSheet.flatten(findToastContainer(root!).props.style);
+    expect(style.backgroundColor).toBe(lightTheme.bgSurface);
+    expect(style.borderColor).toBe(lightTheme.border);
   });
 });
