@@ -28,7 +28,6 @@ import { canTransition } from '@/lib/dealStateMachine';
 import { Avatar } from '@/components/ui/Avatar';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { DetailHeader } from '@/components/ui/DetailHeader';
 import { InfoRow } from '@/components/ui/InfoRow';
@@ -38,6 +37,12 @@ import { useAuth } from '@/lib/AuthContext';
 import { formatDate, formatNumber } from '@/lib/format';
 import { supabase } from '@/lib/supabase';
 import type { DealStatus, PackageTier } from '@/lib/database.types';
+
+// Defined outside the component so handleCountersign's ref generation never
+// calls the impure Date.now()/Math.random() directly inside the component.
+function generateContractRef() {
+  return `RTB-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+}
 
 const STEPS = [
   { key: 'requestReceived', icon: Tray, who: 'client' },
@@ -130,6 +135,10 @@ export default function DealPage() {
   }, [session, params.id]);
 
   useEffect(() => {
+    // False positive: setDeal() inside load() runs after an await, not
+    // synchronously — this is the standard "fetch on mount" effect, not
+    // the setState-cascade pattern this rule targets.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
 
@@ -184,7 +193,7 @@ export default function DealPage() {
         return;
       }
     } else {
-      const ref = `RTB-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const ref = generateContractRef();
       const { data: created, error } = await supabase
         .from('contracts')
         .insert({

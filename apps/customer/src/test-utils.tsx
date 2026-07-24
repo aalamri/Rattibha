@@ -1,6 +1,9 @@
 import { act, render } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
+// Name must start with "mock" — babel-plugin-jest-hoist only allows
+// out-of-scope references matching /^mock/i inside a jest.mock() factory.
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 
 import i18n, { initI18n, type AppLanguage } from '@/i18n';
 import type { Planner } from '@/data/planners';
@@ -9,9 +12,7 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 // ThemeProvider and the i18n singleton both touch AsyncStorage on mount.
 // The package's own Jest mock avoids the "NativeModule: AsyncStorage is
 // null" crash that happens under Jest without it.
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
-);
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 /** Minimal valid Planner fixture — pass overrides for the fields a test cares about. */
 export function makePlanner(overrides?: Partial<Planner>): Planner {

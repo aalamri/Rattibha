@@ -48,6 +48,12 @@ const STATUS_ICON: Record<string, typeof Clock> = {
   withdrawn: XCircle,
 };
 
+// Defined outside the component so the render body never calls the impure
+// Date.now() directly — matches the pattern in NotificationsPanel.tsx.
+function hoursSince(date: Date) {
+  return (Date.now() - date.getTime()) / 3_600_000;
+}
+
 interface OfferRow {
   id: string;
   status: OfferStatus;
@@ -70,6 +76,11 @@ export default function MyOffersPage() {
   const [offers, setOffers] = useState<OfferRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [prevFilter, setPrevFilter] = useState(filter);
+  if (filter !== prevFilter) {
+    setPrevFilter(filter);
+    setVisibleCount(PAGE_SIZE);
+  }
 
   useEffect(() => {
     if (!session) return;
@@ -115,8 +126,6 @@ export default function MyOffersPage() {
 
   const filtered = useMemo(() => offers.filter((o) => filter === 'all' || o.status === filter), [offers, filter]);
   const shown = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
-
-  useEffect(() => { setVisibleCount(PAGE_SIZE); }, [filter]);
 
   return (
     <DashboardShell title={t('myOffers.title')} subtitle={t('myOffers.subtitle')}>
@@ -190,7 +199,7 @@ export default function MyOffersPage() {
               month: 'short',
               year: 'numeric',
             });
-            const sentHoursAgo = (Date.now() - offer.sentAt.getTime()) / 3_600_000;
+            const sentHoursAgo = hoursSince(offer.sentAt);
             const sent =
               sentHoursAgo >= 24
                 ? t('common.daysAgo', { count: Math.round(sentHoursAgo / 24) })

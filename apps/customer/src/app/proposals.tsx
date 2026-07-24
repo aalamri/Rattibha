@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Badge, Stars } from '@/components/ui/Badge';
+import { Stars } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Photo } from '@/components/ui/Photo';
@@ -288,7 +288,7 @@ function OfferCard({
 
         {offer.message && (
           <Text variant="small" color={theme.fg2} style={{ lineHeight: 19, marginVertical: 11 }}>
-            "{offer.message}"
+            &ldquo;{offer.message}&rdquo;
           </Text>
         )}
 

@@ -31,6 +31,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [planner, setPlanner] = useState<Planner | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Reset derived profile/planner state synchronously during render (rather
+  // than in the effect below) the moment session flips to null — avoids a
+  // frame where stale profile/planner data is still visible post-sign-out.
+  const [prevSession, setPrevSession] = useState(session);
+  if (session !== prevSession) {
+    setPrevSession(session);
+    if (!session) {
+      setProfile(null);
+      setPlanner(null);
+    }
+  }
+
   useEffect(() => {
     supabase.auth
       .getSession()
@@ -55,11 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!session) {
-      setProfile(null);
-      setPlanner(null);
-      return;
-    }
+    if (!session) return;
 
     const userId = session.user.id;
 

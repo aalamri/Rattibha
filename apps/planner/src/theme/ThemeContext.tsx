@@ -39,7 +39,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [resolvedScheme, setResolvedScheme] = useState<ResolvedScheme>('light');
 
   useEffect(() => {
+    // Reading localStorage during render would throw/mismatch under SSR —
+    // this effect exists specifically to sync React state from that
+    // external source once we're safely on the client, exactly the
+    // "synchronize with an external system" case this rule allows.
     const stored = (localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null) ?? 'system';
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setModeState(stored);
     setResolvedScheme(resolve(stored));
   }, []);

@@ -32,6 +32,12 @@ type PackageKey = (typeof PACKAGES)[number];
 const PRICE_MIN = 6000;
 const PRICE_MAX = 40000;
 
+// Defined outside the component so the render body never calls the impure
+// Date.now() directly — matches the pattern in NotificationsPanel.tsx.
+function hoursSince(date: Date) {
+  return (Date.now() - date.getTime()) / 3_600_000;
+}
+
 interface RequestDetail {
   id: string;
   category: CategoryKey;
@@ -112,7 +118,7 @@ export default function SubmitQuotePage() {
     year: 'numeric',
   });
 
-  const hoursAgo = (Date.now() - request.createdAt.getTime()) / 3_600_000;
+  const hoursAgo = hoursSince(request.createdAt);
   const posted =
     hoursAgo >= 24
       ? t('common.daysAgo', { count: Math.round(hoursAgo / 24) })

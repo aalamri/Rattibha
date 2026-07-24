@@ -52,6 +52,10 @@ export function initI18n() {
   if (!initPromise) {
     initPromise = (async () => {
       const lng = await detectInitialLanguage();
+      // i18next's default export is the singleton instance; `use` is both
+      // an instance method and an unrelated named export with the same
+      // name, which trips this rule as a false positive.
+      // eslint-disable-next-line import/no-named-as-default-member
       await i18n.use(initReactI18next).init({
         resources,
         lng,
@@ -73,6 +77,9 @@ export function initI18n() {
 }
 
 export async function setAppLanguage(lang: AppLanguage) {
+  // Same false positive as above: `changeLanguage` is a named export that
+  // shares its name with the singleton's own instance method.
+  // eslint-disable-next-line import/no-named-as-default-member
   await i18n.changeLanguage(lang);
   try {
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
