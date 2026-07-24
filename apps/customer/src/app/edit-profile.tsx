@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { ArrowClockwise, ArrowLeft, Check, Phone, User } from 'phosphor-react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -33,12 +33,15 @@ export default function EditProfileScreen() {
   // AuthContext fetches `profile` asynchronously after `session` resolves,
   // so it's very likely still null on this screen's first render — sync
   // the form once it arrives instead of only seeding state at mount.
-  useEffect(() => {
-    if (!profile) return;
-    setFullName(profile.full_name ?? '');
-    setPhone(profile.phone ?? '');
-    setSeed(profile.avatar_seed ?? 0);
-  }, [profile]);
+  const [prevProfile, setPrevProfile] = useState(profile);
+  if (profile !== prevProfile) {
+    setPrevProfile(profile);
+    if (profile) {
+      setFullName(profile.full_name ?? '');
+      setPhone(profile.phone ?? '');
+      setSeed(profile.avatar_seed ?? 0);
+    }
+  }
 
   async function handleSave() {
     if (!session?.user.id) return;

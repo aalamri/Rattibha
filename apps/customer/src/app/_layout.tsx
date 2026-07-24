@@ -97,7 +97,7 @@ function RouteGuard({ children }: { children: ReactNode }) {
     } else if (session && inAuthGroup) {
       router.replace('/(tabs)');
     }
-  }, [session, loading, segments]);
+  }, [session, loading, segments, router]);
 
   if (loading) return null;
 

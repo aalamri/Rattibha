@@ -110,7 +110,12 @@ export default function DiscoverScreen() {
   };
 
   useEffect(() => {
+    // Intentionally mount-only: loadPage is redefined every render so
+    // loadMore's later calls always close over the latest t/showToast —
+    // adding it here would either re-fetch page 0 on every render or
+    // require freezing it via useCallback, which would go stale instead.
     loadPage(0, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadMore = () => {

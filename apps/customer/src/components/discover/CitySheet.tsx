@@ -1,5 +1,5 @@
 import { CheckCircle, GlobeHemisphereEast, MagnifyingGlass, MapPin, X } from 'phosphor-react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
 
@@ -25,9 +25,11 @@ export function CitySheet({ visible, current, onSelect, onClose }: CitySheetProp
   const row = { flexDirection: isRTL ? ('row-reverse' as const) : ('row' as const) };
   const [query, setQuery] = useState('');
 
-  useEffect(() => {
+  const [prevVisible, setPrevVisible] = useState(visible);
+  if (visible !== prevVisible) {
+    setPrevVisible(visible);
     if (!visible) setQuery('');
-  }, [visible]);
+  }
 
   const allOptions: { key: CityKey | undefined; label: string }[] = [
     { key: undefined, label: t('cities.all') },

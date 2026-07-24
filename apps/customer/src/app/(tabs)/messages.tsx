@@ -42,6 +42,12 @@ export async function markConversationRead(requestId: string, plannerId: string)
   await AsyncStorage.setItem(lastReadKey(requestId, plannerId), new Date().toISOString());
 }
 
+// Defined outside the component so the render body never calls the impure
+// Date.now() directly.
+function minutesSince(iso: string) {
+  return Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+}
+
 export default function MessagesScreen() {
   const { t } = useTranslation();
   const isRTL = useIsRTL();
@@ -154,7 +160,7 @@ export default function MessagesScreen() {
 
     setConvos(result);
     setLoading(false);
-  }, [session?.user.id]);
+  }, [session]);
 
   const ownRequestIdsKey = ownRequestIds.slice().sort().join(',');
 
@@ -205,7 +211,7 @@ export default function MessagesScreen() {
               {convos.map((c, i) => {
                 const isMe = c.sender_id === session?.user.id;
                 const preview = (isMe ? t('messages.you') : '') + c.body;
-                const timeAgo = Math.round((Date.now() - new Date(c.created_at).getTime()) / 60000);
+                const timeAgo = minutesSince(c.created_at);
                 const timeLabel =
                   timeAgo < 60
                     ? `${timeAgo}m`

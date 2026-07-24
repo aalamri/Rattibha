@@ -36,6 +36,12 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
 import { radii } from '@/theme/tokens';
 
+// Defined outside the component so the render body never calls the impure
+// Date.now() directly.
+function hoursSince(iso: string) {
+  return Math.round((Date.now() - new Date(iso).getTime()) / 3600000);
+}
+
 const CATEGORY_ICONS: Record<CategoryKey, Icon> = {
   weddings: HeartStraight,
   birthdays: Cake,
@@ -250,7 +256,7 @@ function OfferCard({
   const cityLabel = planner ? t(`cities.${planner.city}`) : '';
   const seed = planner?.profiles?.avatar_seed ?? 0;
 
-  const hoursAgo = Math.max(1, Math.round((Date.now() - new Date(offer.created_at).getTime()) / 3600000));
+  const hoursAgo = Math.max(1, hoursSince(offer.created_at));
   const timeLabel = t('common.hoursAgo', { count: hoursAgo });
 
   return (

@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, PaperPlaneRight, Paperclip } from 'phosphor-react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from 'react-native';
 
@@ -49,9 +49,26 @@ export default function ChatScreen() {
   const [sending, setSending] = useState(false);
   const listRef = useRef<FlatList>(null);
 
+  const loadMessages = useCallback(async () => {
+    const { data } = await supabase
+      .from('messages')
+      .select('id, sender_id, body, created_at, planner_id')
+      .eq('request_id', requestId)
+      .eq('planner_id', plannerId)
+      .order('created_at', { ascending: true });
+    if (data) {
+      setMessages(data as MessageRow[]);
+      setTimeout(() => listRef.current?.scrollToEnd({ animated: false }), 100);
+    }
+  }, [requestId, plannerId]);
+
   useEffect(() => {
     if (!requestId || !plannerId) return;
     markConversationRead(requestId, plannerId);
+    // False positive: setMessages() inside loadMessages() runs after an
+    // await, not synchronously — this is the standard "fetch on mount"
+    // effect, not the setState-cascade pattern this rule targets.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadMessages();
 
     // Realtime subscription — Supabase's postgres_changes filter only
@@ -75,20 +92,7 @@ export default function ChatScreen() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [requestId, plannerId]);
-
-  async function loadMessages() {
-    const { data } = await supabase
-      .from('messages')
-      .select('id, sender_id, body, created_at, planner_id')
-      .eq('request_id', requestId)
-      .eq('planner_id', plannerId)
-      .order('created_at', { ascending: true });
-    if (data) {
-      setMessages(data as MessageRow[]);
-      setTimeout(() => listRef.current?.scrollToEnd({ animated: false }), 100);
-    }
-  }
+  }, [requestId, plannerId, loadMessages]);
 
   async function sendMessage() {
     const body = draft.trim();

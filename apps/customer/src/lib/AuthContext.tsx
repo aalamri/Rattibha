@@ -26,6 +26,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Reset derived profile state synchronously during render (rather than in
+  // the effect below) the moment session flips to null — avoids a frame
+  // where stale profile data is still visible post-sign-out.
+  const [prevSession, setPrevSession] = useState(session);
+  if (session !== prevSession) {
+    setPrevSession(session);
+    if (!session) setProfile(null);
+  }
+
   useEffect(() => {
     supabase.auth
       .getSession()
@@ -51,10 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!session) {
-      setProfile(null);
-      return;
-    }
+    if (!session) return;
 
     supabase
       .from('profiles')

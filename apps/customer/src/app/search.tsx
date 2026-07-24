@@ -80,12 +80,6 @@ export default function SearchScreen() {
     setTimeout(() => inputRef.current?.focus(), 150);
   }, []);
 
-  // Search on query/filter change (debounced)
-  useEffect(() => {
-    const timer = setTimeout(() => { doSearch(query, filters); }, 300);
-    return () => clearTimeout(timer);
-  }, [query, filters]);
-
   async function doSearch(q: string, f: Filters) {
     setLoading(true);
     let qb = supabase
@@ -119,6 +113,12 @@ export default function SearchScreen() {
     setResults(planners);
     setLoading(false);
   }
+
+  // Search on query/filter change (debounced)
+  useEffect(() => {
+    const timer = setTimeout(() => { doSearch(query, filters); }, 300);
+    return () => clearTimeout(timer);
+  }, [query, filters]);
 
   async function commitSearch(q: string) {
     if (!q.trim()) return;
@@ -293,7 +293,11 @@ function FilterSheet({
 
   const [local, setLocal] = useState<Filters>(filters);
   // Sync when parent opens sheet with current filters
-  useEffect(() => { if (visible) setLocal(filters); }, [visible]);
+  const [prevVisible, setPrevVisible] = useState(visible);
+  if (visible !== prevVisible) {
+    setPrevVisible(visible);
+    if (visible) setLocal(filters);
+  }
 
   const SORT_OPTIONS: { key: SortKey; label: string }[] = [
     { key: 'rating', label: t('search.sortRating') },

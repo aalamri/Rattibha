@@ -47,6 +47,9 @@ export default function CheckoutScreen() {
 
   useEffect(() => {
     if (!offerId) return;
+    // False positive: setOffer() inside loadOffer() runs after an await,
+    // not synchronously — this is the standard "fetch on mount" effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadOffer();
 
     // Subscribe to deal_status changes so the screen updates automatically
