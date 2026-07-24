@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import type { TFunction } from 'i18next';
-import { ArrowLeft, Bell, CalendarCheck, ChatCircle, PaperPlaneTilt, SealCheck } from 'phosphor-react-native';
+import { ArrowLeft, Bell, CalendarCheck, ChatCircle, PaperPlaneTilt, SealCheck, type Icon } from 'phosphor-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
@@ -16,7 +16,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fonts } from '@/theme/fonts';
 import { radii } from '@/theme/tokens';
 
-const TYPE_ICON: Record<string, React.ComponentType<{ size: number; color: string; weight?: string }>> = {
+const TYPE_ICON: Record<string, Icon> = {
   offer_received: PaperPlaneTilt,
   offer_accepted: SealCheck,
   booking_confirmed: CalendarCheck,

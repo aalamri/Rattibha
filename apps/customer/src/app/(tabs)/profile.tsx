@@ -10,6 +10,7 @@ import {
   PencilSimple,
   Question,
   SignOut,
+  type Icon,
 } from 'phosphor-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
@@ -25,7 +26,7 @@ import { fonts } from '@/theme/fonts';
 import { radii, shadows } from '@/theme/tokens';
 
 interface MenuRowProps {
-  icon: React.ComponentType<{ size: number; color: string; weight?: string }>;
+  icon: Icon;
   label: string;
   note?: string;
   onPress?: () => void;

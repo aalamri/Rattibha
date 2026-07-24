@@ -66,9 +66,10 @@ jobs:
           cache: npm
           cache-dependency-path: apps/customer/package-lock.json
       - run: npm ci
+      - name: Generate expo-env.d.ts
+        run: printf '/// <reference types="expo/types" />\n' > expo-env.d.ts
       - name: Typecheck
         run: npx tsc --noEmit
-        continue-on-error: true
       - name: Lint
         run: npm run lint
         continue-on-error: true
