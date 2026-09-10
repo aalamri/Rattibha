@@ -10,6 +10,22 @@ env:
   NODE_VERSION: '24'
 
 jobs:
+  account-permissions:
+    name: account permissions
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: supabase
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: supabase/package-lock.json
+      - run: npm ci
+      - run: npm test
+
   planner:
     name: planner
     runs-on: ubuntu-latest

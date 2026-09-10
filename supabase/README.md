@@ -44,6 +44,24 @@ use this whenever you change the schema or want clean seed data back.
   /  etc. security-definer helpers in `migrations/0003_grants_and_rls_fix.sql`
   (needed to avoid RLS recursion between `requests` and `offers`).
 
+## Account permission regression tests
+
+Run `npm ci` and `npm test` from `supabase/`. These tests use an isolated
+PGlite PostgreSQL engine and the repository's account schema and RLS policies;
+they require no Docker, credentials, or live database. CI runs them too.
+Supabase's `auth.users` and `auth.uid()` are represented by minimal fixtures;
+this suite does not replace the full Supabase smoke test below.
+
+Migration `0025_protect_account_permissions.sql` prevents ordinary users from
+granting admin access, changing existing account roles/ownership, or verifying
+their own storefronts, including on insert and upsert. Existing admins retain
+the admin screens' direct updates; service-role/database maintenance retains
+provisioning access. Normal profile editing and onboarding are unchanged.
+Apply this migration to an existing deployment through the normal migration
+process; do not reset a deployed database. Existing admin/verification values
+are preserved and should be reviewed for unauthorized changes made before
+this protection was installed.
+
 ## Seed accounts
 
 All seeded users use password `password123`:
